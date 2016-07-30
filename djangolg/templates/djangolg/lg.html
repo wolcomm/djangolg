@@ -1,0 +1,31 @@
+{% extends "djangolg/base.html" %}
+
+{% block scripts %}
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $("#bgp_prefix_form").submit( function (event) {
+                event.preventDefault();
+                console.log("caught submit")
+                var q = $(this).serialize();
+                var url = "/lg/bgp_prefix/?" + q;
+                console.log(q);
+                $("#output").load(url);
+            })
+        } );
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                {% include "djangolg/controls.html" %}
+            </div>
+            <div class="col-md-9" id="output">
+                <pre>
+                    {{ output }}
+                </pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}

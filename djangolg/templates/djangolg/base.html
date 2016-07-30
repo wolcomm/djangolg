@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Looking Glass{% endblock %}</title>
+    {% include "djangolg/css.html" %}
+    {% include "djangolg/js.html" %}
+    {% block scripts %}{% endblock %}
+</head>
+<body>
+    {% include "djangolg/navbar.html" %}
+    <div class="container">
+        <div class="base" id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% include "djangolg/footer.html" %}
+</body>
+</html>

@@ -1,0 +1,44 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title text-center">Looking Glass</h1>
+    </div>
+    <div class="panel-body">
+        <div class="panel-group" id="accordion" role="tablist">
+            {% for m in methods %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="{{ m.method.name }}-heading">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ m.method.name }}">
+                                {{ m.method.title }}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-{{ m.method.name }}" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            {% if m.form %}
+                                <form action="#" method="get" id="{{ m.method.name }}_form">
+                                    <fieldset>
+                                        {% for hidden in m.form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
+                                        {% for field in m.form.visible_fields %}
+                                            <div class="form-group">
+                                                {{ field.label_tag }} {{ field }}
+                                            </div>
+                                        {% endfor %}
+                                        <button type="submit" class="btn btn-primary">
+                                            Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-default">
+                                            Reset
+                                        </button>
+                                    </fieldset>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
