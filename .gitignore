@@ -98,6 +98,7 @@ ENV/
 .ropeproject
 .idea/
 DjangoProject_djangolg/
-db.sqlite3manage.py
 templates/
 /djangolg/migrations/
+db.sqlite3
+manage.py
