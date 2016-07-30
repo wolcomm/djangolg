@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from djangolg.utils import misc
+from djangolg import ip_prefix
 
 
 class IPPrefixField(forms.CharField):
@@ -9,7 +9,7 @@ class IPPrefixField(forms.CharField):
         if not value:
             return None
         try:
-            prefix = misc.IPPrefix(value)
+            prefix = ip_prefix.IPPrefix(value)
         except:
             raise ValidationError(
                 _('%(value)s is not a valid ip prefix'),

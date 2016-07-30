@@ -100,3 +100,4 @@ ENV/
 DjangoProject_djangolg/
 db.sqlite3manage.py
 templates/
+/djangolg/migrations/

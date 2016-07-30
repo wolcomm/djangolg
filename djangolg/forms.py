@@ -1,6 +1,6 @@
 from django import forms
 from djangolg import models, fields
-from djangolg.utils.lg import LookingGlass
+from djangolg.lg import LookingGlass
 
 
 class LookingGlassBaseForm(forms.Form):
