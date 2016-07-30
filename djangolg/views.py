@@ -3,24 +3,6 @@ from django.http import JsonResponse
 from djangolg import forms, methods
 
 
-class NewIndexView(TemplateView):
-    template_name = 'djangolg/lg.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(NewIndexView, self).get_context_data(**kwargs)
-        req = self.request.GET
-        if req:
-            form = forms.LookingGlassForm(req)
-            if form.is_valid():
-                context['output'] = form.bgp_prefix()
-            else:
-                context['output'] = "Invalid data"
-        else:
-            form = forms.LookingGlassForm()
-        context['form'] = form
-        return context
-
-
 class IndexView(TemplateView):
     template_name = 'djangolg/lg.html'
 
@@ -34,7 +16,7 @@ class IndexView(TemplateView):
         return context
 
 
-class LookingGlassView(View):
+class LookingGlassJsonView(View):
     def get(self, request, method=None):
         query = request.GET
         if not query:
@@ -51,10 +33,10 @@ class LookingGlassView(View):
         return JsonResponse(response)
 
 
-class LookingGlassOutputView(TemplateView):
+class LookingGlassHTMLView(TemplateView):
     template_name = "djangolg/output.html"
     def get_context_data(self, **kwargs):
-        context = super(LookingGlassOutputView, self).get_context_data(**kwargs)
+        context = super(LookingGlassHTMLView, self).get_context_data(**kwargs)
         query = self.request.GET
         if query:
             method = methods.Method(kwargs["method"])

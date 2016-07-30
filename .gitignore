@@ -1,12 +1,9 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Example user template template
-### Example user template
-
 # IntelliJ project files
 .idea
 *.iml
 out
-gen### Python template
+gen
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -96,6 +93,8 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Other settings
 .idea/
 DjangoProject_djangolg/
 templates/
