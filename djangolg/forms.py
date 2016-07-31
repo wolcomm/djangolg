@@ -47,3 +47,43 @@ class BGPPrefixForm(LookingGlassBaseForm):
         bestpath_only = data['bestpath_only']
         output = lg.bgp_prefix(prefix, longer_prefixes, bestpath_only)
         return output
+
+
+class BGPAsPathForm(LookingGlassBaseForm):
+    def execute(self):
+        data = self.cleaned_data
+        lg = LookingGlass(data['router'])
+        prefix = data['prefix']
+        longer_prefixes = data['longer_prefixes']
+        bestpath_only = data['bestpath_only']
+        output = lg.bgp_prefix(prefix, longer_prefixes, bestpath_only)
+        return output
+
+
+class NewLookingGlassBaseForm(forms.Form):
+    label_suffix = ''
+    method = None
+    router = forms.ModelChoiceField(
+        required=True,
+        queryset=models.Router.objects.all(),
+        widget=forms.Select(
+            attrs={'class': 'form-control'}
+        ),
+        label_suffix=label_suffix,
+    )
+    ipv4_src_address = fields.IPPrefixField(
+        required=False,
+        widget=forms.HiddenInput,
+    )
+    ipv6_src_address = fields.IPPrefixField(
+        required=False,
+        widget=forms.HiddenInput
+    )
+
+
+def form_factory(method=None, data={}):
+    class FormClass(NewLookingGlassBaseForm):
+        if method:
+            target = method.target
+    form = FormClass(data)
+    return form

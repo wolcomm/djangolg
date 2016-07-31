@@ -49,8 +49,19 @@ class LookingGlass(object):
             raise ValueError
         return output
 
-    def _build_cmd(self, command):
-        return
+    def _build_cmd(self, method, target=None, address_family='ipv6'):
+        cmd = method.cmd % (address_family, target)
+        return cmd
+
+    def execute(self, method=None, target=None, options=None):
+        cmd = self._build_cmd(method, target=target, address_family='ipv6')
+        try:
+            output = self._connect()._exec(cmd)
+        except Exception:
+            raise
+        finally:
+            self._disconnect()
+        return output
 
     def bgp_prefix(self, prefix=None, longer_prefixes=None, bestpath_only=None):
         af = "ipv%s" % prefix.version
