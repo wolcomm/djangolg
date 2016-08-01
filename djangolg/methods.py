@@ -2,7 +2,8 @@ from djangolg import settings
 
 
 def methods():
-    return settings.METHODS.keys()
+    M = sorted(settings.METHODS.items(), key=lambda m: m[1]['index'])
+    return [m[0] for m in M]
 
 
 class Method(object):

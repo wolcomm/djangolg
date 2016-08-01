@@ -13,6 +13,7 @@ MAX_REQUESTS = 30
 # Query methods, and their implementation variables
 METHODS = {
     'bgp_prefix': {
+        'index': 0,
         'name': 'bgp_prefix',
         'title': "BGP Prefix Query",
         'target': fields.IPPrefixField(
@@ -31,6 +32,7 @@ METHODS = {
         'cmd': lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target))
     },
     'bgp_as_path': {
+        'index': 1,
         'name': 'bgp_as_path',
         'title': "BGP AS_PATH Query",
         'target': forms.CharField(
@@ -48,6 +50,7 @@ METHODS = {
         'cmd': lambda target: "show bgp %s unicast regex %s" % ('ipv4', str(target))
     },
     'ping': {
+        'index': 2,
         'name': 'ping',
         'title': "Ping IP Address",
         'target': fields.IPAddressField(
@@ -61,6 +64,7 @@ METHODS = {
         'cmd': lambda target: "ping %s source Loopback0" % (str(target))
     },
     'trace_route': {
+        'index': 3,
         'name': 'trace_route',
         'title': 'Traceroute to IP Address',
         'target': fields.IPAddressField(
