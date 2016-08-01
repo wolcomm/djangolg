@@ -25,32 +25,44 @@ class LookingGlassHTMLView(TemplateView):
         context = super(LookingGlassHTMLView, self).get_context_data(**kwargs)
         query = self.request.GET
         src_host = self.request.get_host()
+        log = models.Log(src_host=src_host)
         if query:
             key = query['auth_key']
             if keys.AuthKey(src_host).validate(key):
+                log.event = models.Log.EVENT_QUERY_ACCEPT
                 method = methods.Method(query['method_name'])
                 if method:
+                    log.method_name = method.name
                     form = forms.form_factory(method=method, data=query)
                     if form.is_valid():
+                        log.router = form.cleaned_data['router']
+                        log.target = form.cleaned_data['target']
                         context['output'] = self.execute(form=form, method=method)
                     else:
+                        log.event = models.Log.EVENT_QUERY_INVALID
+                        log.error = "Form validation failed"
                         context['output'] = 'Error'
                 else:
+                    log.event = models.Log.EVENT_QUERY_INVALID
+                    log.error = "Invalid method name"
                     context['output'] = 'Bad Command'
             else:
+                log.event = models.Log.EVENT_QUERY_REJECT
                 context['output'] = 'Invalid Auth Key'
         return context
 
-    def execute(self, form, method):
+    def execute(self, form, method, log):
         data = form.cleaned_data
+        router = data['router']
+        target = data['target']
         if 'options' in data:
             option = int(data['options'])
         else:
             option = None
-        lg = LookingGlass(data['router'])
+        lg = LookingGlass(router=router)
         output = lg.execute(
             method=method,
-            target=data['target'],
+            target=target,
             option=option,
         )
         return output
