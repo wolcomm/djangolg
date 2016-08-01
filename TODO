@@ -1,7 +1,5 @@
 TODO: manage.py router/credential mgmt commands
 
-TODO: Secure session cookie / form token - csrf handling, etc
-
 TODO: Query rate limiting
 
 TODO: reCapture session verification
