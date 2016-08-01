@@ -3,6 +3,7 @@
 {% block scripts %}
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
+            $("#accept-terms-modal").modal();
             $("form").each(function () {
                 $(this).submit(function (event) {
                     event.preventDefault();
@@ -12,6 +13,10 @@
             })
         })
     </script>
+{% endblock %}
+
+{% block modal %}
+{% include "djangolg/modal.html" %}
 {% endblock %}
 
 {% block content %}

@@ -2,6 +2,14 @@ from django import forms
 from djangolg import models, fields
 
 
+class AcceptTermsForm(forms.Form):
+    label_suffix = ''
+    accept = forms.BooleanField(
+        required=True,
+        label_suffix=''
+    )
+
+
 class LookingGlassBaseForm(forms.Form):
     label_suffix = ''
     router = forms.ModelChoiceField(

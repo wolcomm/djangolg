@@ -11,6 +11,7 @@
 </head>
 <body>
     {% include "djangolg/navbar.html" %}
+    {% block modal %}{% endblock %}
     <div class="container">
         <div class="base" id="content">
             {% block content %}{% endblock %}

@@ -15,6 +15,7 @@ class IndexView(TemplateView):
             method = methods.Method(m)
             form = forms.form_factory(method=method, key=key)
             context['methods'].append({'method': method, 'form': form})
+        context['modal'] = forms.AcceptTermsForm()
         return context
 
 
