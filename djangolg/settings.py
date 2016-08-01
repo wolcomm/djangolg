@@ -47,4 +47,17 @@ METHODS = {
         ],
         'cmd': lambda target: "show bgp %s unicast regex %s" % ('ipv4', str(target))
     },
+    'ping': {
+        'name': 'ping',
+        'title': "Ping IP Address",
+        'target': fields.IPAddressField(
+            required=True,
+            widget=forms.TextInput(
+                {'class': 'form-control'},
+            ),
+            label_suffix='',
+            label='Target Address'
+        ),
+        'cmd': lambda target: "ping %s" % (str(target))
+    },
 }

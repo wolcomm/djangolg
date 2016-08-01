@@ -40,8 +40,7 @@ def form_factory(method=None, key=None, data=None):
                 options = forms.ChoiceField(
                     required=True,
                     choices=method.option_choices,
-                    widget=forms.RadioSelect(
-                    ),
+                    widget=forms.RadioSelect(),
                     label_suffix='',
                     label='Options'
                 )

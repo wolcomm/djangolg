@@ -30,7 +30,10 @@ class Method(object):
 
     @property
     def options(self):
-        return self.method['options']
+        if 'options' in self.method:
+            return self.method['options']
+        else:
+            return []
 
     @property
     def option_choices(self):

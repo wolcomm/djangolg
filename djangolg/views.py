@@ -42,11 +42,15 @@ class LookingGlassHTMLView(TemplateView):
 
     def execute(self, form, method):
         data = form.cleaned_data
+        if 'options' in data:
+            option = int(data['options'])
+        else:
+            option = None
         lg = LookingGlass(data['router'])
         output = lg.execute(
             method=method,
             target=data['target'],
-            option=int(data['options']),
+            option=option,
         )
         return output
 
