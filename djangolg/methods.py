@@ -1,37 +1,37 @@
-from django import forms as _forms
-from djangolg import forms, fields
+from django import forms
+from djangolg import fields
 
 # TODO: Move _methods into settings
+# TODO: Provide method "options"
+# TODO: Provide dialect-specific cmd syntax
 _methods = {
     'bgp_prefix': {
         'name': 'bgp_prefix',
-        'form': forms.BGPPrefixForm,
         'title': "BGP Prefix Query",
         'target': fields.IPPrefixField(
             required=True,
-            widget=_forms.TextInput(
+            widget=forms.TextInput(
                 {'class': 'form-control'}
             ),
             label_suffix='',
             label='Prefix'
         ),
         'options': {},
-        'cmd': "show bgp %s unicast %s"
+        'cmd': lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target))
     },
     'bgp_as_path': {
         'name': 'bgp_as_path',
-        'form': forms.BGPAsPathForm,
         'title': "BGP AS_PATH Query",
-        'target': _forms.CharField(
+        'target': forms.CharField(
             required=True,
-            widget=_forms.TextInput(
+            widget=forms.TextInput(
                 {'class': 'form-control'}
             ),
             label_suffix='',
             label='AS Path Regex'
         ),
         'options': {},
-        'cmd': "show bgp %s unicast regex %s"
+        'cmd': lambda target: "show bgp %s unicast regex %s" % ('ipv4', str(target))
     },
 }
 

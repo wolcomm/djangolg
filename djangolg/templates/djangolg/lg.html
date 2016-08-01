@@ -2,16 +2,15 @@
 
 {% block scripts %}
     <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
-            $("#bgp_prefix_form").submit( function (event) {
-                event.preventDefault();
-                console.log("caught submit")
-                var q = $(this).serialize();
-                var url = "/lg/bgp_prefix/?" + q;
-                console.log(q);
-                $("#output").load(url);
+        $(document).ready(function () {
+            $("form").each(function () {
+                $(this).submit(function (event) {
+                    event.preventDefault();
+                    var query = $(this).serialize();
+                    $("#output").load("/lg/?"+query);
+                })
             })
-        } );
+        })
     </script>
 {% endblock %}
 
@@ -22,9 +21,7 @@
                 {% include "djangolg/controls.html" %}
             </div>
             <div class="col-md-9" id="output">
-                <pre>
-                    {{ output }}
-                </pre>
+                {% include "djangolg/output.html" %}
             </div>
         </div>
     </div>
