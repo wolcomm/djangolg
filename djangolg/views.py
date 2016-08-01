@@ -1,6 +1,6 @@
 from django.views.generic import View, TemplateView
 from django.http import JsonResponse
-from djangolg import forms, methods, keys
+from djangolg import forms, methods, keys, models
 from djangolg.lg import LookingGlass
 
 
@@ -24,9 +24,10 @@ class LookingGlassHTMLView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(LookingGlassHTMLView, self).get_context_data(**kwargs)
         query = self.request.GET
+        src_host = self.request.get_host()
         if query:
             key = query['auth_key']
-            if keys.AuthKey(self.request.get_host()).validate(key):
+            if keys.AuthKey(src_host).validate(key):
                 method = methods.Method(query['method_name'])
                 if method:
                     form = forms.form_factory(method=method, data=query)

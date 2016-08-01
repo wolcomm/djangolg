@@ -51,26 +51,30 @@ class Log(models.Model):
     EVENT_START = 0
     EVENT_QUERY_ACCEPT = 1
     EVENT_QUERY_REJECT = 2
+    EVENT_QUERY_INVALID = 3
     EVENT_CHOICES = (
         (EVENT_START, "Session Started"),
         (EVENT_QUERY_ACCEPT, "Query Authorised"),
-        (EVENT_QUERY_REJECT, "Query Rejected")
+        (EVENT_QUERY_REJECT, "Query Rejected"),
+        (EVENT_QUERY_INVALID, "Invalid Query"),
     )
     timestamp = models.DateTimeField(auto_now_add=True)
     event = models.IntegerField(choices=EVENT_CHOICES)
     src_host = models.CharField(max_length=20)
-    router = models.ForeignKey('Router', on_delete=models.PROTECT)
+    router_id = models.ForeignKey('Router', on_delete=models.PROTECT)
     method_name = models.CharField(max_length=20)
     target = models.CharField(max_length=20)
+    error = models.CharField(max_length=40)
 
     def __str__(self):
-        str = "%s %s:: from:%s to:%s method:%s target:%s" % (
+        str = "%s %s:: from:%s to:%s method:%s target:%s error:%s" % (
             self.timestamp,
             self.event,
             self.src_host,
             self.router,
             self.method_name,
-            self.target
+            self.target,
+            self.error,
         )
         return str
 
