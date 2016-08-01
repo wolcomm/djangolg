@@ -3,9 +3,11 @@ from django import forms
 from djangolg import fields
 
 # Lifetime of session authorisation key
+# Set to 0 for unlimited
 LIFETIME = 300
 
 # Maximum number of requests with the same key
+# Set to 0 for unlimited
 MAX_REQUESTS = 20
 
 # TODO: Provide dialect-specific cmd syntax

@@ -21,8 +21,11 @@ class AuthKey(object):
         return self.data['signed']
 
     def validate(self, key):
+        life = None
+        if settings.LIFETIME:
+            life = settings.LIFETIME
         try:
-            clear = signer.unsign(key, max_age=settings.LIFETIME)
+            clear = signer.unsign(key, max_age=life)
             if self.clear == clear:
                 return True
             else:

@@ -56,7 +56,7 @@ class LookingGlassHTMLView(TemplateView):
     def authorise(self, key=None, src_host=None):
         if keys.AuthKey(src_host).validate(key):
             count = models.Log.objects.filter(key=key).count()
-            if count < settings.MAX_REQUESTS:
+            if not settings.MAX_REQUESTS or count < settings.MAX_REQUESTS:
                 return True
         return False
 
