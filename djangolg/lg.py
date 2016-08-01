@@ -5,7 +5,6 @@ class LookingGlass(object):
     def __init__(self, router=None, port=22):
         self.router = router
         self.credentials = router.credentials
-        self.syntax = router.syntax
         self.defaults = {
             'ssh_host_key_policy': paramiko.WarningPolicy(),
             'ssh_port': port,
