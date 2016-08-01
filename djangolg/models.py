@@ -64,6 +64,7 @@ class Log(models.Model):
     router = models.ForeignKey('Router', on_delete=models.SET_NULL, null=True)
     method_name = models.CharField(max_length=20, null=True)
     target = models.CharField(max_length=20, null=True)
+    key = models.CharField(max_length=40, null=True)
     error = models.CharField(max_length=40, null=True)
 
     def __str__(self):
