@@ -61,7 +61,7 @@ class Log(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     event = models.IntegerField(choices=EVENT_CHOICES)
     src_host = models.CharField(max_length=20)
-    router_id = models.ForeignKey('Router', on_delete=models.PROTECT)
+    router_id = models.ForeignKey('Router', on_delete=models.SET_NULL, null=True)
     method_name = models.CharField(max_length=20)
     target = models.CharField(max_length=20)
     error = models.CharField(max_length=40)
