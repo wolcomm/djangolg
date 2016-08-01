@@ -58,6 +58,19 @@ METHODS = {
             label_suffix='',
             label='Target Address'
         ),
-        'cmd': lambda target: "ping %s" % (str(target))
+        'cmd': lambda target: "ping %s source Loopback0" % (str(target))
     },
+    'trace_route': {
+        'name': 'trace_route',
+        'title': 'Traceroute to IP Address',
+        'target': fields.IPAddressField(
+            required=True,
+            widget=forms.TextInput(
+                {'class': 'form-control'},
+            ),
+            label_suffix='',
+            label='Target Address'
+        ),
+        'cmd': lambda target: "traceroute %s" % (str(target))
+    }
 }
