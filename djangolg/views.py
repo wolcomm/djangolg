@@ -1,6 +1,6 @@
 from django.views.generic import View, TemplateView
 from django.http import JsonResponse
-from djangolg import forms, methods, keys, models
+from djangolg import forms, methods, keys, models, settings
 from djangolg.lg import LookingGlass
 
 
@@ -28,7 +28,8 @@ class LookingGlassHTMLView(TemplateView):
         log = models.Log(src_host=src_host)
         if query:
             key = query['auth_key']
-            if keys.AuthKey(src_host).validate(key):
+            log.key = key
+            if self.authorise(key=key, src_host=src_host):
                 log.event = models.Log.EVENT_QUERY_ACCEPT
                 method = methods.Method(query['method_name'])
                 if method:
@@ -51,6 +52,13 @@ class LookingGlassHTMLView(TemplateView):
                 context['output'] = 'Invalid Auth Key'
         log.save()
         return context
+
+    def authorise(self, key=None, src_host=None):
+        if keys.AuthKey(src_host).validate(key):
+            count = models.Log.objects.filter(key=key).count()
+            if count < settings.MAX_REQUESTS:
+                return True
+        return False
 
     def execute(self, form, method):
         data = form.cleaned_data
