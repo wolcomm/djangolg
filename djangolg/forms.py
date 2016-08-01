@@ -23,13 +23,18 @@ class LookingGlassBaseForm(forms.Form):
     )
 
 
-def form_factory(method=None, data=None):
+def form_factory(method=None, key=None, data=None):
     if method:
         class FormClass(LookingGlassBaseForm):
             method_name = forms.CharField(
                 required=True,
                 widget=forms.HiddenInput,
                 initial=method.name
+            )
+            auth_key = forms.CharField(
+                required=True,
+                widget=forms.HiddenInput,
+                initial=key
             )
             target = method.target
         form = FormClass(data)

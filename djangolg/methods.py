@@ -1,5 +1,4 @@
-from django import forms
-from djangolg import fields, settings
+from djangolg import settings
 
 
 def methods():

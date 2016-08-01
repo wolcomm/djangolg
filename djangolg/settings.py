@@ -2,8 +2,16 @@ from djangolg.local_settings import *
 from django import forms
 from djangolg import fields
 
+# Lifetime of session authorisation key
+LIFETIME = 300
+
+# TODO: Implement database logging and max-requests checking
+# Maximum number of requests with the same key
+MAX_REQUESTS = 30
+
 # TODO: Provide method "options"
 # TODO: Provide dialect-specific cmd syntax
+# Query methods, and their implementation variables
 METHODS = {
     'bgp_prefix': {
         'name': 'bgp_prefix',
