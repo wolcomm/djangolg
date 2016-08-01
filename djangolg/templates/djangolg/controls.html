@@ -22,9 +22,17 @@
                                             {{ hidden }}
                                         {% endfor %}
                                         {% for field in m.form.visible_fields %}
-                                            <div class="form-group">
-                                                {{ field.label_tag }} {{ field }}
-                                            </div>
+                                            {% if field.label == "Options" %}
+                                                {% for radio in field %}
+                                                    <div class="radio">
+                                                        {{ radio }}
+                                                    </div>
+                                                {% endfor %}
+                                            {% else %}
+                                                <div class="form-group">
+                                                    {{ field.label_tag }} {{ field }}
+                                                </div>
+                                            {% endif %}
                                         {% endfor %}
                                         <button type="submit" class="btn btn-primary">
                                             Submit

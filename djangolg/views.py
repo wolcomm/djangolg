@@ -46,7 +46,7 @@ class LookingGlassHTMLView(TemplateView):
         output = lg.execute(
             method=method,
             target=data['target'],
-            # options=data['options']
+            option=int(data['options']),
         )
         return output
 

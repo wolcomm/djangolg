@@ -49,30 +49,15 @@ class LookingGlass(object):
             raise ValueError
         return output
 
-    def _build_cmd(self, method, target=None):
-        cmd = method.cmd(target)
+    def _build_cmd(self, method, target=None, option=None):
+        if method.options and isinstance(option, int):
+            cmd = method.options[option]['cmd'](target)
+        else:
+            cmd = method.cmd(target)
         return cmd
 
-    def execute(self, method=None, target=None, options=None):
-        cmd = self._build_cmd(method, target=target)
-        try:
-            output = self._connect()._exec(cmd)
-        except Exception:
-            raise
-        finally:
-            self._disconnect()
-        return output
-
-    # TODO: Remove
-    def bgp_prefix(self, prefix=None, longer_prefixes=None, bestpath_only=None):
-        af = "ipv%s" % prefix.version
-        addr = str(prefix)
-        if longer_prefixes:
-            cmd = "show bgp %s unicast %s longer-prefixes | begin Network" % (af, addr)
-        elif bestpath_only:
-            cmd = "show bgp %s unicast %s bestpath" % (af, addr)
-        else:
-            cmd = "show bgp %s unicast %s" % (af, addr)
+    def execute(self, method=None, target=None, option=None):
+        cmd = self._build_cmd(method, target=target, option=option)
         try:
             output = self._connect()._exec(cmd)
         except Exception:

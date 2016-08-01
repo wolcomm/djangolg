@@ -9,7 +9,6 @@ LIFETIME = 300
 # Maximum number of requests with the same key
 MAX_REQUESTS = 30
 
-# TODO: Provide method "options"
 # TODO: Provide dialect-specific cmd syntax
 # Query methods, and their implementation variables
 METHODS = {
@@ -24,7 +23,11 @@ METHODS = {
             label_suffix='',
             label='Prefix'
         ),
-        'options': {},
+        'options': [
+            { 'label': "All paths", 'cmd': lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target)) },
+            { 'label': "Bestpath Only", 'cmd': lambda target: "show bgp ipv%s unicast %s bestpath" % (target.version, str(target)) },
+            { 'label': "Longer Prefixes", 'cmd': lambda target: "show bgp ipv%s unicast %s longer-prefixes | begin Network" % (target.version, str(target)) },
+        ],
         'cmd': lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target))
     },
     'bgp_as_path': {
@@ -38,7 +41,10 @@ METHODS = {
             label_suffix='',
             label='AS Path Regex'
         ),
-        'options': {},
+        'options': [
+            { 'label': "IPv4", 'cmd': lambda target: "show bgp ipv4 unicast quote-regexp \"%s\" | begin Network" % str(target) },
+            { 'label': "IPv6", 'cmd': lambda target: "show bgp ipv6 unicast quote-regexp \"%s\" | begin Network" % str(target) },
+        ],
         'cmd': lambda target: "show bgp %s unicast regex %s" % ('ipv4', str(target))
     },
 }

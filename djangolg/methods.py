@@ -33,5 +33,9 @@ class Method(object):
         return self.method['options']
 
     @property
+    def option_choices(self):
+        return ( ( self.options.index(option), option['label']) for option in self.options )
+
+    @property
     def cmd(self):
         return self.method['cmd']

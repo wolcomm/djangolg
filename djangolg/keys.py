@@ -26,9 +26,10 @@ class AuthKey(object):
             if self.clear == clear:
                 return True
             else:
-                raise ValueError
+                return False
         except Exception:
-            raise
+            return False
+        return False
 
     def __str__(self):
         return self.signed

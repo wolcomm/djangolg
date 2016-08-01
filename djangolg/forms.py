@@ -1,6 +1,5 @@
 from django import forms
 from djangolg import models, fields
-from djangolg.lg import LookingGlass
 
 
 class LookingGlassBaseForm(forms.Form):
@@ -37,6 +36,15 @@ def form_factory(method=None, key=None, data=None):
                 initial=key
             )
             target = method.target
+            if method.options:
+                options = forms.ChoiceField(
+                    required=True,
+                    choices=method.option_choices,
+                    widget=forms.RadioSelect(
+                    ),
+                    label_suffix='',
+                    label='Options'
+                )
         form = FormClass(data)
     else:
         form = LookingGlassBaseForm(data)
