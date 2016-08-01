@@ -62,9 +62,9 @@ class Log(models.Model):
     event = models.IntegerField(choices=EVENT_CHOICES)
     src_host = models.CharField(max_length=20)
     router = models.ForeignKey('Router', on_delete=models.SET_NULL, null=True)
-    method_name = models.CharField(max_length=20)
-    target = models.CharField(max_length=20)
-    error = models.CharField(max_length=40)
+    method_name = models.CharField(max_length=20, null=True)
+    target = models.CharField(max_length=20, null=True)
+    error = models.CharField(max_length=40, null=True)
 
     def __str__(self):
         str = "%s %s:: from:%s to:%s method:%s target:%s error:%s" % (

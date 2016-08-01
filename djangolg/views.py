@@ -49,9 +49,10 @@ class LookingGlassHTMLView(TemplateView):
             else:
                 log.event = models.Log.EVENT_QUERY_REJECT
                 context['output'] = 'Invalid Auth Key'
+        log.save()
         return context
 
-    def execute(self, form, method, log):
+    def execute(self, form, method):
         data = form.cleaned_data
         router = data['router']
         target = data['target']
