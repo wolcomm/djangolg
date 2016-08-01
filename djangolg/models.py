@@ -3,12 +3,11 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-# TODO: Replace "Syntax" with "Dialect" option field
+# TODO: Add "Dialect" option field
 class Router(models.Model):
     hostname = models.CharField(max_length=20, unique=True)
     location = models.ForeignKey('Location', on_delete=models.SET_NULL, null=True)
     credentials = models.ForeignKey('Credential', on_delete=models.SET_NULL, null=True)
-    syntax = models.ForeignKey('Syntax', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.hostname
@@ -43,42 +42,6 @@ class Credential(models.Model):
 
     def __str__(self):
         return self.name
-
-    def __unicode__(self):
-        return self.__str__()
-
-
-# TODO: Remove
-class Syntax(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    def __unicode__(self):
-        return self.__str__()
-
-
-# TODO: Remove
-class Command(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-    description = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-    def __unicode__(self):
-        return self.__str__()
-
-
-# TODO: Remove
-class CommandMap(models.Model):
-    syntax = models.ForeignKey('Syntax', on_delete=models.SET_NULL, null=True)
-    command = models.ForeignKey('Command', on_delete=models.CASCADE)
-    cmd_template = models.CharField(max_length=50)
-
-    def __str__(self):
-        return u"%u / %u" % (self.syntax, self.command)
 
     def __unicode__(self):
         return self.__str__()
