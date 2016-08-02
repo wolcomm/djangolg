@@ -35,7 +35,7 @@ METHODS = {
     'bgp_as_path': {
         'index': 1,
         'name': 'bgp_as_path',
-        'title': "BGP AS_PATH Query",
+        'title': "BGP AS Path Query",
         'target': forms.CharField(
             required=True,
             widget=forms.TextInput(

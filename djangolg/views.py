@@ -13,10 +13,30 @@ class IndexView(TemplateView):
         context['methods'] = []
         for m in methods.methods():
             method = methods.Method(m)
-            form = forms.form_factory(method=method, key=key)
+            form = forms.form_factory(method=method)
             context['methods'].append({'method': method, 'form': form})
         context['modal'] = forms.AcceptTermsForm()
         return context
+
+
+class AcceptTermsView(View):
+    def get(self, request):
+        query = request.GET
+        if query:
+            form = forms.AcceptTermsForm(query)
+            if form.is_valid():
+                key = keys.AuthKey(request.get_host())
+                response = {
+                    'status': 'ok',
+                    'key': key.signed
+                }
+            else:
+                response = {
+                    'status': 'error'
+                }
+        else:
+            return JsonResponse({}, status=400)
+        return JsonResponse(response)
 
 
 class LookingGlassHTMLView(TemplateView):

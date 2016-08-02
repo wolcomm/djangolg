@@ -3,8 +3,16 @@
 {% block scripts %}
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
+            $("#accept-terms-form").submit(function (event) {
+                event.preventDefault();
+                var query = $(this).serialize();
+                $.getJSON("/enter/?", query, function (json) {
+                    $("[name='auth_key']").val(json.key);
+                    $("#accept-terms-modal").modal('hide');
+                })
+            })
             $("#accept-terms-modal").modal();
-            $("form").each(function () {
+            $("form.lg-control").each(function () {
                 $(this).submit(function (event) {
                     event.preventDefault();
                     var query = $(this).serialize();

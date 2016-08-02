@@ -6,7 +6,8 @@ class AcceptTermsForm(forms.Form):
     label_suffix = ''
     accept = forms.BooleanField(
         required=True,
-        label_suffix=''
+        label_suffix='',
+        label="I have read and accept the terms of use"
     )
 
 
@@ -30,7 +31,7 @@ class LookingGlassBaseForm(forms.Form):
     )
 
 
-def form_factory(method=None, key=None, data=None):
+def form_factory(method=None, data=None):
     if method:
         class FormClass(LookingGlassBaseForm):
             method_name = forms.CharField(
@@ -41,7 +42,6 @@ def form_factory(method=None, key=None, data=None):
             auth_key = forms.CharField(
                 required=True,
                 widget=forms.HiddenInput,
-                initial=key
             )
             target = method.target
             if method.options:
@@ -50,7 +50,8 @@ def form_factory(method=None, key=None, data=None):
                     choices=method.option_choices,
                     widget=forms.RadioSelect(),
                     label_suffix='',
-                    label='Options'
+                    label='Options',
+                    initial=0,
                 )
         form = FormClass(data)
     else:

@@ -16,7 +16,7 @@
                     <div id="collapse-{{ m.method.name }}" class="panel-collapse collapse" role="tabpanel">
                         <div class="panel-body">
                             {% if m.form %}
-                                <form action="#" method="get" id="{{ m.method.name }}_form">
+                                <form class="lg-control" action="#" method="get" id="{{ m.method.name }}_form">
                                     <fieldset>
                                         {% for hidden in m.form.hidden_fields %}
                                             {{ hidden }}
