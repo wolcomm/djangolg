@@ -12,12 +12,18 @@
             </div>
             <form class="form-inline" action="#" method="get" id="accept-terms-form">
                 <div class="modal-footer">
-                    <div id="accept-terms-checkbox" class="checkbox pull-left" data-trigger="manual" data-toggle="popover"
-                         data-content="Please accept terms to continue" data-placement="left" data-html="true" container="input">
-                        <label for="{{ modal.accept.id_for_label }}">
-                            {{ modal.accept }} {{ modal.accept.label }}
-                        </label>
-                    </div>
+                    {% if recaptcha %}
+                        <div class="pull-left">
+                            <div class="g-recaptcha" data-sitekey="{{ recaptcha.site_key }}"></div>
+                        </div>
+                    {% else %}
+                        <div id="accept-terms-checkbox" class="checkbox pull-left" data-trigger="manual" data-toggle="popover"
+                             data-content="Please accept terms to continue" data-placement="left" data-html="true" container="input">
+                            <label for="{{ modal.accept.id_for_label }}">
+                                {{ modal.accept }} {{ modal.accept.label }}
+                            </label>
+                        </div>
+                    {% endif %}
                     <button type="submit" class="btn btn-primary">Continue</button>
                 </div>
             </form>

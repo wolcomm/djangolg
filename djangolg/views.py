@@ -10,6 +10,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['info'] = self.general_info()
+        context['recaptcha'] = self.recaptcha()
         key = keys.AuthKey(self.request.get_host())
         context['methods'] = []
         for m in methods.methods():
@@ -31,13 +32,26 @@ class IndexView(TemplateView):
         }
         return info
 
+    def recaptcha(self):
+        if settings.RECAPTCHA_ON:
+            return {'site_key': settings.RECAPTCHA_SITE_KEY}
+        else:
+            return None
+
 
 class AcceptTermsView(View):
     def get(self, request):
         response = {'status': 'error'}
         query = request.GET
         if query:
-            form = forms.AcceptTermsForm(query)
+            if settings.RECAPTCHA_ON:
+                recaptcha = {
+                    'recaptcha_resp': query['g-recaptcha-response'],
+                    'secret_key': settings.RECAPTCHA_SECRET_KEY,
+                }
+                form = forms.RecaptchaTermsForm(recaptcha)
+            else:
+                form = forms.AcceptTermsForm(query)
             if form.is_valid():
                 key = keys.AuthKey(request.get_host())
                 response = {

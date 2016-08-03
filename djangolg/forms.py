@@ -1,5 +1,6 @@
+import requests
 from django import forms
-from djangolg import models, fields
+from djangolg import models, fields, settings
 
 
 class AcceptTermsForm(forms.Form):
@@ -9,6 +10,13 @@ class AcceptTermsForm(forms.Form):
         label_suffix='',
         label="I have read and accept the terms of use"
     )
+
+
+class RecaptchaTermsForm(forms.Form):
+    recaptcha_resp = forms.CharField()
+    secret_key = forms.CharField()
+    def clean(self):
+        super(RecaptchaTermsForm, self).clean()
 
 
 class LookingGlassBaseForm(forms.Form):
