@@ -11,7 +11,6 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['info'] = self.general_info()
         context['recaptcha'] = self.recaptcha()
-        # key = keys.AuthKey(get_src(self.request))
         context['methods'] = []
         for m in methods.methods():
             method = methods.Method(m)
