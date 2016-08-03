@@ -1,0 +1,26 @@
+<div class="modal fade" id="accept-terms-modal" tabindex="-1" role="dialog" aria-labelledby="accept-terms-modal-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="accept-terms-modal-label">Welcome to the {{ info.title }}</h4>
+            </div>
+            <div class="modal-body">
+                {% include "djangolg/terms.html" %}
+            </div>
+            <form class="form-inline" action="#" method="get" id="accept-terms-form">
+                <div class="modal-footer">
+                    <div id="accept-terms-checkbox" class="checkbox pull-left" data-trigger="manual" data-toggle="popover"
+                         data-content="Please accept terms to continue" data-placement="left" data-html="true" container="input">
+                        <label for="{{ modal.accept.id_for_label }}">
+                            {{ modal.accept }} {{ modal.accept.label }}
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
