@@ -11,7 +11,7 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['info'] = self.general_info()
         context['recaptcha'] = self.recaptcha()
-        key = keys.AuthKey(self.request.get_host())
+        # key = keys.AuthKey(get_src(self.request))
         context['methods'] = []
         for m in methods.methods():
             method = methods.Method(m)
@@ -53,7 +53,7 @@ class AcceptTermsView(View):
             else:
                 form = forms.AcceptTermsForm(query)
             if form.is_valid():
-                key = keys.AuthKey(request.get_host())
+                key = keys.AuthKey(get_src(self.request))
                 response = {
                     'status': 'ok',
                     'key': key.signed
@@ -71,7 +71,7 @@ class LookingGlassHTMLView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(LookingGlassHTMLView, self).get_context_data(**kwargs)
         query = self.request.GET
-        src_host = self.request.get_host()
+        src_host = get_src(self.request)
         log = models.Log(src_host=src_host)
         if query:
             key = query['auth_key']
@@ -139,3 +139,14 @@ class LookingGlassJsonView(View):
         else:
             response = { 'output': 'Bad Command' }
         return JsonResponse(response)
+
+
+def get_src(request=None):
+    if request.META:
+        if 'HTTP_X_FORWARDED_FOR' in request.META:
+            address = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
+            return address
+        else:
+            return request.META['REMOTE_ADDR']
+    else:
+        return None
