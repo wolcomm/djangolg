@@ -15,8 +15,21 @@ class AcceptTermsForm(forms.Form):
 class RecaptchaTermsForm(forms.Form):
     recaptcha_resp = forms.CharField()
     secret_key = forms.CharField()
+    src_address = fields.IPAddressField()
+
     def clean(self):
         super(RecaptchaTermsForm, self).clean()
+        url = settings.RECAPTCHA_URL
+        params = {
+            'secret': self.data['secret_key'],
+            'response': self.data['recaptcha_resp'],
+            'remoteip': self.data['src_address'],
+        }
+        response = requests.get(url, params=params, verify=True).json()
+        if not response['success'] == True:
+            raise forms.ValidationError
+        else:
+            return
 
 
 class LookingGlassBaseForm(forms.Form):

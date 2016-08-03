@@ -48,6 +48,7 @@ class AcceptTermsView(View):
                 recaptcha = {
                     'recaptcha_resp': query['g-recaptcha-response'],
                     'secret_key': settings.RECAPTCHA_SECRET_KEY,
+                    'src_address': get_src(self.request)
                 }
                 form = forms.RecaptchaTermsForm(recaptcha)
             else:
@@ -142,11 +143,10 @@ class LookingGlassJsonView(View):
 
 
 def get_src(request=None):
+    address = None
     if request.META:
         if 'HTTP_X_FORWARDED_FOR' in request.META:
-            address = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
-            return address
+            address = unicode(request.META['HTTP_X_FORWARDED_FOR'].split(',')[0])
         else:
-            return request.META['REMOTE_ADDR']
-    else:
-        return None
+            address = unicode(request.META['REMOTE_ADDR'])
+    return address

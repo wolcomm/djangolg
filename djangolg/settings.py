@@ -91,4 +91,14 @@ SALT = '_signing_salt_'
 # Link to Acceptable Use Policy
 AUP_LINK = None
 
-from djangolg.local_settings import *
+# Google reCapture settings
+RECAPTCHA_ON = False
+RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify'
+
+#################################################################
+# Don't edit below this line!
+
+try:
+    from djangolg.local_settings import *
+except Exception:
+    pass
