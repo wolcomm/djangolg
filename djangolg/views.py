@@ -9,6 +9,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
+        context['info'] = self.general_info()
         key = keys.AuthKey(self.request.get_host())
         context['methods'] = []
         for m in methods.methods():
@@ -18,9 +19,22 @@ class IndexView(TemplateView):
         context['modal'] = forms.AcceptTermsForm()
         return context
 
+    def general_info(self):
+        info = {
+            'name': settings.NETNAME,
+            'title': "%s Looking Glass" % settings.NETNAME,
+            'general_email': settings.GENERAL_EMAIL,
+            'support_email': settings.SUPPORT_EMAIL,
+            'noc_email': settings.NOC_EMAIL,
+            'peering_email': settings.PEERING_EMAIL,
+            'aup_link': settings.AUP_LINK,
+        }
+        return info
+
 
 class AcceptTermsView(View):
     def get(self, request):
+        response = {'status': 'error'}
         query = request.GET
         if query:
             form = forms.AcceptTermsForm(query)
@@ -31,9 +45,7 @@ class AcceptTermsView(View):
                     'key': key.signed
                 }
             else:
-                response = {
-                    'status': 'error'
-                }
+                return JsonResponse({}, status=400)
         else:
             return JsonResponse({}, status=400)
         return JsonResponse(response)

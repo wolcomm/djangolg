@@ -9,6 +9,8 @@
                 $.getJSON("/enter/?", query, function (json) {
                     $("[name='auth_key']").val(json.key);
                     $("#accept-terms-modal").modal('hide');
+                }).fail(function () {
+                    $("#accept-terms-checkbox").popover('show');
                 })
             })
             $("#accept-terms-modal").modal();

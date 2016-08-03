@@ -1,8 +1,13 @@
-from djangolg.local_settings import *
 from django import forms
 from djangolg import fields
 
-# Lifetime of session authorisation key
+# Network display name
+NETNAME = "Default Network"
+
+# General contact email
+GENERAL_EMAIL = "contact@example.com"
+
+# Lifetime of session authorisation key in seconds
 # Set to 0 for unlimited
 LIFETIME = 300
 
@@ -79,3 +84,11 @@ METHODS = {
         'cmd': lambda target: "traceroute %s" % (str(target))
     }
 }
+
+# Default salt value for authorisation key generation
+SALT = '_signing_salt_'
+
+# Link to Acceptable Use Policy
+AUP_LINK = None
+
+from djangolg.local_settings import *
