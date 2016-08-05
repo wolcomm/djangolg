@@ -52,7 +52,7 @@ class LookingGlassBaseForm(forms.Form):
     )
 
 
-def form_factory(method=None, data=None):
+def form_factory(method=None, data=None, prefix=None):
     if method:
         class FormClass(LookingGlassBaseForm):
             method_name = forms.CharField(
@@ -74,7 +74,7 @@ def form_factory(method=None, data=None):
                     label='Options',
                     initial=0,
                 )
-        form = FormClass(data)
+        form = FormClass(data, prefix=prefix)
     else:
-        form = LookingGlassBaseForm(data)
+        form = LookingGlassBaseForm(data, prefix=prefix)
     return form

@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from djangolg import types
 
 
+# TODO: Provide options to disallow reserved/multicast addresses
 class IPPrefixField(forms.CharField):
     def to_python(self, value):
         if not value:

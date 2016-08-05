@@ -28,6 +28,7 @@ class IndexView(TemplateView):
             'noc_email': settings.NOC_EMAIL,
             'peering_email': settings.PEERING_EMAIL,
             'aup_link': settings.AUP_LINK,
+            'src_address': get_src(self.request)
         }
         return info
 
