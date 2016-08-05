@@ -6,6 +6,15 @@ def methods():
     return [m[0] for m in M]
 
 
+def dialects():
+    D = sorted(settings.DIALECTS.items(), key=lambda d: d[1]['index'])
+    return [d[0] for d in D]
+
+
+def dialect_choices():
+    return [ (d, Dialect(d).name) for d in dialects() ]
+
+
 class Method(object):
     def __init__(self, method):
         if method in methods():
@@ -16,10 +25,6 @@ class Method(object):
     @property
     def name(self):
         return self.method['name']
-
-    @property
-    def form(self):
-        return self.method['form']
 
     @property
     def title(self):
@@ -38,8 +43,28 @@ class Method(object):
 
     @property
     def option_choices(self):
-        return ( ( self.options.index(option), option['label']) for option in self.options )
+        return ( (self.options.index(option), option['label']) for option in self.options )
 
     @property
     def cmd(self):
         return self.method['cmd']
+
+
+class Dialect(object):
+    def __init__(self, dialect):
+        if dialect in dialects():
+            self.dialect = settings.DIALECTS[dialect]
+        else:
+            raise KeyError
+
+    @property
+    def index(self):
+        return self.dialect['index']
+
+    @property
+    def name(self):
+        return self.dialect['name']
+
+    @property
+    def cmds(self):
+        return self.dialect['cmds']

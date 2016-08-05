@@ -1,10 +1,12 @@
 import paramiko
+from djangolg import methods
 
 
 class LookingGlass(object):
     def __init__(self, router=None, port=22):
         self.router = router
         self.credentials = router.credentials
+        self.dialect = methods.Dialect(router.dialect)
         self.defaults = {
             'ssh_host_key_policy': paramiko.WarningPolicy(),
             'ssh_port': port,
@@ -48,11 +50,15 @@ class LookingGlass(object):
             raise ValueError
         return output
 
+    # TODO: support for dialect based cmd definitions
     def _build_cmd(self, method, target=None, option=None):
-        if method.options and isinstance(option, int):
-            cmd = method.options[option]['cmd'](target)
+        if self.dialect:
+            return
         else:
-            cmd = method.cmd(target)
+            if method.options and isinstance(option, int):
+                cmd = method.options[option]['cmd'](target)
+            else:
+                cmd = method.cmd(target)
         return cmd
 
     def execute(self, method=None, target=None, option=None):

@@ -1,13 +1,14 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from djangolg import methods
 
 
-# TODO: Add "Dialect" option field
 class Router(models.Model):
     hostname = models.CharField(max_length=20, unique=True)
     location = models.ForeignKey('Location', on_delete=models.SET_NULL, null=True)
     credentials = models.ForeignKey('Credential', on_delete=models.SET_NULL, null=True)
+    dialect = models.CharField(max_length=20, choices=methods.dialect_choices(), null=True)
 
     def __str__(self):
         return self.hostname

@@ -15,7 +15,6 @@ LIFETIME = 300
 # Set to 0 for unlimited
 MAX_REQUESTS = 20
 
-# TODO: Provide dialect-specific cmd syntax
 # Query methods, and their implementation variables
 METHODS = {
     'bgp_prefix': {
@@ -82,6 +81,35 @@ METHODS = {
             label='Target Address'
         ),
         'cmd': lambda target: "traceroute %s" % (str(target))
+    }
+}
+
+# NOS-dialect-specific command implementations
+DIALECTS = {
+    'cisco_ios-xe': {
+        'index': 0,
+        'name': "Cisco IOS-XE",
+        'cmds': {
+            'bgp_prefix': {
+                'options': [
+                    lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target)),
+                    lambda target: "show bgp ipv%s unicast %s bestpath" % (target.version, str(target)),
+                    lambda target: "show bgp ipv%s unicast %s longer-prefixes | begin Network" % (target.version, str(target)),
+                ]
+            },
+            'bgp_as_path': {
+                'options': [
+                    lambda target: "show bgp ipv4 unicast quote-regexp \"%s\" | begin Network" % str(target),
+                    lambda target: "show bgp ipv6 unicast quote-regexp \"%s\" | begin Network" % str(target),
+                ]
+            },
+            'ping': {
+                'cmd': lambda target: "ping %s source Loopback0" % (str(target))
+            },
+            'trace_route': {
+                'cmd': lambda target: "traceroute %s" % (str(target))
+            }
+        }
     }
 }
 
