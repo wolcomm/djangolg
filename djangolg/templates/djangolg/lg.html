@@ -17,8 +17,20 @@
             $("form.lg-control").each(function () {
                 $(this).submit(function (event) {
                     event.preventDefault();
+                    $("#error-alert").hide("fast");
+                    $("#raw-output").text("Please wait...")
                     var query = $(this).serialize();
-                    $("#output").load("/lg/?"+query);
+                    $.getJSON("/json/?", query, function (json) {
+                        if (json.err == null) {
+                            $("#raw-output").text(json.raw);
+                        } else {
+                            $("#raw-output").text("An error occurred")
+                            $("#error-alert").text(json.err).show("slow");
+                        }
+                    }).fail(function () {
+                        $("#raw-output").text("An error occurred")
+                        $("#error-alert").show(slow);
+                    })
                 })
             })
         })

@@ -2,21 +2,22 @@
     <div class="panel-heading">
         <ul class="nav nav-pills">
             <li class="active">
-                <a data-toggle="tab" href="#raw-output">Raw</a>
+                <a data-toggle="tab" href="#raw-output-tab">Raw</a>
             </li>
             <li>
-                <a data-toggle="tab" href="#formatted-output">Formatted</a>
+                <a data-toggle="tab" href="#formatted-output-tab">Formatted</a>
             </li>
         </ul>
     </div>
     <div class="panel-body">
+        <div id="error-alert" role="alert" class="alert alert-danger" hidden>An unhandled error occurred</div>
         <div class="tab-content">
-            <div id="raw-output" class="tab-pane fade in active">
-                <pre>
-                    {{ output }}
+            <div id="raw-output-tab" class="tab-pane fade in active">
+                <pre id="raw-output">
+                    Execute a query to see raw output here
                 </pre>
             </div>
-            <div id="formatted-output" class="tab-pane fade">
+            <div id="formatted-output-tab" class="tab-pane fade">
                 <div class="panel panel-default">
                 </div>
             </div>
