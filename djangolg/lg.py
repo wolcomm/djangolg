@@ -6,7 +6,10 @@ class LookingGlass(object):
     def __init__(self, router=None, port=22):
         self.router = router
         self.credentials = router.credentials
-        self.dialect = methods.Dialect(router.dialect)
+        try:
+            self.dialect = methods.Dialect(router.dialect)
+        except KeyError:
+            self.dialect = None
         self.defaults = {
             'ssh_host_key_policy': paramiko.WarningPolicy(),
             'ssh_port': port,
@@ -53,12 +56,14 @@ class LookingGlass(object):
     # TODO: support for dialect based cmd definitions
     def _build_cmd(self, method, target=None, option=None):
         if self.dialect:
-            return
+            try:
+                method.dialect(self.dialect)
+            except NotImplementedError:
+                pass
+        if method.options and isinstance(option, int):
+            cmd = method.options[option]['cmd'](target)
         else:
-            if method.options and isinstance(option, int):
-                cmd = method.options[option]['cmd'](target)
-            else:
-                cmd = method.cmd(target)
+            cmd = method.cmd(target)
         return cmd
 
     def execute(self, method=None, target=None, option=None):

@@ -21,6 +21,19 @@ class Method(object):
             self.method = settings.METHODS[method]
         else:
             raise KeyError
+        self._dialect = None
+
+    @property
+    def dialect(self):
+        return self._dialect
+
+    @dialect.setter
+    def dialect(self, dialect=None):
+        if self.name in dialect.cmds:
+            self.dialect = dialect
+        else:
+            raise NotImplementedError
+        return self
 
     @property
     def name(self):
@@ -36,10 +49,13 @@ class Method(object):
 
     @property
     def options(self):
-        if 'options' in self.method:
-            return self.method['options']
+        if self.dialect:
+            if 'options' in self.dialect.cmds[self.name]:
+                return self.dialect.cmds[self.name]['options']
         else:
-            return []
+            if 'options' in self.method:
+                return self.method['options']
+        return []
 
     @property
     def option_choices(self):
@@ -47,7 +63,10 @@ class Method(object):
 
     @property
     def cmd(self):
-        return self.method['cmd']
+        if self.dialect:
+            return self.dialect.cmds[self.name]['cmd']
+        else:
+            return self.method['cmd']
 
 
 class Dialect(object):
