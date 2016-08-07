@@ -17,7 +17,10 @@
             <div id="progress-bar" class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%">
             </div>
         </div>
-        <div id="error-alert" role="alert" class="alert alert-danger" hidden>An unhandled error occurred</div>
+        <div id="error-alert" role="alert" class="alert alert-danger lead" hidden>
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            <span id="alert-text" class="text-capitalize"> An unhandled error occurred.</span>
+        </div>
         <div class="tab-content">
             <div id="raw-output-tab" role="tabpanel" class="tab-pane fade">
                 <pre id="raw-output">Execute a query to see raw output here</pre>

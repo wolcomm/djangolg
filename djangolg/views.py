@@ -73,6 +73,45 @@ class AcceptTermsView(View):
         return JsonResponse(response)
 
 
+class LookingGlassJsonView(View):
+    def get(self, request):
+        query = request.GET
+        response = {
+            'status': 400,
+            'err': None,
+            'raw': None,
+        }
+        if not query:
+            return JsonResponse(response, status=response['status'])
+        src_host = get_src(self.request)
+        log = models.Log(src_host=src_host)
+        key = query['auth_key']
+        log.key = key
+        if authorise(key=key, src_host=src_host):
+            log.event = models.Log.EVENT_QUERY_ACCEPT
+            method = methods.Method(query['method_name'])
+            if method:
+                log.method_name = method.name
+                form = forms.form_factory(method=method, data=query)
+                if form.is_valid():
+                    log.router = form.cleaned_data['router']
+                    log.target = form.cleaned_data['target']
+                    response['raw'] = execute(form=form, method=method)
+                    response['status'] = 200
+                else:
+                    log.event = models.Log.EVENT_QUERY_INVALID
+                    log.error = 'form validation failure'
+            else:
+                log.event = models.Log.EVENT_QUERY_INVALID
+                log.error = "invalid method name"
+        else:
+            log.event = models.Log.EVENT_QUERY_REJECT
+            log.error = 'invalid authorisation key'
+        response['err'] = log.error
+        log.save()
+        return JsonResponse(response, status=response['status'])
+
+
 class LookingGlassHTMLView(TemplateView):
     template_name = "djangolg/output.html"
 
@@ -107,43 +146,6 @@ class LookingGlassHTMLView(TemplateView):
                 context['output'] = 'Invalid Auth Key'
         log.save()
         return context
-
-
-class LookingGlassJsonView(View):
-    def get(self, request):
-        query = request.GET
-        response = {
-            'err': None,
-            'raw': None,
-        }
-        if not query:
-            return JsonResponse({}, status=400)
-        src_host = get_src(self.request)
-        log = models.Log(src_host=src_host)
-        key = query['auth_key']
-        log.key = key
-        if authorise(key=key, src_host=src_host):
-            log.event = models.Log.EVENT_QUERY_ACCEPT
-            method = methods.Method(query['method_name'])
-            if method:
-                log.method_name = method.name
-                form = forms.form_factory(method=method, data=query)
-                if form.is_valid():
-                    log.router = form.cleaned_data['router']
-                    log.target = form.cleaned_data['target']
-                    response['raw'] = execute(form=form, method=method)
-                else:
-                    log.event = models.Log.EVENT_QUERY_INVALID
-                    log.error = 'form validation failure'
-            else:
-                log.event = models.Log.EVENT_QUERY_INVALID
-                log.error = "invalid method name"
-        else:
-            log.event = models.Log.EVENT_QUERY_REJECT
-            log.error = 'invalid authorisation key'
-        response['err'] = log.error
-        log.save()
-        return JsonResponse(response)
 
 
 def get_src(request=None):
