@@ -37,7 +37,12 @@ class RouterSelectForm(forms.Form):
         required=True,
         queryset=models.Router.objects.all(),
         widget=forms.Select(
-            attrs={'id': "router-select", 'class': 'form-control'}
+            attrs={
+                'id': "router-select",
+                'class': 'form-control',
+                'data-toggle': 'tooltip',
+                'title': "Select a router to query"
+            }
         ),
         empty_label="Select Router"
     )

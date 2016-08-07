@@ -20,12 +20,15 @@ METHODS = {
     'bgp_prefix': {
         'index': 0,
         'name': 'bgp_prefix',
-        'title': "BGP Prefix Query",
+        'title': "BGP Prefix",
         'target': fields.IPPrefixField(
             required=True,
-            widget=forms.TextInput(
-                {'class': 'form-control', 'placeholder': "Prefix"}
-            ),
+            widget=forms.TextInput({
+                'class': 'form-control',
+                'placeholder': "Prefix",
+                'data-toggle': 'tooltip',
+                'title': "IP address or prefix"
+            }),
             label='Prefix'
         ),
         'options': [
@@ -38,13 +41,14 @@ METHODS = {
     'bgp_as_path': {
         'index': 1,
         'name': 'bgp_as_path',
-        'title': "BGP AS Path Query",
+        'title': "BGP AS Path",
         'target': forms.CharField(
-            required=True,
-            widget=forms.TextInput(
-                {'class': 'form-control', 'placeholder': "AS Path Regex"}
-            ),
-            label='AS Path Regex'
+            widget=forms.TextInput({
+                'class': 'form-control',
+                'placeholder': "AS Path Regex",
+                'data-toggle': 'tooltip',
+                'title': "AS path regular expression"
+            }),
         ),
         'options': [
             { 'label': "IPv4", 'cmd': lambda target: "show bgp ipv4 unicast quote-regexp \"%s\" | begin Network" % str(target) },
@@ -55,26 +59,28 @@ METHODS = {
     'ping': {
         'index': 2,
         'name': 'ping',
-        'title': "Ping IP Address",
+        'title': "Ping",
         'target': fields.IPAddressField(
-            required=True,
-            widget=forms.TextInput(
-                {'class': 'form-control', 'placeholder': "Target Address"},
-            ),
-            label='Target Address'
+            widget=forms.TextInput({
+                'class': 'form-control',
+                'placeholder': "Target Address",
+                'data-toggle': 'tooltip',
+                'title': "Target IP address"
+            }),
         ),
         'cmd': lambda target: "ping %s source Loopback0" % (str(target))
     },
     'trace_route': {
         'index': 3,
         'name': 'trace_route',
-        'title': 'Traceroute to IP Address',
+        'title': 'Traceroute',
         'target': fields.IPAddressField(
-            required=True,
-            widget=forms.TextInput(
-                {'class': 'form-control', 'placeholder': "Target Address"},
-            ),
-            label='Target Address'
+            widget=forms.TextInput({
+                'class': 'form-control',
+                'placeholder': "Target Address",
+                'data-toggle': 'tooltip',
+                'title': "Target IP address"
+            }),
         ),
         'cmd': lambda target: "traceroute %s" % (str(target))
     }
