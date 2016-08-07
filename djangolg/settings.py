@@ -24,9 +24,8 @@ METHODS = {
         'target': fields.IPPrefixField(
             required=True,
             widget=forms.TextInput(
-                {'class': 'form-control'}
+                {'class': 'form-control', 'placeholder': "Prefix"}
             ),
-            label_suffix='',
             label='Prefix'
         ),
         'options': [
@@ -43,9 +42,8 @@ METHODS = {
         'target': forms.CharField(
             required=True,
             widget=forms.TextInput(
-                {'class': 'form-control'}
+                {'class': 'form-control', 'placeholder': "AS Path Regex"}
             ),
-            label_suffix='',
             label='AS Path Regex'
         ),
         'options': [
@@ -61,9 +59,8 @@ METHODS = {
         'target': fields.IPAddressField(
             required=True,
             widget=forms.TextInput(
-                {'class': 'form-control'},
+                {'class': 'form-control', 'placeholder': "Target Address"},
             ),
-            label_suffix='',
             label='Target Address'
         ),
         'cmd': lambda target: "ping %s source Loopback0" % (str(target))
@@ -75,9 +72,8 @@ METHODS = {
         'target': fields.IPAddressField(
             required=True,
             widget=forms.TextInput(
-                {'class': 'form-control'},
+                {'class': 'form-control', 'placeholder': "Target Address"},
             ),
-            label_suffix='',
             label='Target Address'
         ),
         'cmd': lambda target: "traceroute %s" % (str(target))

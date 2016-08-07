@@ -17,7 +17,8 @@ $(document).ready(function () {
     $("form.lg-control").each(function () {
         $(this).submit(function (event) {
             event.preventDefault();
-            $("#progress").show("fast")
+            $("#raw-output-tab-link").tab('show');
+            $("#progress").show("fast");
             $("#progress-bar").attr("style", "width:10%");
             $("#error-alert").hide("fast");
             $("#raw-output").text("Please wait...");

@@ -1,14 +1,14 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <ul class="nav nav-pills">
-            <li class="active">
-                <a data-toggle="tab" href="#raw-output-tab">Raw</a>
+        <ul id="output-tabs" class="nav nav-pills">
+            <li>
+                <a id="raw-output-tab-link" data-toggle="tab" href="#raw-output-tab">Raw</a>
             </li>
             <li>
-                <a data-toggle="tab" href="#formatted-output-tab">Formatted</a>
+                <a id="formatted-output-tab-link" data-toggle="tab" href="#formatted-output-tab">Formatted</a>
             </li>
-            <li class="pull-right">
-                <a data-toggle="tab" href="#help-tab">Help</a>
+            <li class="pull-right active">
+                <a id="help-tab-link" data-toggle="tab" href="#help-tab">Help</a>
             </li>
         </ul>
     </div>
@@ -19,14 +19,14 @@
         </div>
         <div id="error-alert" role="alert" class="alert alert-danger" hidden>An unhandled error occurred</div>
         <div class="tab-content">
-            <div id="raw-output-tab" class="tab-pane fade in active">
+            <div id="raw-output-tab" role="tabpanel" class="tab-pane fade">
                 <pre id="raw-output">Execute a query to see raw output here</pre>
             </div>
-            <div id="formatted-output-tab" class="tab-pane fade">
+            <div id="formatted-output-tab" role="tabpanel" class="tab-pane fade">
                 <p id="formatted-output">Execute a query to see formatted output here</p>
             </div>
-            <div id="help-tab" class="tab-pane fade">
-                <h1>Help</h1>
+            <div id="help-tab" role="tabpanel" class="tab-pane fade in active">
+                {% include "djangolg/help.html" %}
             </div>
         </div>
     </div>

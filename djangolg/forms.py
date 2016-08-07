@@ -41,6 +41,7 @@ class LookingGlassBaseForm(forms.Form):
             attrs={'class': 'form-control'}
         ),
         label_suffix=label_suffix,
+        empty_label="Select Router"
     )
     ipv4_src_address = fields.IPPrefixField(
         required=False,
