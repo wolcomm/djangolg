@@ -18,17 +18,21 @@
                 $(this).submit(function (event) {
                     event.preventDefault();
                     $("#error-alert").hide("fast");
-                    $("#raw-output").text("Please wait...")
+                    $("#raw-output").text("Please wait...");
+                    $("#formatted-output").text("Please wait...");
                     var query = $(this).serialize();
                     $.getJSON("/lg/?", query, function (json) {
                         if (json.err == null) {
                             $("#raw-output").text(json.raw);
+                            $("#formatted-output").text("Formatted output not supported for this query");
                         } else {
-                            $("#raw-output").text("An error occurred")
+                            $("#raw-output").text("An error occurred");
+                            $("#formatted-output").text("An error occurred");
                             $("#error-alert").text(json.err).show("slow");
                         }
                     }).fail(function () {
-                        $("#raw-output").text("An error occurred")
+                        $("#raw-output").text("An error occurred");
+                        $("#formatted-output").text("An error occurred");
                         $("#error-alert").show(slow);
                     })
                 })
