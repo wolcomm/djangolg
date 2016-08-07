@@ -20,7 +20,7 @@
                     $("#error-alert").hide("fast");
                     $("#raw-output").text("Please wait...")
                     var query = $(this).serialize();
-                    $.getJSON("/json/?", query, function (json) {
+                    $.getJSON("/lg/?", query, function (json) {
                         if (json.err == null) {
                             $("#raw-output").text(json.raw);
                         } else {
