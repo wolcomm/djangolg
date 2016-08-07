@@ -1,32 +1,35 @@
-<p>
-    The {{ info.title }} provides routing information for use in troubleshooting by 3rd party network operators.
-</p>
-<p>
-    This service is not appropriate for performance measurement.
-    Customers or network operators with queries regarding network performance are advised to make use of the contact details below
-</p>
-<p>
-    For additional information or assistance, please use the following contacts:
-</p>
-<ul>
-    {% if info.support_email %}
-        <li>Customer support: <a href="mailto:{{ info.support_email }}">{{ info.support_email }}</a></li>
-    {% endif %}
-    {% if info.noc_email %}
-        <li>Network operations: <a href="mailto:{{ info.noc_email }}">{{ info.noc_email }}</a></li>
-    {% endif %}
-    {% if info.peering_email %}
-        <li>Peering information: <a href="mailto:{{ info.peering_email }}">{{ info.peering_email }}</a></li>
-    {% endif %}
-    <li>General queries: <a href="mailto:{{ info.general_email }}">{{ info.general_email }}</a></li>
-</ul>
-<hr>
-<h4>Terms of use:</h4>
-<ol>
-    {% if info.aup_link %}
-    <li>By using the {{ info.title }}, you agree to the <a href="{{ info.aup_link }}">Acceptable Use Policy</a>.</li>
-    {% endif %}
-    <li>All queries executed on the {{ info.title }} are logged for analysis and troubleshooting.</li>
-    <li>Users are prohibited from automating queries, or attempting to process queries in bulk.</li>
-    <li>This service is provided on a best effort basis, and {{ info.name }} makes no warranty or guarantee in respect thereof whatsoever.</li>
-</ol>
+<div class="terms">
+    <p>
+        The {{ info.title }} provides routing information for use in troubleshooting by 3rd party network operators.
+    </p>
+    <p>
+        This service is not appropriate for performance measurement.
+        Customers or network operators with queries regarding network performance are advised to make use of the contact details below
+    </p>
+    <p>
+        For additional information or assistance, please use the following contacts:
+    </p>
+    <ul>
+        {% if info.support_email %}
+            <li>Customer support: <a href="mailto:{{ info.support_email }}">{{ info.support_email }}</a></li>
+        {% endif %}
+        {% if info.noc_email %}
+            <li>Network operations: <a href="mailto:{{ info.noc_email }}">{{ info.noc_email }}</a></li>
+        {% endif %}
+        {% if info.peering_email %}
+            <li>Peering information: <a href="mailto:{{ info.peering_email }}">{{ info.peering_email }}</a></li>
+        {% endif %}
+        <li>General queries: <a href="mailto:{{ info.general_email }}">{{ info.general_email }}</a></li>
+    </ul>
+    <hr>
+    <h4>Terms of use:</h4>
+    <p>By proceeding, you agree to be bound by the following terms of use:</p>
+    <ol>
+        {% if info.aup_link %}
+        <li>By using the {{ info.title }}, you agree to the <a href="{{ info.aup_link }}">Acceptable Use Policy</a>.</li>
+        {% endif %}
+        <li>All queries executed on the {{ info.title }} are logged for analysis and troubleshooting.</li>
+        <li>Users are prohibited from automating queries, or attempting to process queries in bulk.</li>
+        <li>This service is provided on a best effort basis, and {{ info.name }} makes no warranty or guarantee in respect thereof whatsoever.</li>
+    </ol>
+</div>

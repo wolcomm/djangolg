@@ -13,7 +13,10 @@ $(document).ready(function () {
             $("#accept-terms-checkbox").popover('show');
         })
     })
-    $("#accept-terms-modal").modal();
+    $("#accept-terms-modal").modal({
+        backdrop: 'static',
+        keyboard: false,
+    });
     $("form.lg-control").each(function () {
         $(this).submit(function (event) {
             event.preventDefault();
