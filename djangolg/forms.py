@@ -32,16 +32,22 @@ class RecaptchaTermsForm(forms.Form):
             return
 
 
-class LookingGlassBaseForm(forms.Form):
-    label_suffix = ''
+class RouterSelectForm(forms.Form):
     router = forms.ModelChoiceField(
         required=True,
         queryset=models.Router.objects.all(),
         widget=forms.Select(
-            attrs={'class': 'form-control'}
+            attrs={'id': "router-select", 'class': 'form-control'}
         ),
-        label_suffix=label_suffix,
         empty_label="Select Router"
+    )
+
+
+class LookingGlassBaseForm(forms.Form):
+    router = forms.ModelChoiceField(
+        required=True,
+        queryset=models.Router.objects.all(),
+        widget=forms.HiddenInput,
     )
     ipv4_src_address = fields.IPPrefixField(
         required=False,
@@ -71,8 +77,6 @@ def form_factory(method=None, data=None, prefix=None):
                     required=True,
                     choices=method.option_choices,
                     widget=forms.RadioSelect(),
-                    label_suffix='',
-                    label='Options',
                     initial=0,
                 )
         form = FormClass(data, prefix=prefix)

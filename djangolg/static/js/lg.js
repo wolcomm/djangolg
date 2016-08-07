@@ -17,6 +17,10 @@ $(document).ready(function () {
         backdrop: 'static',
         keyboard: false,
     });
+    $("#router-select").change(function () {
+        var router = $(this).val();
+        $("[name='router']").val(router);
+    });
     $("form.lg-control").each(function () {
         $(this).submit(function (event) {
             event.preventDefault();

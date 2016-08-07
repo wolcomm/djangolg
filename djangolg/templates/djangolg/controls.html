@@ -3,6 +3,9 @@
         <h1 class="panel-title text-center">Looking Glass</h1>
     </div>
     <div class="panel-body">
+        <div class="form-group">
+            {{ router_select.router }}
+        </div>
         <div class="panel-group" id="accordion" role="tablist">
             {% for m in methods %}
                 <div class="panel panel-default">

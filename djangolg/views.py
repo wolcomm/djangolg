@@ -17,6 +17,7 @@ class IndexView(TemplateView):
             form = forms.form_factory(method=method)
             context['methods'].append({'method': method, 'form': form})
         context['modal'] = forms.AcceptTermsForm()
+        context['router_select'] = forms.RouterSelectForm()
         return context
 
     def general_info(self):
