@@ -46,10 +46,8 @@ $(document).ready(function () {
             });
             req.fail(function (resp) {
                 bar.attr("style", "width:80%");
-                if (resp.responseJSON.err != null) {
-                    var msg = " " + resp.responseJSON.err + ". Please try again.";
-                    $("#alert-text").text(msg);
-                }
+                var msg = " " + resp.statusText + ". Please try again.";
+                $("#alert-text").text(msg);
                 raw.text("An error occurred");
                 formatted.text("An error occurred");
                 alert.show("slow");

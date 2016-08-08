@@ -76,13 +76,15 @@ class AcceptTermsView(View):
 class LookingGlassJsonView(View):
     def get(self, request):
         query = request.GET
-        response = {
-            'status': 400,
-            'err': None,
-            'raw': None,
-        }
+        # response = {
+        #     'status': 400,
+        #     'err': None,
+        #     'raw': None,
+        # }
         if not query:
-            return JsonResponse(response, status=response['status'])
+            resp = JsonResponse({}, status=400)
+            return resp
+            # return JsonResponse(response, status=response['status'])
         src_host = get_src(self.request)
         log = models.Log(src_host=src_host)
         key = query['auth_key']
@@ -96,8 +98,10 @@ class LookingGlassJsonView(View):
                 if form.is_valid():
                     log.router = form.cleaned_data['router']
                     log.target = form.cleaned_data['target']
-                    response['raw'] = execute(form=form, method=method)
-                    response['status'] = 200
+                    data = {'raw': execute(form=form, method=method)}
+                    resp = JsonResponse(data)
+                    # response['raw'] = execute(form=form, method=method)
+                    # response['status'] = 200
                 else:
                     log.event = models.Log.EVENT_QUERY_INVALID
                     log.error = 'form validation failure'
@@ -107,9 +111,13 @@ class LookingGlassJsonView(View):
         else:
             log.event = models.Log.EVENT_QUERY_REJECT
             log.error = 'invalid authorisation key'
-        response['err'] = log.error
+        if log.event != models.Log.EVENT_QUERY_ACCEPT:
+            resp = JsonResponse({}, status=400, reason=log.error)
         log.save()
-        return JsonResponse(response, status=response['status'])
+        return resp
+        # response['err'] = log.error
+        # log.save()
+        # return JsonResponse(response, status=response['status'])
 
 
 class LookingGlassHTMLView(TemplateView):
