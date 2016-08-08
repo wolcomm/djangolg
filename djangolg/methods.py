@@ -30,7 +30,7 @@ class Method(object):
     @dialect.setter
     def dialect(self, dialect=None):
         if self.name in dialect.cmds:
-            self.dialect = dialect
+            self._dialect = dialect
         else:
             raise NotImplementedError
         return self

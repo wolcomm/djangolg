@@ -114,15 +114,20 @@ DIALECTS = {
         'cmds': {
             'bgp_prefix': {
                 'options': [
-                    lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target)),
-                    lambda target: "show bgp ipv%s unicast %s bestpath" % (target.version, str(target)),
-                    lambda target: "show bgp ipv%s unicast %s longer-prefixes | begin Network" % (target.version, str(target)),
+                    {'label': "All paths",
+                    'cmd': lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target))},
+                    {'label': "Bestpath Only",
+                     'cmd': lambda target: "show bgp ipv%s unicast %s bestpath" % (target.version, str(target))},
+                    {'label': "Longer Prefixes",
+                     'cmd': lambda target: "show bgp ipv%s unicast %s longer-prefixes | begin Network" % (target.version, str(target))},
                 ]
             },
             'bgp_as_path': {
                 'options': [
-                    lambda target: "show bgp ipv4 unicast quote-regexp \"%s\" | begin Network" % str(target),
-                    lambda target: "show bgp ipv6 unicast quote-regexp \"%s\" | begin Network" % str(target),
+                    {'label': "IPv4",
+                     'cmd': lambda target: "show bgp ipv4 unicast quote-regexp \"%s\" | begin Network" % str(target)},
+                    {'label': "IPv6",
+                     'cmd': lambda target: "show bgp ipv6 unicast quote-regexp \"%s\" | begin Network" % str(target)},
                 ]
             },
             'ping': {

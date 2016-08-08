@@ -53,11 +53,10 @@ class LookingGlass(object):
             raise ValueError
         return output
 
-    # TODO: support for dialect based cmd definitions
     def _build_cmd(self, method, target=None, option=None):
         if self.dialect:
             try:
-                method.dialect(self.dialect)
+                method.dialect = self.dialect
             except NotImplementedError:
                 pass
         if method.options and isinstance(option, int):
