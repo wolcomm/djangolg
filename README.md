@@ -26,5 +26,4 @@ A BGP looking glass based on the Django web framework
         * Max time enforcement per session
 
 ## Feedback
-Djangolg is maintained by [Workonline Communications (Pty) Ltd](https://github.com/wolcomm).
-Get in touch with us at communications@workonline.co.za or send a pull request.
+Djangolg is maintained by [Workonline Communications (Pty) Ltd](https://github.com/wolcomm).Get in touch with us at communications@workonline.co.za or send a pull request.
