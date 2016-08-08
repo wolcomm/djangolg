@@ -21,6 +21,11 @@ METHODS = {
         'index': 0,
         'name': 'bgp_prefix',
         'title': "BGP Prefix",
+        'description': """
+        Look up BGP RIB entries for the target IP prefix.
+        The prefix field accepts both IPv4 and IPv6 address families.
+        Options are provided to search for all exact-match paths, the BGP bestpath only, or all longer-match paths.
+        """,
         'target': fields.IPPrefixField(
             required=True,
             widget=forms.TextInput({
@@ -42,6 +47,11 @@ METHODS = {
         'index': 1,
         'name': 'bgp_as_path',
         'title': "BGP AS Path",
+        'description': """
+        Look up BGP RIB entries with an AS_PATH attribute matching the target regular expression.
+        The AS Path Regex field accepts Cisco IOS style regular expressions.
+        Options are provided to select either the IPv4 or the IPv6 address family.
+        """,
         'target': forms.CharField(
             widget=forms.TextInput({
                 'class': 'form-control',
@@ -60,6 +70,12 @@ METHODS = {
         'index': 2,
         'name': 'ping',
         'title': "Ping",
+        'description': """
+        Send a series of ICMP echo requests to the target IP address, and report whether responses were received.
+        Target Address field accepts both IPv4 and IPv6 addresses, but not DNS names.
+        The source address of the generated requests will default to the address on the first loopback interface of the
+        selected router.
+        """,
         'target': fields.IPAddressField(
             widget=forms.TextInput({
                 'class': 'form-control',
@@ -74,6 +90,10 @@ METHODS = {
         'index': 3,
         'name': 'trace_route',
         'title': 'Traceroute',
+        'description': """
+        Perform a traceroute from the selected router to the target IP address.
+        Target Address field accepts both IPv4 and IPv6 addresses, but not DNS names.
+        """,
         'target': fields.IPAddressField(
             widget=forms.TextInput({
                 'class': 'form-control',

@@ -1,1 +1,41 @@
-<h3>Help</h3>
+<h3>Using the Looking Glass</h3>
+<h4>Getting Started</h4>
+<p>
+    The {{ info.title }} provides a means for 3rd party network operators to view routing and
+    reachibility information from the perspective of {{ info.name }} network.
+</p>
+<p>
+    This toolset provides users with the ability to execute several pre-defined commands against routers on the
+    {{ info.name }} network.
+</p>
+<p>
+    To begin, select a router to query from the dropdown box at the right of the page, and then select from the
+    available query types, supplying the required target parameter and selecting any additional options.
+</p>
+<h4>Available Queries</h4>
+<dl class="dl-horizontal">
+    {% for m in methods %}
+        <dt>{{ m.method.title }}</dt>
+        <dd>{{ m.method.description }}</dd>
+    {% endfor %}
+</dl>
+<h4>Further Information</h4>
+<p>
+    This service is not appropriate for performance measurement.
+    Customers or network operators with queries regarding network performance are advised to make use of the contact details below
+</p>
+<p>
+    For additional information or assistance, please use the following contacts:
+</p>
+<ul>
+    {% if info.support_email %}
+        <li>Customer support: <a href="mailto:{{ info.support_email }}">{{ info.support_email }}</a></li>
+    {% endif %}
+    {% if info.noc_email %}
+        <li>Network operations: <a href="mailto:{{ info.noc_email }}">{{ info.noc_email }}</a></li>
+    {% endif %}
+    {% if info.peering_email %}
+        <li>Peering information: <a href="mailto:{{ info.peering_email }}">{{ info.peering_email }}</a></li>
+    {% endif %}
+    <li>General queries: <a href="mailto:{{ info.general_email }}">{{ info.general_email }}</a></li>
+</ul>

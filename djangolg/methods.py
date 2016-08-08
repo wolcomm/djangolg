@@ -44,6 +44,10 @@ class Method(object):
         return self.method['title']
 
     @property
+    def description(self):
+        return self.method['description']
+
+    @property
     def target(self):
         return self.method['target']
 
