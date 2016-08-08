@@ -76,15 +76,8 @@ class AcceptTermsView(View):
 class LookingGlassJsonView(View):
     def get(self, request):
         query = request.GET
-        # response = {
-        #     'status': 400,
-        #     'err': None,
-        #     'raw': None,
-        # }
         if not query:
-            resp = JsonResponse({}, status=400)
-            return resp
-            # return JsonResponse(response, status=response['status'])
+            return JsonResponse({}, status=400)
         src_host = get_src(self.request)
         log = models.Log(src_host=src_host)
         key = query['auth_key']
@@ -100,8 +93,6 @@ class LookingGlassJsonView(View):
                     log.target = form.cleaned_data['target']
                     data = {'raw': execute(form=form, method=method)}
                     resp = JsonResponse(data)
-                    # response['raw'] = execute(form=form, method=method)
-                    # response['status'] = 200
                 else:
                     log.event = models.Log.EVENT_QUERY_INVALID
                     log.error = 'form validation failure'
@@ -115,9 +106,6 @@ class LookingGlassJsonView(View):
             resp = JsonResponse({}, status=400, reason=log.error)
         log.save()
         return resp
-        # response['err'] = log.error
-        # log.save()
-        # return JsonResponse(response, status=response['status'])
 
 
 class LookingGlassHTMLView(TemplateView):
