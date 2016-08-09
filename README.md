@@ -33,4 +33,4 @@ Get in touch with us at communications@workonline.co.za or send a pull request.
 ## License
 DjangoLG is released under the [Apache License version 2.0](http://www.apache.org/licenses/).
 
-&copy; 2016 Workonline Communications Pty Ltd
+&copy; 2016 Workonline Communications (Pty) Ltd
