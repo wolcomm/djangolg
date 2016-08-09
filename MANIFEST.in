@@ -1,0 +1,4 @@
+include LICENSE
+include packaging/VERSION
+recursive-include djangolg *.py
+recursive-include packaging *.txt
