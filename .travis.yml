@@ -2,6 +2,7 @@ language: python
 python:
   - "2.7"
 install:
-  - pip install
+  - pip install -r packaging/requirements.txt
+  - pip install -e .
 script:
   - python manage.py test djangolg
