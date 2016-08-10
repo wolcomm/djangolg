@@ -25,6 +25,39 @@ A BGP looking glass based on the Django web framework
         * Max queries enforcement per session
         * Max time enforcement per session
 
+## Quick Start
+1. Install from PyPI (possibly in a virtenv):
+   ```
+   pip install djangolg
+   ```
+
+2. Add `djangolg.apps.DjangolgConfig` to you project `INSTALLED_APPS`.
+3. Add an include (e.g. `url(r'^', include('djangolg.urls')),`) to your project `urlpatterns`.
+4. Copy example settings in the `djangolg` package directory and edit the defaults:
+   ```
+   cp local_settings.py.example local_settings.py
+   vi local_settings.py
+   ```
+
+5. Create your database tables using `manage.py`:
+   ```
+   python manage.py makemigrations djangolg
+   python manage.py migrate
+   ```
+   
+6. Create a set of SSH credentials and some routers:
+   ```
+   python manage.py lg add credentials --name default_credentials --type 0 --username test_user --password test_password
+   python manage.py lg add routers --hostname router1.example.net --dialect cisco_ios-xe --credentials 1
+   python manage.py lg add routers --hostname router2.example.net --dialect cisco_ios-xe --credentials 1
+   ```
+
+7. Run the development server, and check that everything is working:
+   ```
+   python manage.py runserver
+   ```
+
+
 ## Feedback
 DjangoLG is maintained by [Workonline Communications (Pty) Ltd](https://github.com/wolcomm).
 
