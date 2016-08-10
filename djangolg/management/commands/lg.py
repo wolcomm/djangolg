@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.db.utils import IntegrityError
 from djangolg import models, methods
 
 
@@ -18,6 +19,7 @@ class Command(BaseCommand):
         "locations"
     ]
     credential_types = dict(models.Credential.CRED_TYPE_CHOICES)
+
     def add_arguments(self, parser):
         parser.add_argument(
             'CMD', choices=self.commands,
@@ -58,6 +60,7 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             '--type', '-t',
+            type=int,
             choices=self.credential_types.keys(),
             help="Credential type"
         )
@@ -122,43 +125,30 @@ class Command(BaseCommand):
             self.stdout.write(hr)
             if count:
                 for r in objects:
-                    self.stdout.write("Index: %s" % r.id)
-                    self.stdout.write("Hostname: %s" % r.hostname)
-                    self.stdout.write("Location: %s" % r.location)
-                    self.stdout.write("Credentials: %s" % r.credentials)
-                    self.stdout.write("Dialect: %s" % r.dialect)
-                    self.stdout.write(hr)
+                    self.stdout.write("Index: %s\tHostname: %s" % (r.id, r.hostname))
             else:
                 self.stdout.write("No routers configured")
-                self.stdout.write(hr)
+            self.stdout.write(hr)
         elif cls == models.Credential:
-            types = dict(models.Credential.CRED_TYPE_CHOICES)
             self.stdout.write(hr)
             self.stdout.write("Configured Credentials")
             self.stdout.write(hr)
             if count:
                 for c in objects:
-                    self.stdout.write("Index: %s" % c.id)
-                    self.stdout.write("Name: %s" % c.name)
-                    self.stdout.write("Type: %s" % types[c.type])
-                    self.stdout.write("Username %s" % c.username)
-                    self.stdout.write(hr)
+                    self.stdout.write("Index: %s\tName: %s" % (c.id, c.name))
             else:
                 self.stdout.write("No credentials configured")
-                self.stdout.write(hr)
+            self.stdout.write(hr)
         elif cls == models.Location:
             self.stdout.write(hr)
             self.stdout.write("Configured Locations")
             self.stdout.write(hr)
             if count:
                 for l in objects:
-                    self.stdout.write("Index: %s" % l.id)
-                    self.stdout.write("Name: %s" % l.name)
-                    self.stdout.write("Site Code: %s" % l.sitecode)
-                    self.stdout.write(hr)
+                    self.stdout.write("Index: %s\tName: %s" % (l.id, l.name))
             else:
                 self.stdout.write("No locations configured")
-                self.stdout.write(hr)
+            self.stdout.write(hr)
 
     def show(self, inst=None):
         hr = self.hr
@@ -173,12 +163,11 @@ class Command(BaseCommand):
             self.stdout.write("Dialect: %s" % inst.dialect)
             self.stdout.write(hr)
         elif cls == models.Credential:
-            types = dict(models.Credential.CRED_TYPE_CHOICES)
             self.stdout.write(hr)
             self.stdout.write("Credential index: %s" % inst.id)
             self.stdout.write(hr)
             self.stdout.write("Name: %s" % inst.name)
-            self.stdout.write("Type: %s" % types[inst.type])
+            self.stdout.write("Type: %s" % self.credential_types[inst.type])
             self.stdout.write("Username: %s" % inst.username)
             self.stdout.write(hr)
         elif cls == models.Location:
@@ -213,7 +202,7 @@ class Command(BaseCommand):
         elif cls == models.Credential:
             if options['name']:
                 inst.name = options['name']
-            if options['type']:
+            if options['type'] in self.credential_types:
                 inst.type = options['type']
             if options['username']:
                 inst.username = options['username']
@@ -226,6 +215,8 @@ class Command(BaseCommand):
                 inst.sitecode = options['sitecode']
         try:
             inst.save()
+        except IntegrityError:
+            raise
         except Exception:
             raise CommandError("Save failed")
         return inst

@@ -2,7 +2,7 @@ from django import forms
 from djangolg import fields
 
 # Network display name
-NETNAME = "Default Network"
+NETNAME = "Example Network"
 
 # General contact email
 GENERAL_EMAIL = "contact@example.com"

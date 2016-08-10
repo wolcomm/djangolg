@@ -20,7 +20,20 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Internet',
     ],
-    packages = find_packages(),
+    packages=find_packages(
+        include=[
+            'djangolg',
+            'djangolg.*'
+        ],
+        exclude=[
+            'djangolg.migrations'
+        ]
+    ),
+    # packages=[
+    #     'djangolg',
+    #     'djangolg.management',
+    #     'djangolg.management.commands',
+    # ],
     include_package_data=True,
 
     url='https://github.com/wolcomm/djangolg',

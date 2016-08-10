@@ -1,4 +1,9 @@
+include README.md
 include LICENSE
 include packaging/VERSION
-recursive-include djangolg *.py
+include djangolg/local_settings.py.example
 recursive-include packaging *.txt
+recursive-include djangolg/templates *.html
+recursive-include djangolg/static/css *.css
+recursive-include djangolg/static/js *.js
+exclude djangolg/local_settings.py
