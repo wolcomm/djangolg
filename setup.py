@@ -41,4 +41,5 @@ setup(
 
     install_requires=requirements,
     # test_requires=test_requirements,
+    test_suite='test.exec'
 )
