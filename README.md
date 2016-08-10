@@ -61,7 +61,7 @@ A BGP looking glass based on the Django web framework
 ## Feedback
 DjangoLG is maintained by [Workonline Communications (Pty) Ltd](https://github.com/wolcomm).
 
-Get in touch with us at communications@workonline.co.za or send a pull request.
+Get in touch with us at communications@workonline.co.za or [raise an issue](https://github.com/wolcomm/djangolg/issues/new).
 
 ## License
 DjangoLG is released under the [Apache License version 2.0](http://www.apache.org/licenses/).
