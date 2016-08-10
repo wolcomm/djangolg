@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wolcomm/djangolg.svg?branch=master)](https://travis-ci.org/wolcomm/djangolg)
+
 # DjangoLG
 A BGP looking glass based on the Django web framework
 
