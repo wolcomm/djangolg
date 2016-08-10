@@ -6,6 +6,9 @@ NETNAME = "Example Network"
 
 # General contact email
 GENERAL_EMAIL = "contact@example.com"
+SUPPORT_EMAIL = None
+NOC_EMAIL = None
+PEERING_EMAIL = None
 
 # Lifetime of session authorisation key in seconds
 # Set to 0 for unlimited
