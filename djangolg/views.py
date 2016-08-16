@@ -9,6 +9,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
+        context['base_template'] = settings.BASE_TEMPLATE
         context['info'] = self.general_info()
         context['recaptcha'] = self.recaptcha()
         context['methods'] = []

@@ -18,6 +18,19 @@ LIFETIME = 300
 # Set to 0 for unlimited
 MAX_REQUESTS = 20
 
+# Default salt value for authorisation key generation
+SALT = '_signing_salt_'
+
+# Link to Acceptable Use Policy
+AUP_LINK = None
+
+# Google reCapture settings
+RECAPTCHA_ON = False
+RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify'
+
+# Base template
+BASE_TEMPLATE = 'djangolg/base.html'
+
 # Query methods, and their implementation variables
 METHODS = {
     'bgp_prefix': {
@@ -142,16 +155,6 @@ DIALECTS = {
         }
     }
 }
-
-# Default salt value for authorisation key generation
-SALT = '_signing_salt_'
-
-# Link to Acceptable Use Policy
-AUP_LINK = None
-
-# Google reCapture settings
-RECAPTCHA_ON = False
-RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify'
 
 #################################################################
 # Don't edit below this line!

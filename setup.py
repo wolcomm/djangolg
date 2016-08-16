@@ -24,6 +24,7 @@ setup(
         include=[
             'djangolg',
             'djangolg.*'
+            'test'
         ],
         exclude=[
             'djangolg.migrations'

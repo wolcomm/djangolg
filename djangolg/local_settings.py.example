@@ -1,7 +1,7 @@
 # Site-specific settings
 
 # Display name of our network
-#NETNAME = "Our Network Name"
+#NETNAME = "Example Network"
 
 # Lifetime of session authorisation key in seconds
 # Set to 0 for unlimited
@@ -32,3 +32,10 @@
 # If you would like an acceptable use policy to be displayed on
 # the terms & conditions pop-up, then simply add a link to it here:
 # AUP_LINK = 'https://example.com/aup.html'
+
+# Base Template
+# To integrate the looking glass into another set of tools, using a shared
+# base template, provide the path here.
+# The custom template should provide the same set of 'blocks', and load the
+# necessary JS and CSS files
+# BASE_TEMPLATE = 'djangolg/base.html'
