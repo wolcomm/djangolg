@@ -32,3 +32,12 @@ class IPAddressField(forms.CharField):
                 params={'value': value}
             )
         return address
+
+
+class RouterChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        try:
+            label = obj.label
+        except NotImplementedError:
+            label = str(obj)
+        return label

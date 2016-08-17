@@ -10,6 +10,14 @@ class Router(models.Model):
     credentials = models.ForeignKey('Credential', on_delete=models.SET_NULL, null=True)
     dialect = models.CharField(max_length=20, choices=methods.dialect_choices(), null=True)
 
+    @property
+    def label(self):
+        try:
+            from djangolg.settings import ROUTER_LABEL as label
+        except ImportError:
+            def label(s): return str(s)
+        return label(self)
+
     def __str__(self):
         return self.hostname
 

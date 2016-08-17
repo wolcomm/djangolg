@@ -33,7 +33,7 @@ class RecaptchaTermsForm(forms.Form):
 
 
 class RouterSelectForm(forms.Form):
-    router = forms.ModelChoiceField(
+    router = fields.RouterChoiceField(
         required=True,
         queryset=models.Router.objects.all(),
         widget=forms.Select(
