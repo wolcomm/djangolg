@@ -34,7 +34,7 @@ A BGP looking glass based on the Django web framework
    pip install djangolg
    ```
 
-2. Add `djangolg.apps.DjangolgConfig` to you project `INSTALLED_APPS`.
+2. Add `djangolg.apps.DjangolgConfig` to your project `INSTALLED_APPS`.
 3. Add an include (e.g. `url(r'^', include('djangolg.urls')),`) to your project `urlpatterns`.
 4. Copy example settings in the `djangolg` package directory and edit the defaults:
    ```
@@ -48,14 +48,15 @@ A BGP looking glass based on the Django web framework
    python manage.py migrate
    ```
    
-6. Create a set of SSH credentials and some routers:
+6. Create a set of SSH credentials, a location and some routers:
    ```
    python manage.py lg add credentials --name default_credentials --type 0 --username test_user --password test_password
-   python manage.py lg add routers --hostname router1.example.net --dialect cisco_ios-xe --credentials 1
-   python manage.py lg add routers --hostname router2.example.net --dialect cisco_ios-xe --credentials 1
+   python manage.py lg add locations --name Some Place --sitecode ABC-123
+   python manage.py lg add routers --hostname router1.example.net --dialect cisco_ios-xe --credentials 1 --location 1
+   python manage.py lg add routers --hostname router2.example.net --dialect cisco_ios-xe --credentials 1 --location 1
    ```
 
-7. Run the development server, and check that everything is working:
+7. Run the development server, open a browser, and check that everything is working:
    ```
    python manage.py runserver
    ```
