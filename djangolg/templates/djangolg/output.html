@@ -23,7 +23,13 @@
         </div>
         <div class="tab-content">
             <div id="raw-output-tab" role="tabpanel" class="tab-pane fade">
-                <pre id="raw-output">Execute a query to see raw output here</pre>
+                <div>
+                    <button id="copy-button" type="button" class="btn btn-default btn-copy" data-toggle="tooltip"
+                    title="Copy output to clipboard" data-placement="left">
+                        <span class="glyphicon glyphicon-copy"></span>
+                    </button>
+                </div>
+                <pre id="raw-output" class="output">Execute a query to see raw output here</pre>
             </div>
             <div id="formatted-output-tab" role="tabpanel" class="tab-pane fade">
                 <p id="formatted-output">Execute a query to see formatted output here</p>

@@ -25,3 +25,10 @@ body {
 .terms {
     font-size: 12px;
 }
+.output {
+    padding-right: 40px;
+}
+.btn-copy {
+    position: absolute;
+    right: 31px;
+}

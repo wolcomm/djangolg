@@ -57,4 +57,6 @@ $(document).ready(function () {
             });
         })
     })
+    $("#copy-button").click(function (event) {
+    })
 });
