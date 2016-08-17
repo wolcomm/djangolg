@@ -1,3 +1,4 @@
+[![PyPI](https://img.shields.io/pypi/v/djangolg.svg?maxAge=2592000)](https://pypi.python.org/pypi/djangolg)
 [![Build Status](https://travis-ci.org/wolcomm/djangolg.svg?branch=master)](https://travis-ci.org/wolcomm/djangolg)
 
 # DjangoLG
