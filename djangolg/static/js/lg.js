@@ -57,6 +57,5 @@ $(document).ready(function () {
             });
         })
     })
-    $("#copy-button").click(function (event) {
-    })
+    var copy = new Clipboard("#copy-button");
 });
