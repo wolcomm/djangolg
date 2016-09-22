@@ -31,6 +31,9 @@ RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify'
 # Base template
 BASE_TEMPLATE = 'djangolg/base.html'
 
+# Logo Image
+LOGO = 'img/logo.jpg'
+
 # Navbar Image
 NAV_IMG = None
 

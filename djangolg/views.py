@@ -31,6 +31,7 @@ class IndexView(TemplateView):
             'peering_email': settings.PEERING_EMAIL,
             'aup_link': settings.AUP_LINK,
             'src_address': get_src(self.request),
+            'logo': settings.LOGO,
             'nav_img': settings.NAV_IMG,
         }
         return info
