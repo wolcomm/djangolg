@@ -1,3 +1,5 @@
 TODO: Query rate limiting
 
 TODO: Fix all the nasty hacks in methods.py!
+
+TODO: Increase Location name field length
