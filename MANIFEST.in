@@ -6,4 +6,5 @@ recursive-include packaging *.txt
 recursive-include djangolg/templates *.html
 recursive-include djangolg/static/css *.css
 recursive-include djangolg/static/js *.js
+recursive-include djangolg/static/img *.jpg
 exclude djangolg/local_settings.py
