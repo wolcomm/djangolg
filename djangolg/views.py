@@ -32,6 +32,7 @@ class IndexView(TemplateView):
             'aup_link': settings.AUP_LINK,
             'src_address': get_src(self.request),
             'logo': settings.LOGO,
+            'small_logo': settings.SMALL_LOGO,
             'nav_img': settings.NAV_IMG,
         }
         return info

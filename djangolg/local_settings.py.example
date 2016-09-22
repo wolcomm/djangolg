@@ -49,6 +49,10 @@
 # Provide a relative link to the logo image
 LOGO = 'img/logo.jpg'
 
+# Small Logo Image
+# Provide a relative link to the smaller logo image
+SMALL_LOGO = 'img/small_logo.jpg'
+
 # Navbar Image
 # Provide a link to a static image to use in the navbar, instead of a title
 #NAV_IMG = 'img/nav.jpg'

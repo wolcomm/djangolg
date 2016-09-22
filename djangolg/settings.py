@@ -34,6 +34,9 @@ BASE_TEMPLATE = 'djangolg/base.html'
 # Logo Image
 LOGO = 'img/logo.jpg'
 
+# Small Logo Image
+SMALL_LOGO = 'img/small_logo.jpg'
+
 # Navbar Image
 NAV_IMG = None
 

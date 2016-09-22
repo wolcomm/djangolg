@@ -1,7 +1,9 @@
+{% load staticfiles %}
 <div class="modal fade" id="accept-terms-modal" tabindex="-1" role="dialog" aria-labelledby="accept-terms-modal-label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <img src="{% static info.small_logo %}" alt="Logo">
                 <h4 class="modal-title" id="accept-terms-modal-label">
                     Welcome to the {{ info.title }}<br/>
                     <small>You are visiting from {{ info.src_address }}</small>
