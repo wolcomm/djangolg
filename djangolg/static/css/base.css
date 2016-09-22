@@ -32,3 +32,6 @@ body {
     position: absolute;
     right: 31px;
 }
+.navbar-brand-img {
+    border-radius: 3px;
+}

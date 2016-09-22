@@ -44,3 +44,7 @@
 # Provide a lambda definition to customise the display of the router names
 # in the select dropdown
 #ROUTER_LABEL = lambda router: router.location.name if router.location else str(router)
+
+# Navbar Image
+# Provide a link to a static image to use in the navbar, instead of a title
+#NAV_IMG = 'img/nav.jpg'

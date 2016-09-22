@@ -31,6 +31,9 @@ RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify'
 # Base template
 BASE_TEMPLATE = 'djangolg/base.html'
 
+# Navbar Image
+NAV_IMG = None
+
 # Query methods, and their implementation variables
 METHODS = {
     'bgp_prefix': {
