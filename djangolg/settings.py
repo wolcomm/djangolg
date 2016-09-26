@@ -1,3 +1,4 @@
+import os
 from django import forms
 from djangolg import fields
 
@@ -39,6 +40,8 @@ SMALL_LOGO = 'img/small_logo.jpg'
 
 # Navbar Image
 NAV_IMG = None
+
+TEXTFSM_TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'textfsm')
 
 # Query methods, and their implementation variables
 METHODS = {
@@ -140,11 +143,12 @@ DIALECTS = {
             'bgp_prefix': {
                 'options': [
                     {'label': "All paths",
-                    'cmd': lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target))},
+                     'cmd': lambda target: "show bgp ipv%s unicast %s" % (target.version, str(target))},
                     {'label': "Bestpath Only",
                      'cmd': lambda target: "show bgp ipv%s unicast %s bestpath" % (target.version, str(target))},
                     {'label': "Longer Prefixes",
-                     'cmd': lambda target: "show bgp ipv%s unicast %s longer-prefixes | begin Network" % (target.version, str(target))},
+                     'cmd': lambda target: "show bgp ipv%s unicast %s longer-prefixes | begin Network" % (target.version, str(target)),
+                     'template': 'bgp_prefix_longer.textfsm'},
                 ]
             },
             'bgp_as_path': {

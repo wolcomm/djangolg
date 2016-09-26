@@ -12,7 +12,7 @@ def dialects():
 
 
 def dialect_choices():
-    return [ (d, Dialect(d).name) for d in dialects() ]
+    return [(d, Dialect(d).name) for d in dialects()]
 
 
 class Method(object):
@@ -72,22 +72,33 @@ class Method(object):
         else:
             return self.method['cmd']
 
+    @property
+    def template(self):
+        if self.dialect:
+            return self.dialect.cmds[self.name]['template']
+        else:
+            return self.method['template']
+
 
 class Dialect(object):
     def __init__(self, dialect):
         if dialect in dialects():
-            self.dialect = settings.DIALECTS[dialect]
+            self._dialect = settings.DIALECTS[dialect]
         else:
             raise KeyError
+        self._str = dialect
 
     @property
     def index(self):
-        return self.dialect['index']
+        return self._dialect['index']
 
     @property
     def name(self):
-        return self.dialect['name']
+        return self._dialect['name']
 
     @property
     def cmds(self):
-        return self.dialect['cmds']
+        return self._dialect['cmds']
+
+    def __str__(self):
+        return self._str

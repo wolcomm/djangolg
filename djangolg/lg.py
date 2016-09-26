@@ -1,5 +1,7 @@
+import os
 import paramiko
-from djangolg import methods
+import textfsm
+from djangolg import methods, settings
 
 
 class LookingGlass(object):
@@ -66,7 +68,27 @@ class LookingGlass(object):
         return cmd
 
     def _parse(self, raw, method, option=None):
-        parsed = {}
+        templates_dir = settings.TEXTFSM_TEMPLATES_DIR
+        if self.dialect:
+            templates_dir = os.path.join(templates_dir, str(self.dialect))
+            try:
+                method.dialect = self.dialect
+            except NotImplementedError:
+                pass
+        try:
+            if method.options and isinstance(option, int):
+                template = method.options[option]['template']
+            else:
+                template = method.template
+        except KeyError:
+            return None
+        try:
+            f = os.path.join(templates_dir, template)
+            t = open(f)
+        except:
+            raise
+        parser = textfsm.TextFSM(t)
+        parsed = parser.ParseText(raw)
         return parsed
 
     def execute(self, method=None, target=None, option=None, parse=False):

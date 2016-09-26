@@ -179,5 +179,6 @@ def execute(form, method):
         method=method,
         target=target,
         option=option,
+        parse=True
     )
     return output
