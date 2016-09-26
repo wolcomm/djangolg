@@ -95,7 +95,7 @@ class LookingGlassJsonView(View):
                 if form.is_valid():
                     log.router = form.cleaned_data['router']
                     log.target = form.cleaned_data['target']
-                    data = {'raw': execute(form=form, method=method)}
+                    data = execute(form=form, method=method)
                     resp = JsonResponse(data)
                 else:
                     log.event = models.Log.EVENT_QUERY_INVALID

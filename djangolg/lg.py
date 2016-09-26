@@ -65,12 +65,21 @@ class LookingGlass(object):
             cmd = method.cmd(target)
         return cmd
 
-    def execute(self, method=None, target=None, option=None):
+    def _parse(self, raw, method, option=None):
+        parsed = {}
+        return parsed
+
+    def execute(self, method=None, target=None, option=None, parse=False):
         cmd = self._build_cmd(method, target=target, option=option)
+        output = {}
         try:
-            output = self._connect()._exec(cmd)
+            raw = self._connect()._exec(cmd)
+            output['raw'] = raw
         except Exception:
             raise
         finally:
             self._disconnect()
+        if parse:
+            parsed = self._parse(raw=raw, method=method, option=option)
+            output['parsed'] = parsed
         return output
