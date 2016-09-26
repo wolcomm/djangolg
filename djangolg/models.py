@@ -26,7 +26,7 @@ class Router(models.Model):
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     sitecode = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
