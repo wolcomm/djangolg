@@ -30,8 +30,9 @@ $(document).ready(function () {
                 .hide("fast");
             var raw = $("#raw-output")
                 .text("Please wait...");
-            var formatted = $("#formatted-output")
-                .text("Please wait...");
+            var formatted = $("#formatted-output");
+            var formatted_msg = $("#formatted-output-msg")
+                .text("Please wait...").show();
             bar.attr("style", "width:20%");
             var query = $(this).serialize();
             bar.attr("style", "width:40%");
@@ -39,7 +40,30 @@ $(document).ready(function () {
             req.done(function (json) {
                 bar.attr("style", "width:80%");
                 raw.text(json.raw);
-                formatted.text("Formatted output not supported for this query");
+                if (json.parsed) {
+                    var header = json.parsed.header;
+                    var data = json.parsed.data;
+                    formatted_msg.hide();
+                    t = $("<table/>").addClass("table");
+                    tr = $("<tr/>");
+                    $.each(header, function (i, val) {
+                        th = $("<th/>").text(val);
+                        tr.append(th);
+                    });
+                    t.append(tr);
+                    $.each(data, function () {
+                        tr = $("<tr/>");
+                        $.each(this, function (i, val) {
+                            td = $("<td/>").text(val);
+                            tr.append(td);
+                        });
+                        t.append(tr)
+                    });
+                    formatted.append(t);
+                    formatted_msg.hide();
+                } else {
+                    formatted_msg.text("Formatted output not supported for this query").show();
+                }
                 bar.attr("style", "width:100%");
                 progress.hide("slow");
                 bar.attr("style", "width:0%");

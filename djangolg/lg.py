@@ -88,7 +88,10 @@ class LookingGlass(object):
         except:
             raise
         parser = textfsm.TextFSM(t)
-        parsed = parser.ParseText(raw)
+        parsed = {
+            'header': parser.header,
+            'data': parser.ParseText(raw)
+        }
         return parsed
 
     def execute(self, method=None, target=None, option=None, parse=False):
