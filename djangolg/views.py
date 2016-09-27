@@ -33,6 +33,7 @@ class IndexView(TemplateView):
             'src_address': get_src(self.request),
             'logo': settings.LOGO,
             'small_logo': settings.SMALL_LOGO,
+            'favicon': settings.FAVICON,
             'nav_img': settings.NAV_IMG,
         }
         return info

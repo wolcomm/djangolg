@@ -38,6 +38,9 @@ LOGO = 'img/logo.jpg'
 # Small Logo Image
 SMALL_LOGO = 'img/small_logo.jpg'
 
+# Favicon
+FAVICON = 'img/favicon.ico'
+
 # Navbar Image
 NAV_IMG = None
 
