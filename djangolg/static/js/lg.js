@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#accept-terms-form").submit(function (event) {
         event.preventDefault();
         var query = $(this).serialize();
-        $.getJSON("/enter/?", query, function (json) {
+        $.getJSON("enter/?", query, function (json) {
             $("[name$='auth_key']").val(json.key);
             $("#accept-terms-modal").modal('hide');
         }).fail(function () {
