@@ -8,8 +8,13 @@
     <title>{% block title %}{{ info.title }}{% endblock %}</title>
     <meta name="description" content="{{ info.title }}"/>
     <link rel="icon" href="{% static info.favicon %}"/>
-    {% include "djangolg/css.html" %}
-    {% include "djangolg/js.html" %}
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block links %}{% endblock %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {% block scripts %}{% endblock %}
 </head>
 <body>
     {% include "djangolg/navbar.html" %}
