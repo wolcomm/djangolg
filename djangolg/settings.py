@@ -33,13 +33,13 @@ RECAPTCHA_URL = 'https://www.google.com/recaptcha/api/siteverify'
 BASE_TEMPLATE = 'djangolg/base.html'
 
 # Logo Image
-LOGO = 'img/logo.jpg'
+LOGO = 'djangolg/img/logo.jpg'
 
 # Small Logo Image
-SMALL_LOGO = 'img/small_logo.jpg'
+SMALL_LOGO = 'djangolg/img/small_logo.jpg'
 
 # Favicon
-FAVICON = 'img/favicon.ico'
+FAVICON = 'djangolg/img/favicon.ico'
 
 # Navbar Image
 NAV_IMG = None
