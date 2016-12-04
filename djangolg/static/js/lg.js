@@ -36,7 +36,7 @@ $(document).ready(function () {
             bar.attr("style", "width:20%");
             var query = $(this).serialize();
             bar.attr("style", "width:40%");
-            var req = $.getJSON("/lg/?", query);
+            var req = $.getJSON("lg/?", query);
             req.done(function (json) {
                 bar.attr("style", "width:80%");
                 raw.text(json.raw);
