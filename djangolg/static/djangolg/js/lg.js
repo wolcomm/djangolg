@@ -24,7 +24,7 @@ $(document).ready(function () {
             var progress = $("#progress")
                 .show(0);
             var bar = $("#progress-bar")
-                .attr("sytle", "width:10%");
+                .attr("style", "width:10%");
             $("#raw-output-tab-link").tab('show');
             var alert = $("#error-alert")
                 .hide("fast");
