@@ -44,6 +44,8 @@ FAVICON = 'djangolg/img/favicon.ico'
 # Navbar Image
 NAV_IMG = None
 
+# Output formatting
+FORMATTED_OUTPUT = False
 TEXTFSM_TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'textfsm')
 
 # Query methods, and their implementation variables

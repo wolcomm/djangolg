@@ -2,11 +2,13 @@
     <div class="panel-heading">
         <ul id="output-tabs" class="nav nav-pills">
             <li>
-                <a id="raw-output-tab-link" data-toggle="tab" href="#raw-output-tab">Raw</a>
+                <a id="raw-output-tab-link" data-toggle="tab" href="#raw-output-tab">Output</a>
             </li>
+            {% if info.formatted %}
             <li>
                 <a id="formatted-output-tab-link" data-toggle="tab" href="#formatted-output-tab">Formatted</a>
             </li>
+            {% endif %}
             <li class="pull-right active">
                 <a id="help-tab-link" data-toggle="tab" href="#help-tab">Help</a>
             </li>

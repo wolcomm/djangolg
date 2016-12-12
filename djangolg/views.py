@@ -35,6 +35,7 @@ class IndexView(TemplateView):
             'small_logo': settings.SMALL_LOGO,
             'favicon': settings.FAVICON,
             'nav_img': settings.NAV_IMG,
+            'formatted': settings.FORMATTED_OUTPUT
         }
         return info
 
@@ -180,6 +181,6 @@ def execute(form, method):
         method=method,
         target=target,
         option=option,
-        parse=True
+        parse=settings.FORMATTED_OUTPUT
     )
     return output
