@@ -97,8 +97,32 @@ METHODS = {
         ],
         'cmd': lambda target: "show bgp %s unicast regex %s" % ('ipv4', str(target))
     },
-    'ping': {
+    'bgp_community': {
         'index': 2,
+        'name': 'bgp_community',
+        'title': "BGP Community",
+        'description': """
+        Look up BGP RIB entries with a COMMUNITIES attribute that contains the target value.
+        The Community Value field accepts a pair of colon-seperated 16-bit decimal numbers.
+        Some platforms may also support named "well known" community values such as 'no-export', etc.
+        Options are provided to select either the IPv4 or the IPv6 address family.
+        """,
+        'target': forms.CharField(
+            widget=forms.TextInput({
+                'class': 'form-control',
+                'placeholder': "Community Value",
+                'data-toggle': 'tooltip',
+                'title': "RFC1997 Community Value"
+            }),
+        ),
+        'options': [
+            { 'label': "IPv4", 'cmd': lambda target: "show bgp ipv4 unicast community %s | begin Network" % str(target) },
+            { 'label': "IPv6", 'cmd': lambda target: "show bgp ipv6 unicast community %s | begin Network" % str(target) },
+        ],
+        'cmd': lambda target: "show bgp %s unicast community %s" % ('ipv4', str(target))
+    },
+    'ping': {
+        'index': 3,
         'name': 'ping',
         'title': "Ping",
         'description': """
@@ -118,7 +142,7 @@ METHODS = {
         'cmd': lambda target: "ping %s source Loopback0" % (str(target))
     },
     'trace_route': {
-        'index': 3,
+        'index': 4,
         'name': 'trace_route',
         'title': 'Traceroute',
         'description': """
@@ -160,6 +184,14 @@ DIALECTS = {
                      'cmd': lambda target: "show bgp ipv4 unicast quote-regexp \"%s\" | begin Network" % str(target)},
                     {'label': "IPv6",
                      'cmd': lambda target: "show bgp ipv6 unicast quote-regexp \"%s\" | begin Network" % str(target)},
+                ]
+            },
+            'bgp_community': {
+                'options': [
+                    {'label': "IPv4",
+                     'cmd': lambda target: "show bgp ipv4 unicast community %s | begin Network" % str(target)},
+                    {'label': "IPv6",
+                     'cmd': lambda target: "show bgp ipv6 unicast community %s | begin Network" % str(target)},
                 ]
             },
             'ping': {
