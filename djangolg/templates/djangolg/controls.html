@@ -14,6 +14,9 @@
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ m.method.name }}">
                                 {{ m.method.title }}
                             </a>
+                            {% if m.method.new %}
+                                <span class="label label-success">new</span>
+                            {% endif %}
                         </h4>
                     </div>
                     <div id="collapse-{{ m.method.name }}" class="panel-collapse collapse" role="tabpanel">

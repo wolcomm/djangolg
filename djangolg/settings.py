@@ -101,6 +101,7 @@ METHODS = {
         'index': 2,
         'name': 'bgp_community',
         'title': "BGP Community",
+        'new': True,
         'description': """
         Look up BGP RIB entries with a COMMUNITIES attribute that contains the target value.
         The Community Value field accepts a pair of colon-seperated 16-bit decimal numbers.

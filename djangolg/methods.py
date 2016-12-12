@@ -33,7 +33,6 @@ class Method(object):
             self._dialect = dialect
         else:
             raise NotImplementedError
-        return self
 
     @property
     def name(self):
@@ -50,6 +49,13 @@ class Method(object):
     @property
     def target(self):
         return self.method['target']
+
+    @property
+    def new(self):
+        try:
+            return self.method['new']
+        except KeyError:
+            return False
 
     @property
     def options(self):
