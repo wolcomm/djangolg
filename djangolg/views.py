@@ -107,7 +107,7 @@ class LookingGlassJsonView(View):
                 log.error = "invalid method name"
         else:
             log.event = models.Log.EVENT_QUERY_REJECT
-            log.error = 'invalid authorisation key'
+            log.error = 'invalid or expired authorisation key - refresh the page to retry'
         if log.event != models.Log.EVENT_QUERY_ACCEPT:
             resp = JsonResponse({}, status=400, reason=log.error)
         log.save()
