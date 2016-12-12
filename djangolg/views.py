@@ -114,42 +114,6 @@ class LookingGlassJsonView(View):
         return resp
 
 
-class LookingGlassHTMLView(TemplateView):
-    template_name = "djangolg/output.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(LookingGlassHTMLView, self).get_context_data(**kwargs)
-        query = self.request.GET
-        src_host = get_src(self.request)
-        log = models.Log(src_host=src_host)
-        if query:
-            key = query['auth_key']
-            log.key = key
-            if authorise(key=key, src_host=src_host):
-                log.event = models.Log.EVENT_QUERY_ACCEPT
-                method = methods.Method(query['method_name'])
-                if method:
-                    log.method_name = method.name
-                    form = forms.form_factory(method=method, data=query)
-                    if form.is_valid():
-                        log.router = form.cleaned_data['router']
-                        log.target = form.cleaned_data['target']
-                        context['output'] = execute(form=form, method=method)
-                    else:
-                        log.event = models.Log.EVENT_QUERY_INVALID
-                        log.error = "Form validation failed"
-                        context['output'] = 'Error'
-                else:
-                    log.event = models.Log.EVENT_QUERY_INVALID
-                    log.error = "Invalid method name"
-                    context['output'] = 'Bad Command'
-            else:
-                log.event = models.Log.EVENT_QUERY_REJECT
-                context['output'] = 'Invalid Auth Key'
-        log.save()
-        return context
-
-
 def get_src(request=None):
     address = None
     if request.META:
