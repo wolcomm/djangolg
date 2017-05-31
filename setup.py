@@ -23,20 +23,13 @@ setup(
         'Topic :: Internet',
     ],
     packages=find_packages(
-        include=[
-            'djangolg',
-            'djangolg.*'
-            'test'
-        ],
-        exclude=[
-            'djangolg.migrations'
-        ]
+#        include=[
+#            'djangolg',
+#            'djangolg.*'
+#            'test'
+#        ],
+#        exclude=[]
     ),
-    # packages=[
-    #     'djangolg',
-    #     'djangolg.management',
-    #     'djangolg.management.commands',
-    # ],
     include_package_data=True,
 
     url='https://github.com/wolcomm/djangolg',

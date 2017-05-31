@@ -4,7 +4,6 @@ include packaging/VERSION
 include djangolg/local_settings.py.example
 recursive-include packaging *.txt
 recursive-include djangolg/templates *.html
-recursive-include djangolg/static/css *.css
-recursive-include djangolg/static/js *.js
-recursive-include djangolg/static/img *.jpg
+recursive-include djangolg/static *.css *js *.jpg
+recursive-include djangolg/textfsm *.textfsm
 exclude djangolg/local_settings.py
