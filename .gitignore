@@ -98,6 +98,5 @@ ENV/
 .idea/
 /DjangoProject_djangolg/
 /templates/
-/djangolg/migrations/
 db.sqlite3
 manage.py
