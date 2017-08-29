@@ -1,4 +1,5 @@
 [![PyPI](https://img.shields.io/pypi/v/djangolg.svg)](https://pypi.python.org/pypi/djangolg)
+[![PyPI](https://img.shields.io/pypi/dm/djangolg.svg)](https://pypi.python.org/pypi/djangolg)
 [![Build Status](https://travis-ci.org/wolcomm/djangolg.svg?branch=master)](https://travis-ci.org/wolcomm/djangolg)
 [![codecov](https://codecov.io/gh/wolcomm/djangolg/branch/master/graph/badge.svg)](https://codecov.io/gh/wolcomm/djangolg)
 
@@ -10,6 +11,7 @@ A BGP looking glass based on the Django web framework
     * Polished web UI based on jQuery and Bootstrap
     * Ajax/JSON query processing
     * Customisable Django templates
+* Multi-vendor device support using Napalm drivers
 * Supported query types
     * BGP paths/bestpath/longer paths by prefix
     * BGP paths by AS_PATH regexp
@@ -21,7 +23,6 @@ A BGP looking glass based on the Django web framework
     * "Dialect" framework for defining new syntax mappings
 * Security
     * SSH2-only command execution
-    * Pubkey authentication (coming soon)
     * Multi-layered parameter verification
     * Session and command authorisation framework:
         * Google reCaptcha support
@@ -53,8 +54,8 @@ A BGP looking glass based on the Django web framework
    ```
    python manage.py lg add credentials --name default_credentials --type 0 --username test_user --password test_password
    python manage.py lg add locations --name Some Place --sitecode ABC-123
-   python manage.py lg add routers --hostname router1.example.net --dialect cisco_ios-xe --credentials 1 --location 1
-   python manage.py lg add routers --hostname router2.example.net --dialect cisco_ios-xe --credentials 1 --location 1
+   python manage.py lg add routers --hostname router1.example.net --dialect ios --credentials 1 --location 1
+   python manage.py lg add routers --hostname router2.example.net --dialect ios --credentials 1 --location 1
    ```
 
 7. Run the development server, open a browser, and check that everything is working:
