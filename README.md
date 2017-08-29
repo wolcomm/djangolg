@@ -1,5 +1,6 @@
 [![PyPI](https://img.shields.io/pypi/v/djangolg.svg)](https://pypi.python.org/pypi/djangolg)
 [![Build Status](https://travis-ci.org/wolcomm/djangolg.svg?branch=master)](https://travis-ci.org/wolcomm/djangolg)
+[![codecov](https://codecov.io/gh/wolcomm/djangolg/branch/master/graph/badge.svg)](https://codecov.io/gh/wolcomm/djangolg)
 
 # DjangoLG
 A BGP looking glass based on the Django web framework
@@ -47,7 +48,7 @@ A BGP looking glass based on the Django web framework
    python manage.py makemigrations djangolg
    python manage.py migrate
    ```
-   
+
 6. Create a set of SSH credentials, a location and some routers:
    ```
    python manage.py lg add credentials --name default_credentials --type 0 --username test_user --password test_password
