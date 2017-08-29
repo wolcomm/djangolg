@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
-from djangolg import models, methods
+from djangolg import models, methods, dialects
 
 
 class Command(BaseCommand):
@@ -50,7 +50,7 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             '--dialect', '-d',
-            choices=methods.dialects(),
+            choices=dialects.available_dialects(output="list"),
             help="Name of related dialect"
         )
         parser.add_argument(

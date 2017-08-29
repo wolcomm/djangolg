@@ -1,14 +1,17 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from djangolg import methods
+from djangolg import dialects
 
 
 class Router(models.Model):
     hostname = models.CharField(max_length=20, unique=True)
     location = models.ForeignKey('Location', on_delete=models.SET_NULL, null=True)
     credentials = models.ForeignKey('Credential', on_delete=models.SET_NULL, null=True)
-    dialect = models.CharField(max_length=20, choices=methods.dialect_choices(), null=True)
+    dialect = models.CharField(
+        max_length=20,
+        choices=dialects.available_dialects(output="choices"),
+        null=True)
 
     @property
     def label(self):

@@ -1,59 +1,25 @@
 import os
-import paramiko
+import napalm
 import textfsm
-from djangolg import methods, settings
+from djangolg import methods, dialects, settings, models
 
 
 class LookingGlass(object):
-    def __init__(self, router=None, port=22):
-        self.router = router
-        self.credentials = router.credentials
-        try:
-            self.dialect = methods.Dialect(router.dialect)
-        except KeyError:
-            self.dialect = None
-        self.defaults = {
-            'ssh_host_key_policy': paramiko.WarningPolicy(),
-            'ssh_port': port,
-        }
+    def __init__(self, router=None):
+        if not isinstance(router, models.Router):
+            raise ValueError
+        self.dialect = dialects.get_dialect(router.dialect)
+        self.device = self.dialect.driver_class(
+            hostname=router.hostname,
+            username=router.credentials.username,
+            password=router.credentials.password)
 
-    def _connect(self):
-        self.ssh = paramiko.SSHClient()
-        self.ssh.set_missing_host_key_policy(
-            self.defaults['ssh_host_key_policy']
-        )
-        try:
-            self.ssh.connect(
-                hostname=self.router.hostname,
-                port=self.defaults['ssh_port'],
-                username=self.credentials.username,
-                password=self.credentials.password,
-            )
-        except Exception:
-            raise
+    def __enter__(self):
+        self.device.open()
         return self
 
-    def _disconnect(self):
-        if self.ssh:
-            try:
-                self.ssh.close()
-            except Exception:
-                raise
-            del self.ssh
-        else:
-            raise ValueError
-        return self
-
-    def _exec(self, cmd=None):
-        if self.ssh:
-            try:
-                stdin, stdout, stderr = self.ssh.exec_command(cmd)
-                output = stdout.read()
-            except Exception:
-                raise
-        else:
-            raise ValueError
-        return output
+    def __exit__(self, *args):
+        self.device.__exit__(*args)
 
     def _build_cmd(self, method, target=None, option=None):
         if self.dialect:
@@ -94,17 +60,15 @@ class LookingGlass(object):
         }
         return parsed
 
-    def execute(self, method=None, target=None, option=None, parse=False):
-        cmd = self._build_cmd(method, target=target, option=option)
+    def execute(self, method=None, target=None, option_index=None, parse=False):
+        # cmd = self._build_cmd(method, target=target, option=option)
         output = {}
-        try:
-            raw = self._connect()._exec(cmd)
-            output['raw'] = raw
-        except Exception:
-            raise
-        finally:
-            self._disconnect()
-        if parse:
-            parsed = self._parse(raw=raw, method=method, option=option)
-            output['parsed'] = parsed
+        method.dialect = self.dialect
+        command = method.get_command(target=target, option_index=option_index)
+        tmp = self.device.cli([command])
+        raw = tmp[command]
+        output['raw'] = raw
+        # if parse:
+        #     parsed = self._parse(raw=raw, method=method, option=option)
+        #     output['parsed'] = parsed
         return output

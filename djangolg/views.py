@@ -13,8 +13,8 @@ class IndexView(TemplateView):
         context['info'] = self.general_info()
         context['recaptcha'] = self.recaptcha()
         context['methods'] = []
-        for m in methods.methods():
-            method = methods.Method(m)
+        for method_name in methods.available_methods(output="list"):
+            method = methods.get_method(name=method_name)
             form = forms.form_factory(method=method)
             context['methods'].append({'method': method, 'form': form})
         context['modal'] = forms.AcceptTermsForm()
@@ -90,7 +90,7 @@ class LookingGlassJsonView(View):
         log.key = key
         if authorise(key=key, src_host=src_host):
             log.event = models.Log.EVENT_QUERY_ACCEPT
-            method = methods.Method(query['method_name'])
+            method = methods.get_method(query['method_name'])
             if method:
                 log.method_name = method.name
                 form = forms.form_factory(method=method, data=query)
@@ -137,14 +137,14 @@ def execute(form, method):
     router = data['router']
     target = data['target']
     if 'options' in data:
-        option = int(data['options'])
+        option_index = int(data['options'])
     else:
-        option = None
-    lg = LookingGlass(router=router)
-    output = lg.execute(
-        method=method,
-        target=target,
-        option=option,
-        parse=settings.FORMATTED_OUTPUT
-    )
+        option_index = None
+    with LookingGlass(router=router) as lg:
+        output = lg.execute(
+            method=method,
+            target=target,
+            option_index=option_index,
+            parse=settings.FORMATTED_OUTPUT
+        )
     return output

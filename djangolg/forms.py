@@ -76,7 +76,7 @@ def form_factory(method=None, data=None, prefix=None):
                 required=True,
                 widget=forms.HiddenInput,
             )
-            target = method.target
+            target = method.target_field
             if method.options:
                 options = forms.ChoiceField(
                     required=True,
