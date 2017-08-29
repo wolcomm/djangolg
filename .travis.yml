@@ -12,6 +12,7 @@ env:
   - DJANGO=1.11
   - DJANGO=master
 matrix:
+  fast_finish: true
   exclude:
     - python: "2.7"
       env: DJANGO=master
@@ -23,6 +24,8 @@ matrix:
       env: DJANGO=1.9
     - python: "3.6"
       env: DJANGO=1.10
+  allow_failures:
+    - env: DJANGO=master
 install:
   - pip install -U pip
   - pip install -U setuptools
