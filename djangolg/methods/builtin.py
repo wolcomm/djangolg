@@ -1,3 +1,6 @@
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from djangolg.methods.base import BaseMethod
 from django import forms
 from djangolg import fields

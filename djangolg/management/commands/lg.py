@@ -1,3 +1,6 @@
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from djangolg import models, dialects

@@ -1,3 +1,7 @@
+from __future__ import print_function
+from __future__ import unicode_literals
+
+
 class BaseMethod(object):
     name = None
     title = None

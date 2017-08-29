@@ -1,3 +1,7 @@
+from __future__ import print_function
+from __future__ import unicode_literals
+
+
 def pytest_configure():
     from django.conf import settings
 

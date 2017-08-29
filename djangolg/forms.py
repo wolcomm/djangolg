@@ -1,3 +1,6 @@
+from __future__ import print_function
+from __future__ import unicode_literals
+
 import requests
 from django import forms
 from djangolg import models, fields, settings

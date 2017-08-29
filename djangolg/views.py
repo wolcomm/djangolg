@@ -1,3 +1,6 @@
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from django.views.generic import View, TemplateView
 from django.http import JsonResponse
 from djangolg import forms, methods, keys, models, settings
@@ -116,10 +119,10 @@ def get_src(request=None):
     address = None
     if request.META:
         if 'HTTP_X_FORWARDED_FOR' in request.META:
-            address = unicode(
-                request.META['HTTP_X_FORWARDED_FOR'].split(',')[0])
+            address = "{0}"\
+                .format(request.META['HTTP_X_FORWARDED_FOR'].split(',')[0])
         else:
-            address = unicode(request.META['REMOTE_ADDR'])
+            address = "{0}".format(request.META['REMOTE_ADDR'])
     return address
 
 
