@@ -1,4 +1,3 @@
-import os
 
 # Network display name
 NETNAME = "Example Network"
@@ -44,12 +43,11 @@ NAV_IMG = None
 
 # Output formatting
 FORMATTED_OUTPUT = False
-TEXTFSM_TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'textfsm')
 
 #################################################################
 # Don't edit below this line!
 
 try:
-    from djangolg.local_settings import *
+    from djangolg.local_settings import * #noqa
 except Exception:
     pass

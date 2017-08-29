@@ -26,7 +26,7 @@ class RecaptchaTermsForm(forms.Form):
             'remoteip': self.data['src_address'],
         }
         response = requests.get(url, params=params, verify=True).json()
-        if not response['success'] == True:
+        if not response['success']:
             raise forms.ValidationError
         else:
             return

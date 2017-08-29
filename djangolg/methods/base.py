@@ -29,7 +29,7 @@ class BaseMethod(object):
 
     def option_choices(self):
         return ((self.options.index(option), option)
-            for option in self.options)
+                for option in self.options)
 
     def select_option(self, index):
         if self.options:
@@ -41,6 +41,6 @@ class BaseMethod(object):
         """Get the dialect specific command syntax and return command."""
         option = self.select_option(index=option_index)
         syntax_function = self.dialect.get_command_syntax(method=self,
-                                                         option=option)
+                                                          option=option)
         command = syntax_function(target=target)
         return command

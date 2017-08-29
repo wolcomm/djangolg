@@ -1,10 +1,11 @@
-from djangolg.methods.builtin import (
+from djangolg.methods.builtin import ( #noqa
     BGPPrefixMethod,
     BGPASPathMethod,
     BGPCommunityMethod,
     PingMethod,
     TracerouteMethod
 )
+
 
 def available_methods(output="map"):
     from djangolg.methods.base import BaseMethod
@@ -15,6 +16,7 @@ def available_methods(output="map"):
         return [m.name for m in classes]
     else:
         raise ValueError("invalid output type: {0}".format(output))
+
 
 def get_method(name=None):
     return available_methods(output="map")[name]()

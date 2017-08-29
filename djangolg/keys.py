@@ -2,7 +2,8 @@ from django.core.signing import TimestampSigner
 from djangolg import settings
 
 signer = TimestampSigner()
-if settings.SALT: signer.salt = settings.SALT
+if settings.SALT:
+    signer.salt = settings.SALT
 
 
 class AuthKey(object):

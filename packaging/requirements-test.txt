@@ -2,4 +2,5 @@ pytest
 pytest-django
 pytest-cov
 pylama
+flake8-import-order
 -r requirements.txt

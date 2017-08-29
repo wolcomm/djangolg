@@ -12,7 +12,7 @@ class IPPrefixField(forms.CharField):
             return None
         try:
             prefix = types.IPPrefix(value)
-        except:
+        except Exception:
             raise ValidationError(
                 _('%(value)s is not a valid ip prefix'),
                 params={'value': value}
@@ -26,7 +26,7 @@ class IPAddressField(forms.CharField):
             return None
         try:
             address = ipaddress.ip_address(value)
-        except:
+        except Exception:
             raise ValidationError(
                 _('%(value)s is not a valid ip address'),
                 params={'value': value}

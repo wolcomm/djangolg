@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
-from djangolg import models, methods, dialects
+from djangolg import models, dialects
 
 
 class Command(BaseCommand):
@@ -79,8 +79,7 @@ class Command(BaseCommand):
             help="Credential key - not yet implemented"
         )
 
-    def handle(self, *args, **options):
-        hr = self.hr
+    def handle(self, *args, **options): #noqa
         obj = options['OBJ']
         if obj == 'routers':
             cls = models.Router
@@ -100,7 +99,8 @@ class Command(BaseCommand):
             if 'index' in options:
                 index = options['index']
             else:
-                raise CommandError("Please provide object index argument (--index)")
+                raise CommandError(
+                    "Please provide object index argument (--index)")
             try:
                 inst = cls.objects.get(id=index)
             except Exception:
@@ -125,7 +125,8 @@ class Command(BaseCommand):
             self.stdout.write(hr)
             if count:
                 for r in objects:
-                    self.stdout.write("Index: %s\tHostname: %s" % (r.id, r.hostname))
+                    self.stdout.write(
+                        "Index: {0}\tHostname: {1}".format(r.id, r.hostname))
             else:
                 self.stdout.write("No routers configured")
             self.stdout.write(hr)
@@ -186,7 +187,7 @@ class Command(BaseCommand):
         inst = self.set(cls(), options)
         return inst
 
-    def set(self, inst, options):
+    def set(self, inst, options): #noqa
         cls = type(inst)
         if cls == models.Router:
             if options['name']:
@@ -195,7 +196,8 @@ class Command(BaseCommand):
                 location = models.Location.objects.get(id=options['location'])
                 inst.location = location
             if options['credentials']:
-                credentials = models.Credential.objects.get(id=options['credentials'])
+                credentials = models.Credential.objects.get(
+                    id=options['credentials'])
                 inst.credentials = credentials
             if options['dialect']:
                 inst.dialect = options['dialect']

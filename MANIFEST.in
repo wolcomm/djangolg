@@ -5,5 +5,4 @@ include djangolg/local_settings.py.example
 recursive-include packaging *.txt
 recursive-include djangolg/templates *.html
 recursive-include djangolg/static *.css *js *.jpg
-recursive-include djangolg/textfsm *.textfsm
 exclude djangolg/local_settings.py

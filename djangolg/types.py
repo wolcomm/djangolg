@@ -11,12 +11,12 @@ class IPPrefix(object):
         except Exception:
             try:
                 obj = ipaddress.ip_network(value, strict=False)
-            except:
+            except Exception:
                 raise
-        if type(obj) in [ ipaddress.IPv4Address, ipaddress.IPv6Address ]:
+        if type(obj) in [ipaddress.IPv4Address, ipaddress.IPv6Address]:
             self.prefix = None
             self.type = self.HOST
-        elif type(obj) in [ ipaddress.IPv4Network, ipaddress.IPv6Network ]:
+        elif type(obj) in [ipaddress.IPv4Network, ipaddress.IPv6Network]:
             self.prefix = obj.network_address
             self.type = self.PREFIX
         self.version = obj.version

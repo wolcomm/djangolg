@@ -1,6 +1,7 @@
-from djangolg.dialects.builtin import (
+from djangolg.dialects.builtin import ( #noqa
     CiscoIOSDialect
 )
+
 
 def available_dialects(output="map"):
     from djangolg.dialects.base import BaseDialect
@@ -13,6 +14,7 @@ def available_dialects(output="map"):
         return [d.name for d in classes]
     else:
         raise ValueError("invalid output type: {0}".format(output))
+
 
 def get_dialect(name=None):
     return available_dialects(output="map")[name]()

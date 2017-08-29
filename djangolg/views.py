@@ -63,11 +63,8 @@ class AcceptTermsView(View):
                 form = forms.AcceptTermsForm(query)
             if form.is_valid():
                 key = keys.AuthKey(get_src(self.request))
-                log = models.Log(
-                    event=models.Log.EVENT_START,
-                    src_host=src_host,
-                    key=key
-                ).save()
+                models.Log(event=models.Log.EVENT_START, src_host=src_host,
+                           key=key).save()
                 response = {
                     'status': 'ok',
                     'key': key.signed
@@ -107,7 +104,8 @@ class LookingGlassJsonView(View):
                 log.error = "invalid method name"
         else:
             log.event = models.Log.EVENT_QUERY_REJECT
-            log.error = 'invalid or expired authorisation key - refresh the page to retry'
+            log.error = "invalid or expired authorisation key - \
+                         refresh the page to retry"
         if log.event != models.Log.EVENT_QUERY_ACCEPT:
             resp = JsonResponse({}, status=400, reason=log.error)
         log.save()
@@ -118,7 +116,8 @@ def get_src(request=None):
     address = None
     if request.META:
         if 'HTTP_X_FORWARDED_FOR' in request.META:
-            address = unicode(request.META['HTTP_X_FORWARDED_FOR'].split(',')[0])
+            address = unicode(
+                request.META['HTTP_X_FORWARDED_FOR'].split(',')[0])
         else:
             address = unicode(request.META['REMOTE_ADDR'])
     return address
@@ -144,7 +143,6 @@ def execute(form, method):
         output = lg.execute(
             method=method,
             target=target,
-            option_index=option_index,
-            parse=settings.FORMATTED_OUTPUT
+            option_index=option_index
         )
     return output
