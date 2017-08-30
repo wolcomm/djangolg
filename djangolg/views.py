@@ -90,14 +90,14 @@ class LookingGlassJsonView(View):
         log.key = self.key
         if self.authorise():
             log.event = models.Log.EVENT_QUERY_ACCEPT
-            method = methods.get_method(query['method_name'])
-            if method:
-                log.method_name = method.name
-                form = forms.form_factory(method=method, data=query)
-                if form.is_valid():
-                    log.router = form.cleaned_data['router']
-                    log.target = form.cleaned_data['target']
-                    data = execute(form=form, method=method)
+            self.method = methods.get_method(query['method_name'])
+            if self.method:
+                log.method_name = self.method.name
+                self.form = forms.form_factory(method=self.method, data=query)
+                if self.form.is_valid():
+                    log.router = self.form.cleaned_data['router']
+                    log.target = self.form.cleaned_data['target']
+                    data = self.execute()
                     resp = JsonResponse(data)
                 else:
                     log.event = models.Log.EVENT_QUERY_INVALID
@@ -125,6 +125,26 @@ class LookingGlassJsonView(View):
                 return True
         return False
 
+    def execute(self):
+        if not self.form:
+            raise RuntimeError("form not set")
+        if not self.method:
+            raise RuntimeError("method not set")
+        data = self.form.cleaned_data
+        router = data['router']
+        target = data['target']
+        if 'options' in data:
+            option_index = int(data['options'])
+        else:
+            option_index = None
+        with LookingGlass(router=router) as lg:
+            output = lg.execute(
+                method=self.method,
+                target=target,
+                option_index=option_index
+            )
+        return output
+
 
 def get_src(request=None):
     address = None
@@ -135,20 +155,3 @@ def get_src(request=None):
         else:
             address = "{0}".format(request.META['REMOTE_ADDR'])
     return address
-
-
-def execute(form, method):
-    data = form.cleaned_data
-    router = data['router']
-    target = data['target']
-    if 'options' in data:
-        option_index = int(data['options'])
-    else:
-        option_index = None
-    with LookingGlass(router=router) as lg:
-        output = lg.execute(
-            method=method,
-            target=target,
-            option_index=option_index
-        )
-    return output
