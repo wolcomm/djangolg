@@ -27,9 +27,6 @@ LIFETIME = getattr(settings, 'DJANGOLG_LIFETIME', 300)
 # Set to 0 for unlimited
 MAX_REQUESTS = getattr(settings, 'DJANGOLG_MAX_REQUESTS', 20)
 
-# Default salt value for authorisation key generation
-SALT = getattr(settings, 'DJANGOLG_SALT', '_signing_salt_')
-
 # Link to Acceptable Use Policy
 AUP_LINK = getattr(settings, 'DJANGOLG_AUP_LINK', None)
 

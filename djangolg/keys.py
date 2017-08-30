@@ -4,32 +4,29 @@ from __future__ import unicode_literals
 from django.core.signing import TimestampSigner
 from djangolg import settings
 
-signer = TimestampSigner()
-if settings.SALT:
-    signer.salt = settings.SALT
-
 
 class AuthKey(object):
     def __init__(self, value=None):
-        self.data = {
+        self.signer = TimestampSigner(salt="auth")
+        self._data = {
             'clear': value,
-            'signed': signer.sign(value)
+            'signed': self.signer.sign(value)
         }
 
     @property
     def clear(self):
-        return self.data['clear']
+        return self._data['clear']
 
     @property
     def signed(self):
-        return self.data['signed']
+        return self._data['signed']
 
     def validate(self, key):
         life = None
         if settings.LIFETIME:
             life = settings.LIFETIME
         try:
-            clear = signer.unsign(key, max_age=life)
+            clear = self.signer.unsign(key, max_age=life)
             if self.clear == clear:
                 return True
             else:
