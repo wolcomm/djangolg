@@ -84,11 +84,11 @@ class LookingGlassJsonView(View):
         query = request.GET
         if not query:
             return JsonResponse({}, status=400)
-        src_host = get_src(self.request)
-        log = models.Log(src_host=src_host)
-        key = query['auth_key']
-        log.key = key
-        if authorise(key=key, src_host=src_host):
+        self.src_host = get_src(self.request)
+        self.key = query['auth_key']
+        log = models.Log(src_host=self.src_host)
+        log.key = self.key
+        if self.authorise():
             log.event = models.Log.EVENT_QUERY_ACCEPT
             method = methods.get_method(query['method_name'])
             if method:
@@ -114,6 +114,17 @@ class LookingGlassJsonView(View):
         log.save()
         return resp
 
+    def authorise(self):
+        if not self.src_host:
+            raise RuntimeError("src_host not set")
+        if not self.key:
+            raise RuntimeError("auth_key not set")
+        if keys.AuthKey(self.src_host).validate(self.key):
+            count = models.Log.objects.filter(key=self.key).count()
+            if not settings.MAX_REQUESTS or count < settings.MAX_REQUESTS:
+                return True
+        return False
+
 
 def get_src(request=None):
     address = None
@@ -124,14 +135,6 @@ def get_src(request=None):
         else:
             address = "{0}".format(request.META['REMOTE_ADDR'])
     return address
-
-
-def authorise(key=None, src_host=None):
-    if keys.AuthKey(src_host).validate(key):
-        count = models.Log.objects.filter(key=key).count()
-        if not settings.MAX_REQUESTS or count < settings.MAX_REQUESTS:
-            return True
-    return False
 
 
 def execute(form, method):
