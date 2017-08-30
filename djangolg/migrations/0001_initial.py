@@ -29,9 +29,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Credential',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True,
+                                        serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20, unique=True)),
-                ('type', models.IntegerField(choices=[(0, 'Password'), (1, 'Public Key')])),
+                ('type', models.IntegerField(choices=[(0, 'Password'),
+                                                      (1, 'Public Key')])),
                 ('username', models.CharField(max_length=20)),
                 ('password', models.CharField(max_length=20)),
                 ('pubkey', models.BinaryField()),
@@ -40,7 +42,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Location',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True,
+                                        serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
                 ('sitecode', models.CharField(max_length=10, unique=True)),
             ],
@@ -48,9 +51,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Log',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True,
+                                        serialize=False, verbose_name='ID')),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('event', models.IntegerField(choices=[(0, 'Session Started'), (1, 'Query Authorised'), (2, 'Query Rejected'), (3, 'Invalid Query')])),
+                ('event', models.IntegerField(choices=[(0, 'Session Started'),
+                                                       (1, 'Query Authorised'),
+                                                       (2, 'Query Rejected'),
+                                                       (3, 'Invalid Query')])),
                 ('src_host', models.CharField(max_length=20)),
                 ('method_name', models.CharField(max_length=20, null=True)),
                 ('target', models.CharField(max_length=20, null=True)),
@@ -61,16 +68,25 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Router',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True,
+                                        serialize=False, verbose_name='ID')),
                 ('hostname', models.CharField(max_length=20, unique=True)),
-                ('dialect', models.CharField(choices=[(b'cisco_ios-xe', b'Cisco IOS-XE')], max_length=20, null=True)),
-                ('credentials', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='djangolg.Credential')),
-                ('location', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='djangolg.Location')),
+                ('dialect', models.CharField(choices=[(b'cisco_ios-xe',
+                                                       b'Cisco IOS-XE')],
+                                             max_length=20, null=True)),
+                ('credentials', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL,
+                    to='djangolg.Credential')),
+                ('location', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.SET_NULL,
+                    to='djangolg.Location')),
             ],
         ),
         migrations.AddField(
             model_name='log',
             name='router',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='djangolg.Router'),
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.SET_NULL,
+                to='djangolg.Router'),
         ),
     ]
