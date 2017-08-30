@@ -11,14 +11,19 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Model classes for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
 from django.db import models
+
 from djangolg import dialects
 
 
 class Router(models.Model):
+    """Database representation of a router."""
+
     hostname = models.CharField(max_length=20, unique=True)
     location = models.ForeignKey('Location', on_delete=models.SET_NULL,
                                  null=True)
@@ -31,6 +36,7 @@ class Router(models.Model):
 
     @property
     def label(self):
+        """Render router display label from attributes."""
         try:
             from djangolg.settings import ROUTER_LABEL as label
         except ImportError:
@@ -38,24 +44,32 @@ class Router(models.Model):
         return label(self)
 
     def __str__(self):
+        """Return string representation."""
         return self.hostname
 
     def __unicode__(self):
+        """Return string representation."""
         return self.__str__()
 
 
 class Location(models.Model):
+    """Database representation of a location."""
+
     name = models.CharField(max_length=50)
     sitecode = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
+        """Return string representation."""
         return self.sitecode
 
     def __unicode__(self):
+        """Return string representation."""
         return self.__str__()
 
 
 class Credential(models.Model):
+    """Database representation of device credentials."""
+
     CRED_TYPE_PASSWD = 0
     CRED_TYPE_PUBKEY = 1
     CRED_TYPE_CHOICES = (
@@ -69,13 +83,17 @@ class Credential(models.Model):
     pubkey = models.BinaryField()
 
     def __str__(self):
+        """Return string representation."""
         return self.name
 
     def __unicode__(self):
+        """Return string representation."""
         return self.__str__()
 
 
 class Log(models.Model):
+    """Database representation of a command log entry."""
+
     EVENT_START = 0
     EVENT_QUERY_ACCEPT = 1
     EVENT_QUERY_REJECT = 2
@@ -96,6 +114,7 @@ class Log(models.Model):
     error = models.CharField(max_length=40, null=True)
 
     def __str__(self):
+        """Return string representation."""
         str = "%s %s:: from:%s to:%s method:%s target:%s error:%s" % (
             self.timestamp,
             self.event,
@@ -108,4 +127,5 @@ class Log(models.Model):
         return str
 
     def __unicode__(self):
+        """Return string representation."""
         return self.__str__()

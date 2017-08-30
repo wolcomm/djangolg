@@ -11,19 +11,26 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Custom django field definitions."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
 import ipaddress
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+
 from djangolg import types
 
 
 # TODO: Provide options to disallow reserved/multicast addresses
 class IPPrefixField(forms.CharField):
+    """IP Prefix field."""
+
     def to_python(self, value):
+        """Deserialise to python type."""
         if not value:
             return None
         try:
@@ -37,7 +44,10 @@ class IPPrefixField(forms.CharField):
 
 
 class IPAddressField(forms.CharField):
+    """IP Address field."""
+
     def to_python(self, value):
+        """Deserialise to python type."""
         if not value:
             return None
         try:
@@ -51,7 +61,10 @@ class IPAddressField(forms.CharField):
 
 
 class RouterChoiceField(forms.ModelChoiceField):
+    """Router selection field."""
+
     def label_from_instance(self, obj):
+        """Render field label."""
         try:
             label = obj.label
         except NotImplementedError:

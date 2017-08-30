@@ -12,13 +12,16 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Initial migration definition for djangolg."""
+
 from __future__ import unicode_literals
 
-from django.db import migrations, models
 import django.db.models.deletion
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+    """Migration definition."""
 
     initial = True
 

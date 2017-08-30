@@ -11,15 +11,20 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Builtin method classes for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from djangolg.methods.base import BaseMethod
 from django import forms
+
 from djangolg import fields
+from djangolg.methods.base import BaseMethod
 
 
 class BGPPrefixMethod(BaseMethod):
+    """Look up BGP RIB entries for the target IP prefix."""
+
     name = "bgp_prefix"
     title = "BGP Prefix"
     description = """
@@ -41,6 +46,8 @@ class BGPPrefixMethod(BaseMethod):
 
 
 class BGPASPathMethod(BaseMethod):
+    """Look up BGP RIB entries by AS_PATH."""
+
     name = "bgp_as_path"
     title = "BGP AS Path"
     description = """
@@ -61,6 +68,8 @@ class BGPASPathMethod(BaseMethod):
 
 
 class BGPCommunityMethod(BaseMethod):
+    """Look up BGP RIB entries by AS_PATH."""
+
     name = "bgp_community"
     title = "BGP Community"
     new = True
@@ -83,6 +92,8 @@ class BGPCommunityMethod(BaseMethod):
 
 
 class PingMethod(BaseMethod):
+    """Ping target address."""
+
     name = "ping"
     title = "Ping"
     description = """
@@ -103,6 +114,8 @@ class PingMethod(BaseMethod):
 
 
 class TracerouteMethod(BaseMethod):
+    """Traceroute to target address."""
+
     name = "trace_route"
     title = "Traceroute"
     description = """

@@ -11,6 +11,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Custom type classes for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
@@ -18,10 +20,13 @@ import ipaddress
 
 
 class IPPrefix(object):
+    """Generic IP prefix class."""
+
     HOST = 0
     PREFIX = 1
 
     def __init__(self, value):
+        """Initialise new IPPrefix instance."""
         try:
             obj = ipaddress.ip_address(value)
         except Exception:
@@ -39,7 +44,9 @@ class IPPrefix(object):
         self.txt = obj.compressed
 
     def __str__(self):
+        """Return string representation."""
         return self.txt
 
     def __unicode__(self):
+        """Return string representation."""
         return self.__str__()

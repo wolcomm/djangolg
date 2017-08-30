@@ -11,15 +11,21 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Cryptographic key classes for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
 from django.core.signing import TimestampSigner
+
 from djangolg import settings
 
 
 class AuthKey(object):
+    """Command authorisation key class."""
+
     def __init__(self, value=None):
+        """Initialise new AuthKey instance."""
         self.signer = TimestampSigner(salt="auth")
         self._data = {
             'clear': value,
@@ -28,13 +34,16 @@ class AuthKey(object):
 
     @property
     def clear(self):
+        """Get cleartext key value."""
         return self._data['clear']
 
     @property
     def signed(self):
+        """Get cyphertext key value."""
         return self._data['signed']
 
     def validate(self, key):
+        """Validate key value."""
         life = None
         if settings.LIFETIME:
             life = settings.LIFETIME
@@ -49,7 +58,9 @@ class AuthKey(object):
         return False
 
     def __str__(self):
+        """Return string representation."""
         return self.signed
 
     def __unicode__(self):
+        """Return string representation."""
         return self.__str__()

@@ -11,11 +11,14 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Helper functions for djangolg view classes."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
 
 def get_src(request=None):
+    """Get the source address of a request."""
     address = None
     if request.META:
         if 'HTTP_X_FORWARDED_FOR' in request.META:

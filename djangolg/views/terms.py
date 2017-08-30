@@ -11,17 +11,23 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Terms and Conditions view module for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from django.views.generic import View
 from django.http import JsonResponse
+from django.views.generic import View
+
 from djangolg import forms, keys, models, settings
 from djangolg.views.helpers import get_src
 
 
 class AcceptTermsView(View):
+    """Terms and Conditions view class."""
+
     def get(self, request):
+        """Handle GET request."""
         response = {'status': 'error'}
         query = request.GET
         src_host = get_src(self.request)

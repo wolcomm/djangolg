@@ -11,22 +11,28 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Base dialect class for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import napalm
 import inspect
+
+import napalm
+
 from napalm_base import NetworkDriver
 
 
 class BaseDialect(object):
-    """Device dialect class"""
+    """Device base dialect class."""
+
     driver_class = None
     name = None
     description = None
     commands = {}
 
     def __init__(self):
+        """Initialise new instance."""
         if not isinstance(self.driver_class, NetworkDriver):
             if type(self).name:
                 self.driver_class = napalm.get_network_driver(type(self).name)

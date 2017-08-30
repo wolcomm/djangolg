@@ -11,6 +11,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Dialect definitions for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
@@ -20,6 +22,7 @@ from djangolg.dialects.builtin import ( #noqa
 
 
 def available_dialects(output="map"):
+    """Get available dialect classes."""
     from djangolg.dialects.base import BaseDialect
     classes = BaseDialect.__subclasses__()
     if output == "map":
@@ -33,4 +36,5 @@ def available_dialects(output="map"):
 
 
 def get_dialect(name=None):
+    """Instantiate a dialect class by name."""
     return available_dialects(output="map")[name]()

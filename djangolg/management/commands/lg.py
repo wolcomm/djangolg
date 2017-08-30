@@ -11,15 +11,20 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Looking Glass management commands for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
-from djangolg import models, dialects
+
+from djangolg import dialects, models
 
 
 class Command(BaseCommand):
+    """Definition of 'lg' management command."""
+
     help = "Manage Looking Glass Configuration"
     hr = "----"
     commands = [
@@ -37,6 +42,7 @@ class Command(BaseCommand):
     credential_types = dict(models.Credential.CRED_TYPE_CHOICES)
 
     def add_arguments(self, parser):
+        """Define command args."""
         parser.add_argument(
             'CMD', choices=self.commands,
             help="Operation to perform"
@@ -96,6 +102,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options): #noqa
+        """Run command."""
         obj = options['OBJ']
         if obj == 'routers':
             cls = models.Router
@@ -132,6 +139,7 @@ class Command(BaseCommand):
                 raise CommandError("Invalid command")
 
     def list(self, cls=None):
+        """Run 'list' subcommand."""
         hr = self.hr
         objects = cls.objects.all()
         count = objects.count()
@@ -168,6 +176,7 @@ class Command(BaseCommand):
             self.stdout.write(hr)
 
     def show(self, inst=None):
+        """Run 'show' subcommand."""
         hr = self.hr
         cls = type(inst)
         if cls == models.Router:
@@ -196,14 +205,17 @@ class Command(BaseCommand):
             self.stdout.write(hr)
 
     def not_implemented(self, cmd):
+        """Raise error on not implemented."""
         msg = "Command %s is not yet implemented" % cmd
         raise CommandError(msg)
 
     def add(self, cls, options):
+        """Run 'add' subcommand."""
         inst = self.set(cls(), options)
         return inst
 
     def set(self, inst, options): #noqa
+        """Run 'set' subcommand."""
         cls = type(inst)
         if cls == models.Router:
             if options['name']:
@@ -240,6 +252,7 @@ class Command(BaseCommand):
         return inst
 
     def delete(self, inst):
+        """Run 'delete' subcommand."""
         try:
             inst.delete()
         except Exception:

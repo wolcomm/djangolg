@@ -11,11 +11,15 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Base method class for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
 
 class BaseMethod(object):
+    """Base method class."""
+
     name = None
     title = None
     new = False
@@ -24,6 +28,7 @@ class BaseMethod(object):
     options = None
 
     def __init__(self, dialect=None):
+        """Initialise new instance."""
         from djangolg.dialects.base import BaseDialect
         if dialect and not isinstance(dialect, BaseDialect):
             raise ValueError
@@ -31,24 +36,24 @@ class BaseMethod(object):
 
     @property
     def dialect(self):
+        """Get dialect."""
         return self._dialect
 
     @dialect.setter
     def dialect(self, dialect=None):
+        """Set dialect."""
         from djangolg.dialects.base import BaseDialect
         if not isinstance(dialect, BaseDialect):
             raise ValueError
         self._dialect = dialect
 
-    @property
-    def doc_description(self):
-        return self.__doc__
-
     def option_choices(self):
+        """Get available options."""
         return ((self.options.index(option), option)
                 for option in self.options)
 
     def select_option(self, index):
+        """Get option name by index."""
         if self.options:
             return self.options[index]
         else:

@@ -11,18 +11,24 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""LookingGlass view module for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from django.views.generic import View
 from django.http import JsonResponse
-from djangolg import forms, methods, keys, models, settings
+from django.views.generic import View
+
+from djangolg import forms, keys, methods, models, settings
 from djangolg.lg import LookingGlass
 from djangolg.views.helpers import get_src
 
 
 class LookingGlassJsonView(View):
+    """LookingGlass view class for djangolg."""
+
     def get(self, request):
+        """Handle GET request."""
         query = request.GET
         if not query:
             return JsonResponse({}, status=400)
@@ -57,6 +63,7 @@ class LookingGlassJsonView(View):
         return resp
 
     def authorise(self):
+        """Check AuthKey validity."""
         if not self.src_host:
             raise RuntimeError("src_host not set")
         if not self.key:
@@ -68,6 +75,7 @@ class LookingGlassJsonView(View):
         return False
 
     def execute(self):
+        """Execute Looking Glass request."""
         if not self.form:
             raise RuntimeError("form not set")
         if not self.method:

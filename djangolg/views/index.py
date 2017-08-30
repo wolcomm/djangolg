@@ -11,18 +11,24 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Index view module for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
 from django.views.generic import TemplateView
+
 from djangolg import forms, methods, settings
 from djangolg.views.helpers import get_src
 
 
 class IndexView(TemplateView):
+    """Index view class for djangolg."""
+
     template_name = 'djangolg/lg.html'
 
     def get_context_data(self, **kwargs):
+        """Get view context data."""
         context = super(IndexView, self).get_context_data(**kwargs)
         context['base_template'] = settings.BASE_TEMPLATE
         context['info'] = self.general_info()
@@ -37,6 +43,7 @@ class IndexView(TemplateView):
         return context
 
     def general_info(self):
+        """Get meta info for the template context."""
         info = {
             'name': settings.NETNAME,
             'title': "%s Looking Glass" % settings.NETNAME,
@@ -55,6 +62,7 @@ class IndexView(TemplateView):
         return info
 
     def recaptcha(self):
+        """Get recaptcha site key if enabled."""
         if settings.RECAPTCHA_ON:
             return {'site_key': settings.RECAPTCHA_SITE_KEY}
         else:

@@ -11,6 +11,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Method definitions for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
@@ -24,6 +26,7 @@ from djangolg.methods.builtin import ( #noqa
 
 
 def available_methods(output="map"):
+    """Get available method classes."""
     from djangolg.methods.base import BaseMethod
     classes = BaseMethod.__subclasses__()
     if output == "map":
@@ -35,4 +38,5 @@ def available_methods(output="map"):
 
 
 def get_method(name=None):
+    """Instantiate a method class by name."""
     return available_methods(output="map")[name]()

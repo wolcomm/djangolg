@@ -11,15 +11,21 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Form classes for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import requests
 from django import forms
-from djangolg import models, fields, settings
+
+from djangolg import fields, models, settings
+
+import requests
 
 
 class AcceptTermsForm(forms.Form):
+    """Standard Terms and Conditions acceptance form."""
+
     label_suffix = ''
     accept = forms.BooleanField(
         required=True,
@@ -29,11 +35,14 @@ class AcceptTermsForm(forms.Form):
 
 
 class RecaptchaTermsForm(forms.Form):
+    """Google reCaptcha Terms and Conditions acceptance form."""
+
     recaptcha_resp = forms.CharField()
     secret_key = forms.CharField()
     src_address = fields.IPAddressField()
 
     def clean(self):
+        """Validate form."""
         super(RecaptchaTermsForm, self).clean()
         url = settings.RECAPTCHA_URL
         params = {
@@ -49,6 +58,8 @@ class RecaptchaTermsForm(forms.Form):
 
 
 class RouterSelectForm(forms.Form):
+    """Router selection form."""
+
     router = fields.RouterChoiceField(
         required=True,
         queryset=models.Router.objects.all(),
@@ -65,6 +76,8 @@ class RouterSelectForm(forms.Form):
 
 
 class LookingGlassBaseForm(forms.Form):
+    """Base method input form."""
+
     router = forms.ModelChoiceField(
         required=True,
         queryset=models.Router.objects.all(),
@@ -81,6 +94,7 @@ class LookingGlassBaseForm(forms.Form):
 
 
 def form_factory(method=None, data=None, prefix=None):
+    """Dynamically generate a form for the given LG method."""
     if method:
         class FormClass(LookingGlassBaseForm):
             method_name = forms.CharField(

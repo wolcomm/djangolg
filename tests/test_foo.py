@@ -11,6 +11,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Dummy test classes for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
@@ -18,5 +20,8 @@ from django.test import TestCase
 
 
 class FooTestCase(TestCase):
+    """Dummy test."""
+
     def test_foo(self):
+        """Run dummy test."""
         self.assertEqual(1+1, 2)

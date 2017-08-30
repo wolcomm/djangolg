@@ -11,6 +11,8 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
+"""Builtin dialect classes for djangolg."""
+
 from __future__ import print_function
 from __future__ import unicode_literals
 
@@ -18,6 +20,8 @@ from djangolg.dialects.base import BaseDialect
 
 
 class CiscoIOSDialect(BaseDialect):
+    """Cisco IOS Classic/XE dialect."""
+
     name = "ios"
     description = "Cisco IOS"
     commands = {
