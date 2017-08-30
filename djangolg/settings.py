@@ -6,7 +6,8 @@ from django.conf import settings
 NETNAME = getattr(settings, 'DJANGOLG_NETNAME', "Example Network")
 
 # General contact email
-GENERAL_EMAIL = getattr(settings, 'DJANGOLG_GENERAL_EMAIL', "contact@example.com")
+GENERAL_EMAIL = getattr(settings, 'DJANGOLG_GENERAL_EMAIL',
+                        "contact@example.com")
 SUPPORT_EMAIL = getattr(settings, 'DJANGOLG_SUPPORT_EMAIL', None)
 NOC_EMAIL = getattr(settings, 'DJANGOLG_NOC_EMAIL', None)
 PEERING_EMAIL = getattr(settings, 'DJANGOLG_PEERING_EMAIL', None)
@@ -27,16 +28,19 @@ AUP_LINK = getattr(settings, 'DJANGOLG_AUP_LINK', None)
 
 # Google reCapture settings
 RECAPTCHA_ON = getattr(settings, 'DJANGOLG_RECAPTCHA_ON', False)
-RECAPTCHA_URL = getattr(settings, 'DJANGOLG_RECAPTCHA_URL', 'https://www.google.com/recaptcha/api/siteverify')
+RECAPTCHA_URL = getattr(settings, 'DJANGOLG_RECAPTCHA_URL',
+                        'https://www.google.com/recaptcha/api/siteverify')
 
 # Base template
-BASE_TEMPLATE = getattr(settings, 'DJANGOLG_BASE_TEMPLATE', 'djangolg/base.html')
+BASE_TEMPLATE = getattr(settings, 'DJANGOLG_BASE_TEMPLATE',
+                        'djangolg/base.html')
 
 # Logo Image
 LOGO = getattr(settings, 'DJANGOLG_LOGO', 'djangolg/img/logo.jpg')
 
 # Small Logo Image
-SMALL_LOGO = getattr(settings, 'DJANGOLG_SMALL_LOGO', 'djangolg/img/small_logo.jpg')
+SMALL_LOGO = getattr(settings, 'DJANGOLG_SMALL_LOGO',
+                     'djangolg/img/small_logo.jpg')
 
 # Favicon
 FAVICON = getattr(settings, 'DJANGOLG_FAVICON', 'djangolg/img/favicon.ico')
