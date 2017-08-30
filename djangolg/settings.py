@@ -12,6 +12,13 @@ SUPPORT_EMAIL = getattr(settings, 'DJANGOLG_SUPPORT_EMAIL', None)
 NOC_EMAIL = getattr(settings, 'DJANGOLG_NOC_EMAIL', None)
 PEERING_EMAIL = getattr(settings, 'DJANGOLG_PEERING_EMAIL', None)
 
+# Router name display function
+ROUTER_LABEL = getattr(
+    settings, 'DJANGOLG_ROUTER_LABEL',
+    lambda router:
+        router.location.name if router.location else str(router)
+)
+
 # Lifetime of session authorisation key in seconds
 # Set to 0 for unlimited
 LIFETIME = getattr(settings, 'DJANGOLG_LIFETIME', 300)
@@ -30,6 +37,8 @@ AUP_LINK = getattr(settings, 'DJANGOLG_AUP_LINK', None)
 RECAPTCHA_ON = getattr(settings, 'DJANGOLG_RECAPTCHA_ON', False)
 RECAPTCHA_URL = getattr(settings, 'DJANGOLG_RECAPTCHA_URL',
                         'https://www.google.com/recaptcha/api/siteverify')
+RECAPTCHA_SITE_KEY = getattr(settings, 'DJANGOLG_RECAPTCHA_SITE_KEY', None)
+RECAPTCHA_SECRET_KEY = getattr(settings, 'DJANGOLG_RECAPTCHA_SECRET_KEY', None)
 
 # Base template
 BASE_TEMPLATE = getattr(settings, 'DJANGOLG_BASE_TEMPLATE',
