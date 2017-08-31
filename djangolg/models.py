@@ -98,11 +98,15 @@ class Log(models.Model):
     EVENT_QUERY_ACCEPT = 1
     EVENT_QUERY_REJECT = 2
     EVENT_QUERY_INVALID = 3
+    EVENT_QUERY_FAILED = 4
+    EVENT_QUERY_ERROR = 5
     EVENT_CHOICES = (
         (EVENT_START, "Session Started"),
         (EVENT_QUERY_ACCEPT, "Query Authorised"),
         (EVENT_QUERY_REJECT, "Query Rejected"),
         (EVENT_QUERY_INVALID, "Invalid Query"),
+        (EVENT_QUERY_FAILED, "Query Execution Failed"),
+        (EVENT_QUERY_ERROR, "Unhandled Error")
     )
     timestamp = models.DateTimeField(auto_now_add=True)
     event = models.IntegerField(choices=EVENT_CHOICES)

@@ -16,9 +16,9 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from django.core.signing import TimestampSigner
+from django.core.signing import TimestampSigner, SignatureExpired
 
-from djangolg import settings
+from djangolg import exceptions, settings
 
 
 class AuthKey(object):
@@ -49,13 +49,13 @@ class AuthKey(object):
             life = settings.LIFETIME
         try:
             clear = self.signer.unsign(key, max_age=life)
-            if self.clear == clear:
-                return True
-            else:
-                return False
-        except Exception:
-            return False
-        return False
+        except SignatureExpired as e:
+            raise KeyValidityExpired(e.message)
+        if self.clear == clear:
+            return True
+        else:
+            raise KeyValueMismatchError(keyval=clear, refval=self.clear)
+        raise KeyValidationError("An error occured during key validation")
 
     def __str__(self):
         """Return string representation."""
@@ -64,3 +64,21 @@ class AuthKey(object):
     def __unicode__(self):
         """Return string representation."""
         return self.__str__()
+
+
+class KeyValidationError(exceptions.LookingGlassError):
+    """Generic exception raised if key validation fails."""
+
+
+class KeyValueMismatchError(KeyValidationError):
+    """Exception raised when key validation fails due to value mis-match."""
+
+    def __init__(self, keyval=None, refval=None, *args, **kwargs):
+        """Initialise new KeyValueMismatchError instance."""
+        self.message = "decyrpted key value ({0}) does not match \
+                        reference value ({0}).".format(keyval, refval)
+        super(self.__class__, self).__init__(message, *args, **kwargs)
+
+
+class KeyValidityExpired(KeyValidationError, SignatureExpired):
+    """Exception raised when key signature has expired."""

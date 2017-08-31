@@ -11,7 +11,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Method definitions for djangolg."""
+"""Method definitions and exceptions for djangolg."""
 
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -23,6 +23,8 @@ from djangolg.methods.builtin import ( #noqa
     PingMethod,
     TracerouteMethod
 )
+
+from djangolg import exceptions
 
 
 def available_methods(output="map"):
@@ -39,4 +41,21 @@ def available_methods(output="map"):
 
 def get_method(name=None):
     """Instantiate a method class by name."""
-    return available_methods(output="map")[name]()
+    try:
+        return available_methods(output="map")[name]()
+    except KeyError:
+        raise MethodNotFound(name=name)
+    except Exception as e:
+        raise LookingGlassMethodError(e.message)
+
+
+class LookingGlassMethodError(exceptions.LookingGlassError):
+    """Generic exception raised by method classes and helpers."""
+
+
+class MethodNotFound(LookingGlassMethodError):
+    """Exception raised when a method matching a given name cannot be found."""
+
+    def __init__(self, name=None, *args, **kwargs):
+        self.message = "No method class found with name {0}".format(name)
+        super(self.__class__).__init__(message, *args, **kwargs)

@@ -18,7 +18,8 @@ from __future__ import unicode_literals
 
 from django import forms
 
-from djangolg import fields, models, settings
+from djangolg import exceptions, fields, models, settings
+from djangolg.methods.base import BaseMethod
 
 import requests
 
@@ -95,26 +96,26 @@ class LookingGlassBaseForm(forms.Form):
 
 def form_factory(method=None, data=None, prefix=None):
     """Dynamically generate a form for the given LG method."""
-    if method:
-        class FormClass(LookingGlassBaseForm):
-            method_name = forms.CharField(
+    exceptions.check_type(instance=method, classinfo=BaseMethod)
+    class FormClass(LookingGlassBaseForm):
+        method_name = forms.CharField(
+            required=True,
+            widget=forms.HiddenInput,
+            initial=method.name
+        )
+        auth_key = forms.CharField(
+            required=True,
+            widget=forms.HiddenInput,
+        )
+        target = method.target_field
+        if method.options:
+            options = forms.TypedChoiceField(
                 required=True,
-                widget=forms.HiddenInput,
-                initial=method.name
+                choices=method.option_choices,
+                widget=forms.RadioSelect(),
+                initial=0,
+                coerce=int,
+                empty_value=None
             )
-            auth_key = forms.CharField(
-                required=True,
-                widget=forms.HiddenInput,
-            )
-            target = method.target_field
-            if method.options:
-                options = forms.ChoiceField(
-                    required=True,
-                    choices=method.option_choices,
-                    widget=forms.RadioSelect(),
-                    initial=0,
-                )
-        form = FormClass(data, prefix=prefix)
-    else:
-        form = LookingGlassBaseForm(data, prefix=prefix)
+    form = FormClass(data, prefix=prefix)
     return form
