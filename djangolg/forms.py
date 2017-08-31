@@ -97,6 +97,7 @@ class LookingGlassBaseForm(forms.Form):
 def form_factory(method=None, data=None, prefix=None):
     """Dynamically generate a form for the given LG method."""
     exceptions.check_type(instance=method, classinfo=BaseMethod)
+
     class FormClass(LookingGlassBaseForm):
         method_name = forms.CharField(
             required=True,

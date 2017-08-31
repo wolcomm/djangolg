@@ -16,7 +16,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from django.core.signing import TimestampSigner, SignatureExpired
+from django.core.signing import SignatureExpired, TimestampSigner
 
 from djangolg import exceptions, settings
 
@@ -77,7 +77,7 @@ class KeyValueMismatchError(KeyValidationError):
         """Initialise new KeyValueMismatchError instance."""
         self.message = "decyrpted key value ({0}) does not match \
                         reference value ({0}).".format(keyval, refval)
-        super(self.__class__, self).__init__(message, *args, **kwargs)
+        super(self.__class__, self).__init__(self.message, *args, **kwargs)
 
 
 class KeyValidityExpired(KeyValidationError, SignatureExpired):

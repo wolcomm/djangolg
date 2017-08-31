@@ -16,6 +16,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from djangolg import exceptions
 from djangolg.methods.builtin import ( #noqa
     BGPPrefixMethod,
     BGPASPathMethod,
@@ -23,8 +24,6 @@ from djangolg.methods.builtin import ( #noqa
     PingMethod,
     TracerouteMethod
 )
-
-from djangolg import exceptions
 
 
 def available_methods(output="map"):
@@ -57,5 +56,6 @@ class MethodNotFound(LookingGlassMethodError):
     """Exception raised when a method matching a given name cannot be found."""
 
     def __init__(self, name=None, *args, **kwargs):
+        """Initialise new MethodNotFound instance."""
         self.message = "No method class found with name {0}".format(name)
-        super(self.__class__).__init__(message, *args, **kwargs)
+        super(self.__class__).__init__(self.message, *args, **kwargs)

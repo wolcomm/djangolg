@@ -64,7 +64,7 @@ class LookingGlassJsonView(View):
                 else:
                     log.event = models.Log.EVENT_QUERY_ACCEPT
                     resp = JsonResponse(data)
-                log.src_host=self.src_host
+                log.src_host = self.src_host
                 log.key = self.key
                 log.method_name = self.method_name
                 log.router = self.router
@@ -108,7 +108,6 @@ class LookingGlassJsonView(View):
                 self.option_index = None
         else:
             raise FormValidationError(form.errors)
-
 
     def execute(self):
         """Execute Looking Glass request."""
