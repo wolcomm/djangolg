@@ -24,6 +24,7 @@ DEFAULT_STATUS = 500
 DEFAULT_REASON = "An unhandled error occured. \
                   Please try again or contact support."
 
+
 class LookingGlassError(Exception):
     """Exception raised during looking glass query execution."""
 
@@ -34,6 +35,7 @@ class LookingGlassError(Exception):
 
     @property
     def log_error(self):
+        """Render the log message for this exception."""
         return default_error_message(self)
 
 

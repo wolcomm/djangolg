@@ -177,6 +177,7 @@ class FormValidationError(exceptions.LookingGlassError):
 
     @property
     def response_data(self):
+        """Render a dict with a description of the validation errors."""
         data = {}
         if self.wrap_errors:
             data = {'error_message': ""}
