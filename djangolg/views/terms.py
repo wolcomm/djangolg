@@ -19,7 +19,7 @@ from __future__ import unicode_literals
 from django.http import JsonResponse
 from django.views.generic import View
 
-from djangolg import forms, keys, models, settings
+from djangolg import events, forms, keys, models, settings
 from djangolg.views.helpers import get_src
 
 
@@ -43,7 +43,7 @@ class AcceptTermsView(View):
                 form = forms.AcceptTermsForm(query)
             if form.is_valid():
                 key = keys.AuthKey(get_src(self.request))
-                models.Log(event=models.Log.EVENT_START, src_host=src_host,
+                models.Log(event=events.EVENT_START, src_host=src_host,
                            key=key).save()
                 response = {
                     'status': 'ok',

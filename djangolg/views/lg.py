@@ -16,10 +16,10 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse
 from django.views.generic import View
 
-from djangolg import exceptions, forms, keys, methods, models, settings
+from djangolg import events, exceptions, forms, keys, methods, models, settings
 from djangolg.lg import LookingGlass
 from djangolg.views.helpers import get_src
 
@@ -29,52 +29,43 @@ class LookingGlassJsonView(View):
 
     def get(self, request):
         """Handle GET request."""
-        # get the query or return a 400 error
-        self.query = request.GET
-        if not self.query:
-            return JsonResponse({}, status=400)
-        # get the source address and auth_key for validation
-        self.src_host = get_src(self.request)
-        self.key = self.query['auth_key']
-        self.method_name = self.query['method_name']
-        # set up the log entry
-        log = models.Log()
-
         try:
+            self.log = models.Log()
+            self.parse(request=request)
             self.authorise()
             self.validate()
             data = self.execute()
-        except (AuthorisationError, keys.KeyValidationError) as e:
-            log.event = models.Log.EVENT_QUERY_REJECT
-            log.error = e.message
-        except (FormValidationError, methods.LookingGlassMethodError) as e:
-            log.event = models.Log.EVENT_QUERY_INVALID
-            log.error = e.message
-        except ExecutionError as e:
-            log.event = models.Log.EVENT_QUERY_FAILED
-            log.error = e.message
         except Exception as e:
-            log.event = models.Log.EVENT_QUERY_ERROR
-            log.error = e.message
-            raise e
+            resp = JsonResponse(**self.handle_error(e))
+            if settings.DEBUG:
+                raise e
+        else:
+            self.log.event = events.EVENT_QUERY_ACCEPT
+            resp = JsonResponse(data)
         finally:
             try:
-                if log.event:
-                    resp = JsonResponse({}, status=400, reason=log.error)
-                else:
-                    log.event = models.Log.EVENT_QUERY_ACCEPT
-                    resp = JsonResponse(data)
-                log.src_host = self.src_host
-                log.key = self.key
-                log.method_name = self.method_name
-                log.router = self.router
-                log.target = self.target
+                self.log.src_host = self.src_host
+                self.log.key = self.key
+                self.log.method_name = self.method_name
+                self.log.router = self.router
+                self.log.target = self.target
             except AttributeError:
                 pass
             finally:
-                log.save()
+                self.log.save()
 
         return resp
+
+    def parse(self, request=None):
+        """Parse the HttpRequest."""
+        exceptions.check_type(instance=request, classinfo=HttpRequest)
+        try:
+            self.query = request.GET
+            self.src_host = get_src(request)
+            self.key = self.query['auth_key']
+            self.method_name = self.query['method_name']
+        except Exception as e:
+            raise QueryParsingError(e.message)
 
     def authorise(self):
         """Check AuthKey validity."""
@@ -107,7 +98,7 @@ class LookingGlassJsonView(View):
             else:
                 self.option_index = None
         else:
-            raise FormValidationError(form.errors)
+            raise FormValidationError(form.errors.as_data())
 
     def execute(self):
         """Execute Looking Glass request."""
@@ -124,13 +115,46 @@ class LookingGlassJsonView(View):
             raise ExecutionError(e.message)
         return output
 
+    def handle_error(self, e=exceptions.LookingGlassError):
+        """Handle an error raised during query progressing."""
+        exceptions.check_type(instance=e, classinfo=Exception)
+        if isinstance(e, exceptions.LookingGlassError):
+            status = e.http_status
+            reason = e.http_reason
+            data = e.response_data
+            self.log.event = e.log_event
+            self.log.error = e.log_error
+        else:
+            status = exceptions.DEFAULT_STATUS
+            reason = exceptions.DEFAULT_REASON
+            data = {}
+            self.log.event = exceptions.DEFAULT_EVENT
+            self.log.error = exceptions.default_error_message(e=e)
+        return {'data': data, 'status': status, 'reason': reason}
+
+
+class QueryParsingError(exceptions.LookingGlassError):
+    """Generic query parsing exception."""
+
+    log_event = events.EVENT_QUERY_INVALID
+    http_status = 400
+    http_reason = None
+
 
 class AuthorisationError(exceptions.LookingGlassError):
     """Generic command authorisation exception."""
 
+    log_event = events.EVENT_QUERY_REJECT
+    http_status = 401
+    http_reason = "An error occured during authorisation key validation. \
+                   Please try again or contact support."
+
 
 class MaxRequestsExceeded(AuthorisationError):
     """Exception raised when MAX_REQUESTS is exceeded."""
+
+    http_reason = "The maximum number of allowed requests has been exceeded. \
+                   Please wait to try again later, or contact support."
 
     def __init__(self, max_requests=None, request_count=None, *args, **kwargs):
         """Initialise new MaxRequestsExceeded instance."""
@@ -141,6 +165,33 @@ class MaxRequestsExceeded(AuthorisationError):
 class FormValidationError(exceptions.LookingGlassError):
     """Generic form validation execption."""
 
+    log_event = events.EVENT_QUERY_INVALID
+    http_status = 400
+    http_reason = "Some query parameters failed to validate."
+
+    def __init__(self, wrap_errors=None, *args, **kwargs):
+        """Initialise new MaxRequestsExceeded instance."""
+        if isinstance(wrap_errors, dict):
+            self.wrap_errors = wrap_errors
+        super(self.__class__, self).__init__(wrap_errors, *args, **kwargs)
+
+    @property
+    def response_data(self):
+        data = {}
+        if self.wrap_errors:
+            data = {'error_message': ""}
+            for field, errors in self.wrap_errors.iteritems():
+                data["error_message"] += "{0} ".format(field).capitalize()
+                for error in errors:
+                    for message in error:
+                        data["error_message"] += "{0}.".format(message)
+        return data
+
 
 class ExecutionError(exceptions.LookingGlassError):
     """Generic command execution exception."""
+
+    log_event = events.EVENT_QUERY_FAILED
+    http_status = 503
+    http_reason = "An error occured during query execution. \
+                   Please try again or contact support."

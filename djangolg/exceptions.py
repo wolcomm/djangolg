@@ -16,9 +16,25 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from djangolg import events
+
+
+DEFAULT_EVENT = events.EVENT_QUERY_ERROR
+DEFAULT_STATUS = 500
+DEFAULT_REASON = "An unhandled error occured. \
+                  Please try again or contact support."
 
 class LookingGlassError(Exception):
     """Exception raised during looking glass query execution."""
+
+    log_event = DEFAULT_EVENT
+    http_status = DEFAULT_STATUS
+    http_reason = DEFAULT_REASON
+    response_data = {}
+
+    @property
+    def log_error(self):
+        return default_error_message(self)
 
 
 class TypeCheckError(TypeError):
@@ -31,3 +47,9 @@ def check_type(instance=None, classinfo=None):
         raise TypeCheckError(
             "expected an instance of {0}, got {1}".format(classinfo, instance)
         )
+
+
+def default_error_message(e=None):
+    """Generate a default log message from an exception."""
+    check_type(instance=e, classinfo=Exception)
+    return "{0}: {1}".format(e.__class__.__name__, e.message)

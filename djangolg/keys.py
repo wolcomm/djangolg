@@ -18,7 +18,7 @@ from __future__ import unicode_literals
 
 from django.core.signing import SignatureExpired, TimestampSigner
 
-from djangolg import exceptions, settings
+from djangolg import events, exceptions, settings
 
 
 class AuthKey(object):
@@ -69,9 +69,17 @@ class AuthKey(object):
 class KeyValidationError(exceptions.LookingGlassError):
     """Generic exception raised if key validation fails."""
 
+    http_status = 401
+    http_reason = "An error occured during authorisation key validation. \
+                   Please try again or contact support."
+    log_event = events.EVENT_QUERY_REJECT
+
 
 class KeyValueMismatchError(KeyValidationError):
     """Exception raised when key validation fails due to value mis-match."""
+
+    http_reason = "Source address does not match authorisation key. \
+                   Please try refreshing the page or contact support."
 
     def __init__(self, keyval=None, refval=None, *args, **kwargs):
         """Initialise new KeyValueMismatchError instance."""
@@ -82,3 +90,6 @@ class KeyValueMismatchError(KeyValidationError):
 
 class KeyValidityExpired(KeyValidationError, SignatureExpired):
     """Exception raised when key signature has expired."""
+
+    http_reason = "The authorisation key provided has expired. \
+                   Please try refreshing the page or contact support"

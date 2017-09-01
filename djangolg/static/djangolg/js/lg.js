@@ -90,7 +90,11 @@ $(document).ready(function () {
                 });
                 req.fail(function (resp) {
                     bar.attr("style", "width:80%");
-                    var msg = " " + resp.statusText + ". Please try again.";
+                    var err_msg = $.parseJSON(resp.responseText).error_message;
+                    var msg = resp.statusText;
+                    if (err_msg) {
+                         msg += " " + err_msg;
+                    }
                     $("#alert-text").text(msg);
                     raw.text("An error occurred");
                     formatted.text("An error occurred");

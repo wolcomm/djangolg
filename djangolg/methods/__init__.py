@@ -16,7 +16,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from djangolg import exceptions
+from djangolg import events, exceptions
 from djangolg.methods.builtin import ( #noqa
     BGPPrefixMethod,
     BGPASPathMethod,
@@ -51,9 +51,16 @@ def get_method(name=None):
 class LookingGlassMethodError(exceptions.LookingGlassError):
     """Generic exception raised by method classes and helpers."""
 
+    log_event = events.EVENT_QUERY_ERROR
+    http_status = 500
+    http_reason = None
+
 
 class MethodNotFound(LookingGlassMethodError):
     """Exception raised when a method matching a given name cannot be found."""
+
+    log_event = events.EVENT_QUERY_INVALID
+    http_status = 400
 
     def __init__(self, name=None, *args, **kwargs):
         """Initialise new MethodNotFound instance."""

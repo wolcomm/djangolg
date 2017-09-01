@@ -71,3 +71,9 @@ NAV_IMG = getattr(settings, 'DJANGOLG_NAV_IMG', None)
 
 # Output formatting
 FORMATTED_OUTPUT = getattr(settings, 'DJANGOLG_FORMATTED_OUTPUT', False)
+
+# Enable debugging
+# this will re-raise exceptions in the view, so that stack traces
+# can be inspected
+#DEBUG = True
+DEBUG = getattr(settings, 'DJANGOLG_DEBUG', False)
