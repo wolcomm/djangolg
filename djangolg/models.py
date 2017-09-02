@@ -37,11 +37,8 @@ class Router(models.Model):
     @property
     def label(self):
         """Render router display label from attributes."""
-        try:
-            from djangolg.settings import ROUTER_LABEL as label
-        except ImportError:
-            def label(s): return str(s)
-        return label(self)
+        from djangolg.settings import ROUTER_LABEL
+        return ROUTER_LABEL(self)
 
     def __str__(self):
         """Return string representation."""

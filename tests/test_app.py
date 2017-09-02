@@ -11,17 +11,20 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Dummy test classes for djangolg."""
+"""App test classes for djangolg."""
 
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from django.apps import AppConfig
 from django.test import TestCase
 
 
-class FooTestCase(TestCase):
-    """Dummy test."""
+class AppTestCase(TestCase):
+    """Test djangolg apps."""
 
-    def test_foo(self):
-        """Run dummy test."""
-        self.assertEqual(1+1, 2)
+    def test_app_import(self):
+        """Test importing djangolg app."""
+        from djangolg import apps
+        assert issubclass(apps.DjangolgConfig, AppConfig)
+        assert apps.DjangolgConfig.name == "djangolg"
