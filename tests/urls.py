@@ -11,8 +11,12 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Blank URLConf just to keep the test suite happy."""
+"""URLConf for the djangolg test suite."""
 from __future__ import print_function
 from __future__ import unicode_literals
 
-urlpatterns = []
+from django.conf.urls import include, url
+
+urlpatterns = [
+    url(r'^', include('djangolg.urls'))
+]

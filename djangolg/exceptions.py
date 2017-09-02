@@ -54,4 +54,4 @@ def check_type(instance=None, classinfo=None):
 def default_error_message(e=None):
     """Generate a default log message from an exception."""
     check_type(instance=e, classinfo=Exception)
-    return "{0}: {1}".format(e.__class__.__name__, e.message)
+    return "{0}: {1}".format(e.__class__.__name__, e)
