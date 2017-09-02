@@ -29,7 +29,7 @@ from djangolg import types
 class IPPrefixField(forms.CharField):
     """IP Prefix field."""
 
-    def to_python(self, value):
+    def to_python(self, value=None):
         """Deserialise to python type."""
         if not value:
             return None
@@ -46,7 +46,7 @@ class IPPrefixField(forms.CharField):
 class IPAddressField(forms.CharField):
     """IP Address field."""
 
-    def to_python(self, value):
+    def to_python(self, value=None):
         """Deserialise to python type."""
         if not value:
             return None
@@ -68,5 +68,5 @@ class RouterChoiceField(forms.ModelChoiceField):
         try:
             label = obj.label
         except NotImplementedError:
-            label = str(obj)
+            label = "{}".format(obj)
         return label

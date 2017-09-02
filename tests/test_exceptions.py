@@ -37,14 +37,14 @@ class ExceptionTestCase(TestCase):
             (0,): tuple, 0: int,
             DummyClass: type, DummySubClass(): DummyClass,
         }
-        for instance, classinfo in pass_dict.iteritems():
+        for instance, classinfo in pass_dict.items():
             exceptions.check_type(instance=instance, classinfo=classinfo)
         # these should fail
         fail_dict = {
             (0,): list, 0: str,
             DummySubClass: DummyClass, DummyClass(): DummySubClass,
         }
-        for instance, classinfo in fail_dict.iteritems():
+        for instance, classinfo in fail_dict.items():
             try:
                 exceptions.check_type(instance=instance, classinfo=classinfo)
             except Exception as e:
