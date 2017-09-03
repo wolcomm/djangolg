@@ -42,20 +42,18 @@ class AuthKey(object):
         """Get cyphertext key value."""
         return self._data['signed']
 
-    def validate(self, key):
+    def validate(self, key, life=None):
         """Validate key value."""
-        life = None
-        if settings.LIFETIME:
+        if not life and settings.LIFETIME:
             life = settings.LIFETIME
         try:
             clear = self.signer.unsign(key, max_age=life)
         except SignatureExpired as e:
-            raise KeyValidityExpired(e.message)
+            raise KeyValidityExpired("{}".format(e))
         if self.clear == clear:
             return True
         else:
             raise KeyValueMismatchError(keyval=clear, refval=self.clear)
-        raise KeyValidationError("An error occured during key validation")
 
     def __str__(self):
         """Return string representation."""

@@ -16,6 +16,8 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import time
+
 from django.test import TestCase
 
 from djangolg import keys
@@ -27,12 +29,16 @@ class KeyTestCase(TestCase):
     def test_validate_auth_key(self):
         """Test AuthKey validation."""
         value = "good_value"
+        other_value = "bad_value"
         key = keys.AuthKey(value=value)
+        other_key = keys.AuthKey(value=other_value)
         assert key.validate(key="{}".format(key))
-        # from django.conf import settings
-        # settings.configure(DJANGOLG_LIFETIME=1)
-        # sleep(1)
-        # try:
-        #     key.validate(key="{}".format(key))
-        # except Exception as e:
-        #     assert isinstance(e, KeyValidityExpired)
+        time.sleep(1)
+        try:
+            key.validate(key="{}".format(key), life=1)
+        except Exception as e:
+            assert isinstance(e, keys.KeyValidityExpired)
+        try:
+            other_key.validate(key="{}".format(key))
+        except Exception as e:
+            assert isinstance(e, keys.KeyValueMismatchError)
