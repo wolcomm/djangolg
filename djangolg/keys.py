@@ -84,7 +84,7 @@ class KeyValueMismatchError(KeyValidationError):
     def __init__(self, keyval=None, refval=None, *args, **kwargs):
         """Initialise new KeyValueMismatchError instance."""
         self.message = "decyrpted key value ({0}) does not match \
-                        reference value ({0}).".format(keyval, refval)
+                        reference value ({1}).".format(keyval, refval)
         super(self.__class__, self).__init__(self.message, *args, **kwargs)
 
 
