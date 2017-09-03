@@ -102,16 +102,14 @@ class Log(models.Model):
 
     def __str__(self):
         """Return string representation."""
-        str = "%s %s:: from:%s to:%s method:%s target:%s error:%s" % (
-            self.timestamp,
-            self.event,
-            self.src_host,
-            self.router,
-            self.method_name,
-            self.target,
-            self.error,
-        )
-        return str
+        return "{0} {1}:: from:{2} to:{3} \
+                method:{4} target:{5} error:{6}".format(self.timestamp,
+                                                        self.event,
+                                                        self.src_host,
+                                                        self.router,
+                                                        self.method_name,
+                                                        self.target,
+                                                        self.error)
 
     def __unicode__(self):
         """Return string representation."""
