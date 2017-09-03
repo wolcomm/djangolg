@@ -18,7 +18,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 
-from djangolg import views
+# from djangolg import views
 from djangolg.views import helpers
 
 
