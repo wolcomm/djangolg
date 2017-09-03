@@ -29,7 +29,7 @@ class KeyTestCase(TestCase):
         value = "good_value"
         key = keys.AuthKey(value=value)
         assert key.validate(key="{}".format(key))
-        from django.conf import settings
+        # from django.conf import settings
         # settings.configure(DJANGOLG_LIFETIME=1)
         # sleep(1)
         # try:
