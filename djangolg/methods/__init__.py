@@ -45,7 +45,7 @@ def get_method(name=None):
     except KeyError:
         raise MethodNotFound(name=name)
     except Exception as e:
-        raise LookingGlassMethodError(e.message)
+        raise LookingGlassMethodError("{}".format(e))
 
 
 class LookingGlassMethodError(exceptions.LookingGlassError):
@@ -65,4 +65,4 @@ class MethodNotFound(LookingGlassMethodError):
     def __init__(self, name=None, *args, **kwargs):
         """Initialise new MethodNotFound instance."""
         self.message = "No method class found with name {0}".format(name)
-        super(self.__class__).__init__(self.message, *args, **kwargs)
+        super(self.__class__, self).__init__(self.message, *args, **kwargs)

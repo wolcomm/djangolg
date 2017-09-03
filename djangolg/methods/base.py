@@ -16,6 +16,8 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from djangolg import exceptions
+
 
 class BaseMethod(object):
     """Base method class."""
@@ -26,12 +28,13 @@ class BaseMethod(object):
     description = None
     target_field = None
     options = None
+    test_target = None
 
     def __init__(self, dialect=None):
         """Initialise new instance."""
         from djangolg.dialects.base import BaseDialect
-        if dialect and not isinstance(dialect, BaseDialect):
-            raise ValueError
+        if dialect:
+            exceptions.check_type(instance=dialect, classinfo=BaseDialect)
         self._dialect = dialect
 
     @property
@@ -43,8 +46,7 @@ class BaseMethod(object):
     def dialect(self, dialect=None):
         """Set dialect."""
         from djangolg.dialects.base import BaseDialect
-        if not isinstance(dialect, BaseDialect):
-            raise ValueError
+        exceptions.check_type(dialect, BaseDialect)
         self._dialect = dialect
 
     def option_choices(self):

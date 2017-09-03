@@ -43,6 +43,7 @@ class BGPPrefixMethod(BaseMethod):
         label='Prefix'
     )
     options = ["All paths", "Bestpath Only", "Longer Prefixes"]
+    test_target = fields.IPPrefixField().to_python(value="2001:db8::/32")
 
 
 class BGPASPathMethod(BaseMethod):
@@ -65,6 +66,7 @@ class BGPASPathMethod(BaseMethod):
         }),
     )
     options = ["IPv4", "IPv6"]
+    test_target = "_65000_"
 
 
 class BGPCommunityMethod(BaseMethod):
@@ -89,6 +91,7 @@ class BGPCommunityMethod(BaseMethod):
         }),
     )
     options = ["IPv4", "IPv6"]
+    test_target = "65000:65000"
 
 
 class PingMethod(BaseMethod):
@@ -111,6 +114,7 @@ class PingMethod(BaseMethod):
             'title': "Target IP address"
         }),
     )
+    test_target = fields.IPAddressField().to_python(value="2001:db8::1")
 
 
 class TracerouteMethod(BaseMethod):
@@ -131,3 +135,4 @@ class TracerouteMethod(BaseMethod):
             'title': "Target IP address"
         }),
     )
+    test_target = fields.IPAddressField().to_python(value="2001:db8::1")
