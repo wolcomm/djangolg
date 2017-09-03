@@ -1,7 +1,8 @@
 [![PyPI](https://img.shields.io/pypi/v/djangolg.svg)](https://pypi.python.org/pypi/djangolg)
-[![PyPI](https://img.shields.io/pypi/dm/djangolg.svg)](https://pypi.python.org/pypi/djangolg)
 [![Build Status](https://travis-ci.org/wolcomm/djangolg.svg?branch=master)](https://travis-ci.org/wolcomm/djangolg)
 [![codecov](https://codecov.io/gh/wolcomm/djangolg/branch/master/graph/badge.svg)](https://codecov.io/gh/wolcomm/djangolg)
+[![Code Health](https://landscape.io/github/wolcomm/djangolg/master/landscape.svg?style=flat)](https://landscape.io/github/wolcomm/djangolg/master)
+[![Requirements Status](https://requires.io/github/wolcomm/djangolg/requirements.svg?branch=master)](https://requires.io/github/wolcomm/djangolg/requirements/?branch=master)
 
 # DjangoLG
 A BGP looking glass based on the Django web framework
