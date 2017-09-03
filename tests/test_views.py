@@ -11,24 +11,23 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Helper functions for djangolg view classes."""
+"""View test classes for djangolg."""
 
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from django.http import HttpRequest
+from django.test import TestCase
 
-from djangolg import exceptions
+from djangolg import views
+from djangolg.views import helpers
 
 
-def get_src(request=None):
-    """Get the source address of a request."""
-    address = None
-    exceptions.check_type(request, HttpRequest)
-    if request.META:
-        if 'HTTP_X_FORWARDED_FOR' in request.META:
-            address = "{0}"\
-                .format(request.META['HTTP_X_FORWARDED_FOR'].split(',')[0])
-        else:
-            address = "{0}".format(request.META['REMOTE_ADDR'])
-    return address
+class ViewHelpersCase(TestCase):
+    """Test djangolg view helper functions."""
+
+    def test_get_src_helper(self):
+        """Test get_src helper."""
+        try:
+            helpers.get_src()
+        except Exception as e:
+            assert isinstance(e, TypeError)
