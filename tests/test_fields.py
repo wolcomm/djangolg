@@ -55,10 +55,10 @@ class FieldTestCase(TestCase):
 
     def test_router_label(self):
         """Test Router label rendering."""
-        class DummyRouterWithLabel(models.Router): #noqa
+        class DummyRouterWithLabel(models.Router): # noqa
             """Dummy router subclass for testing."""
             label = "router-label-string"
-        class DummyRouterWithoutLabel(models.Router): #noqa
+        class DummyRouterWithoutLabel(models.Router): # noqa
             """Dummy router subclass for testing."""
             @property
             def label(self):

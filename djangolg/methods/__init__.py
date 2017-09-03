@@ -17,7 +17,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from djangolg import events, exceptions
-from djangolg.methods.builtin import ( #noqa
+from djangolg.methods.builtin import ( # noqa
     BGPPrefixMethod,
     BGPASPathMethod,
     BGPCommunityMethod,

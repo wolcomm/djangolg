@@ -16,6 +16,6 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from djangolg.views.index import IndexView #noqa
-from djangolg.views.lg import LookingGlassJsonView #noqa
-from djangolg.views.terms import AcceptTermsView #noqa
+from djangolg.views.index import IndexView # noqa
+from djangolg.views.lg import LookingGlassJsonView # noqa
+from djangolg.views.terms import AcceptTermsView # noqa

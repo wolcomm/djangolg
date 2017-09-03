@@ -16,7 +16,7 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from djangolg.dialects.builtin import ( #noqa
+from djangolg.dialects.builtin import ( # noqa
     CiscoIOSDialect
 )
 

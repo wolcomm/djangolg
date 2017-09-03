@@ -101,7 +101,7 @@ class Command(BaseCommand):
             help="Credential key - not yet implemented"
         )
 
-    def handle(self, *args, **options): #noqa
+    def handle(self, *args, **options): # noqa
         """Run command."""
         obj = options['OBJ']
         if obj == 'routers':
@@ -214,7 +214,7 @@ class Command(BaseCommand):
         inst = self.set(cls(), options)
         return inst
 
-    def set(self, inst, options): #noqa
+    def set(self, inst, options): # noqa
         """Run 'set' subcommand."""
         cls = type(inst)
         if cls == models.Router:

@@ -26,10 +26,10 @@ class ExceptionTestCase(TestCase):
 
     def test_type_check_helper(self):
         """Test check_type helper."""
-        class DummyClass(object): #noqa
+        class DummyClass(object): # noqa
             """A dummy class for testing purposes."""
             pass
-        class DummySubClass(DummyClass): #noqa
+        class DummySubClass(DummyClass): # noqa
             """A dummy subclass for testing purposes."""
             pass
         # these checks should pass
