@@ -11,4 +11,22 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under
 # the License.
-"""Management command classes for djangolg."""  # pragma: no cover
+"""Types test classes for djangolg."""
+
+from __future__ import print_function
+from __future__ import unicode_literals
+
+from django.test import TestCase
+
+from djangolg import types
+
+
+class TypesTestCase(TestCase):
+    """Test djangolg types."""
+
+    def test_ip_prefix_type(self):
+        """Test IPPrefix type."""
+        network = '192.0.2.0/24'
+        host = '192.0.2.1'
+        assert "{}".format(types.IPPrefix(network)) == network
+        assert "{}".format(types.IPPrefix(host)) == host

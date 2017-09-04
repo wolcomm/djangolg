@@ -55,5 +55,5 @@ class BaseDialect(object):
             if inspect.isfunction(syntax):
                 return syntax
             else:
-                raise TypeError
-        raise NotImplementedError
+                raise TypeError  # pragma: no cover
+        raise NotImplementedError  # pragma: no cover

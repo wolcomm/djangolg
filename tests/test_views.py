@@ -16,9 +16,10 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import reverse
 
-# from djangolg import views
+from djangolg import settings
 from djangolg.views import helpers
 
 
@@ -31,3 +32,54 @@ class ViewHelpersCase(TestCase):
             helpers.get_src()
         except Exception as e:
             assert isinstance(e, TypeError)
+
+
+class ViewsTestCase(TestCase):
+    """Test djangolg index view."""
+
+    def test_index_view(self):
+        """Test index view."""
+        client = Client()
+        url = reverse('djangolg-index')
+        settings.RECAPTCHA_ON = False
+        response = client.get(url)
+        assert response.status_code == 200
+        settings.RECAPTCHA_ON = True
+        response = client.get(url)
+        assert response.status_code == 200
+
+    def test_index_view_with_proxy(self):
+        """Test index view with the HTTP_X_FORWARDED_FOR header set."""
+        client = Client()
+        url = reverse('djangolg-index')
+        extra = {'HTTP_X_FORWARDED_FOR': '192.0.2.1'}
+        settings.RECAPTCHA_ON = False
+        response = client.get(url, **extra)
+        assert response.status_code == 200
+        settings.RECAPTCHA_ON = True
+        response = client.get(url, **extra)
+        assert response.status_code == 200
+
+    def test_std_terms_view(self):
+        """Test terms view."""
+        client = Client()
+        url = reverse('djangolg-enter')
+        settings.RECAPTCHA_ON = False
+        response = client.get(url)
+        assert response.status_code == 400
+        response = client.get(url, {'accept': 'on'})
+        assert response.status_code == 200
+
+    def test_recapture_terms_view(self):
+        """Test terms view."""
+        client = Client()
+        url = reverse('djangolg-enter')
+        query = {'g-recaptcha-response': 'dummy_response'}
+        settings.RECAPTCHA_ON = True
+        response = client.get(url)
+        assert response.status_code == 400
+        response = client.get(url, query)
+        assert response.status_code == 400
+        settings.RECAPTCHA_SECRET_KEY = 'dummy_key'
+        response = client.get(url, query)
+        assert response.status_code == 200
