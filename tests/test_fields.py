@@ -21,6 +21,8 @@ from django.test import TestCase
 
 from djangolg import fields, models
 
+from tests.models import DummyRouterWithLabel, DummyRouterWithoutLabel
+
 
 class FieldTestCase(TestCase):
     """Test djangolg fields."""
@@ -54,16 +56,7 @@ class FieldTestCase(TestCase):
             assert isinstance(e, ValidationError)
 
     def test_router_label(self):
-        """Test Router label rendering."""
-        class DummyRouterWithLabel(models.Router): # noqa
-            """Dummy router subclass for testing."""
-            label = "router-label-string"
-        class DummyRouterWithoutLabel(models.Router): # noqa
-            """Dummy router subclass for testing."""
-            @property
-            def label(self):
-                """Raise error."""
-                raise NotImplementedError
+        """Test router label rendering."""
         field = fields.RouterChoiceField(queryset=models.Router.objects.all())
         router_with_label = DummyRouterWithLabel(hostname="test-router")
         router_without_label = DummyRouterWithoutLabel(hostname="test-router")

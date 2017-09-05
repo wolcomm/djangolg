@@ -111,7 +111,7 @@ class Command(BaseCommand):
         elif obj == 'locations':
             cls = models.Location
         else:
-            raise CommandError("Invalid object type")
+            raise CommandError("Invalid object type")  # pragma: no cover
         cmd = options['CMD']
         if cmd == 'list':
             self.list(cls)
@@ -121,7 +121,7 @@ class Command(BaseCommand):
         else:
             if 'index' in options:
                 index = options['index']
-            else:
+            else:  # pragma: no cover
                 raise CommandError(
                     "Please provide object index argument (--index)")
             try:
@@ -136,7 +136,7 @@ class Command(BaseCommand):
             elif cmd == 'delete':
                 self.delete(inst)
             else:
-                raise CommandError("Invalid command")
+                raise CommandError("Invalid command")  # pragma: no cover
 
     def list(self, cls=None):
         """Run 'list' subcommand."""
@@ -204,7 +204,7 @@ class Command(BaseCommand):
             self.stdout.write("Site Code: %s" % inst.sitecode)
             self.stdout.write(hr)
 
-    def not_implemented(self, cmd):
+    def not_implemented(self, cmd):  # pragma: no cover
         """Raise error on not implemented."""
         msg = "Command %s is not yet implemented" % cmd
         raise CommandError(msg)
@@ -245,9 +245,9 @@ class Command(BaseCommand):
                 inst.sitecode = options['sitecode']
         try:
             inst.save()
-        except IntegrityError:
+        except IntegrityError:  # pragma: no cover
             raise
-        except Exception:
+        except Exception:  # pragma: no cover
             raise CommandError("Save failed")
         return inst
 
@@ -255,5 +255,5 @@ class Command(BaseCommand):
         """Run 'delete' subcommand."""
         try:
             inst.delete()
-        except Exception:
+        except Exception:  # pragma: no cover
             raise CommandError("Delete failed")
