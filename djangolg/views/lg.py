@@ -37,7 +37,7 @@ class LookingGlassJsonView(View):
             data = self.execute()
         except Exception as e:
             resp = JsonResponse(**self.handle_error(e))
-            if settings.DEBUG:
+            if settings.DEBUG:  # pragma: no cover
                 raise e
         else:
             self.log.event = events.EVENT_QUERY_ACCEPT
@@ -65,26 +65,27 @@ class LookingGlassJsonView(View):
             self.key = self.query['auth_key']
             self.method_name = self.query['method_name']
         except Exception as e:
-            raise QueryParsingError(e.message)
+            raise QueryParsingError("{}".format(e))
 
     def authorise(self):
         """Check AuthKey validity."""
         if not (self.src_host and self.key):
-            raise AuthorisationError("src_host or key not set")
+            raise AuthorisationError(
+                "src_host or key not set")  # pragma: no cover
         try:
             keys.AuthKey(self.src_host).validate(self.key)
             count = models.Log.objects.filter(key=self.key).count()
         except keys.KeyValidationError:
             raise
         except Exception as e:
-            raise AuthorisationError(e.message)
+            raise AuthorisationError("{}".format(e))
         if not settings.MAX_REQUESTS or count < settings.MAX_REQUESTS:
             return True
         else:
             raise MaxRequestsExceeded(max_requests=settings.MAX_REQUESTS,
                                       request_count=count)
         raise AuthorisationError("An error occured during command \
-                                  authorisation")
+                                  authorisation")  # pragma: no cover
 
     def validate(self):
         """Validate the request query parameters."""
@@ -124,7 +125,7 @@ class LookingGlassJsonView(View):
             data = e.response_data
             self.log.event = e.log_event
             self.log.error = e.log_error
-        else:
+        else:  # pragma: no cover
             status = exceptions.DEFAULT_STATUS
             reason = exceptions.DEFAULT_REASON
             data = {}

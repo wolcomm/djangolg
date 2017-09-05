@@ -94,10 +94,17 @@ class ViewsTestCase(TestCase):
         extra = {'HTTP_X_FORWARDED_FOR': src_addr}
         for method_name in methods.available_methods(output="list"):
             method = methods.get_method(name=method_name)
-            query = {
-                'auth_key': auth_key, 'method_name': method_name,
+            query = {'method_name': method_name}
+            response = client.get(url, query, **extra)
+            assert response.status_code == 400  # QueryParsingError
+            query['auth_key'] = 'bad_key'
+            response = client.get(url, query, **extra)
+            assert response.status_code == 401  # KeyValidationError
+            query['auth_key'] = auth_key
+            response = client.get(url, query, **extra)
+            assert response.status_code == 400  # FormValidationError
+            query.update({
+                'method_name': method_name,
                 'router': router.hostname,
                 'target': "{}".format(method.test_target)
-            }
-            response = client.get(url, query, **extra)
-            assert response.status_code == 400
+            })
