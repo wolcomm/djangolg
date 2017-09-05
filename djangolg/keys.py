@@ -61,7 +61,7 @@ class AuthKey(object):
 
     def __unicode__(self):
         """Return string representation."""
-        return self.__str__()
+        return self.__str__()  # pragma: no cover
 
 
 class KeyValidationError(exceptions.LookingGlassError):

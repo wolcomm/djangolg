@@ -46,7 +46,7 @@ class Router(models.Model):
 
     def __unicode__(self):
         """Return string representation."""
-        return self.__str__()
+        return self.__str__()  # pragma: no cover
 
 
 class Location(models.Model):
@@ -61,7 +61,7 @@ class Location(models.Model):
 
     def __unicode__(self):
         """Return string representation."""
-        return self.__str__()
+        return self.__str__()  # pragma: no cover
 
 
 class Credential(models.Model):
@@ -85,7 +85,7 @@ class Credential(models.Model):
 
     def __unicode__(self):
         """Return string representation."""
-        return self.__str__()
+        return self.__str__()  # pragma: no cover
 
 
 class Log(models.Model):
@@ -113,4 +113,4 @@ class Log(models.Model):
 
     def __unicode__(self):
         """Return string representation."""
-        return self.__str__()
+        return self.__str__()  # pragma: no cover
