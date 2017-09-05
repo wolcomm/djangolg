@@ -16,6 +16,7 @@ A BGP looking glass based on the Django web framework
 * Supported query types
     * BGP paths/bestpath/longer paths by prefix
     * BGP paths by AS_PATH regexp
+    * BGP paths by community match
     * ICMP Ping
     * Traceroute
     * Framework for adding new query types easily
