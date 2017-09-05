@@ -19,7 +19,7 @@ from __future__ import unicode_literals
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from djangolg import settings
+from djangolg import keys, methods, models, settings
 from djangolg.views import helpers
 
 
@@ -83,3 +83,21 @@ class ViewsTestCase(TestCase):
         settings.RECAPTCHA_SECRET_KEY = 'dummy_key'
         response = client.get(url, query)
         assert response.status_code == 200
+
+    def test_lg_view(self):
+        """Test lg view."""
+        router = models.Router.objects.create(hostname="test-router")
+        client = Client()
+        src_addr = '192.0.2.1'
+        auth_key = keys.AuthKey(value=src_addr).signed
+        url = reverse('djangolg-lg')
+        extra = {'HTTP_X_FORWARDED_FOR': src_addr}
+        for method_name in methods.available_methods(output="list"):
+            method = methods.get_method(name=method_name)
+            query = {
+                'auth_key': auth_key, 'method_name': method_name,
+                'router': router.hostname,
+                'target': "{}".format(method.test_target)
+            }
+            response = client.get(url, query, **extra)
+            assert response.status_code == 400

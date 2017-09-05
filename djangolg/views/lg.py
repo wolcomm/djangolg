@@ -181,7 +181,7 @@ class FormValidationError(exceptions.LookingGlassError):
         data = {}
         if self.wrap_errors:
             data = {'error_message': ""}
-            for field, errors in self.wrap_errors.iteritems():
+            for field, errors in self.wrap_errors.items():
                 data["error_message"] += "{0} ".format(field).capitalize()
                 for error in errors:
                     for message in error:
