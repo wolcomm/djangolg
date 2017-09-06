@@ -76,3 +76,23 @@ FORMATTED_OUTPUT = getattr(settings, 'DJANGOLG_FORMATTED_OUTPUT', False)
 # this will re-raise exceptions in the view, so that stack traces
 # can be inspected
 DEBUG = getattr(settings, 'DJANGOLG_DEBUG', False)
+
+# Paths to method classes
+_DEFAULT_METHODS = [
+    'djangolg.methods.bgp_as_path.BGPASPathMethod',
+    'djangolg.methods.bgp_community.BGPCommunityMethod',
+    'djangolg.methods.bgp_prefix.BGPPrefixMethod',
+    'djangolg.methods.ping.PingMethod',
+    'djangolg.methods.traceroute.TracerouteMethod',
+]
+CUSTOM_METHODS = getattr(settings, 'DJANGOLG_CUSTOM_METHODS', [])
+METHODS = getattr(settings, 'DJANGOLG_METHODS',
+                  _DEFAULT_METHODS + CUSTOM_METHODS)
+
+# Paths to dialect classes
+_DEFAULT_DIALECTS = [
+    'djangolg.dialects.cisco_ios.CiscoIOSDialect',
+]
+CUSTOM_DIALECTS = getattr(settings, 'DJANGOLG_CUSTOM_DIALECTS', [])
+DIALECTS = getattr(settings, 'DJANGOLG_DIALECTS',
+                   _DEFAULT_DIALECTS + CUSTOM_DIALECTS)

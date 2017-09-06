@@ -16,21 +16,26 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from djangolg import events, exceptions
-from djangolg.methods.bgp_as_path import BGPASPathMethod
-from djangolg.methods.bgp_community import BGPCommunityMethod
-from djangolg.methods.bgp_prefix import BGPPrefixMethod
-from djangolg.methods.ping import PingMethod
-from djangolg.methods.traceroute import TracerouteMethod
+import importlib
 
+from djangolg import events, exceptions, settings
+from djangolg.methods.base import BaseMethod
 
-classes = (
-    BGPPrefixMethod,
-    BGPASPathMethod,
-    BGPCommunityMethod,
-    PingMethod,
-    TracerouteMethod
-)
+__all__ = ['available_methods', 'get_method',
+           'LookingGlassMethodError', 'MethodNotFound']
+
+classes = []
+
+for item in settings.METHODS:
+    try:
+        module_path, class_name = item.rsplit('.', 1)
+        cls = getattr(importlib.import_module(module_path), class_name)
+        if issubclass(cls, BaseMethod):
+            classes.append(cls)
+    except ImportError:
+        pass
+
+__all__.extend(classes)
 
 
 def available_methods(output="map"):

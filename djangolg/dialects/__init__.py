@@ -16,12 +16,25 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from djangolg.dialects.cisco_ios import CiscoIOSDialect
+import importlib
 
+from djangolg import settings
+from djangolg.dialects.base import BaseDialect
 
-classes = (
-    CiscoIOSDialect,
-)
+__all__ = ['available_dialects', 'get_dialect']
+
+classes = []
+
+for item in settings.DIALECTS:
+    try:
+        module_path, class_name = item.rsplit('.', 1)
+        cls = getattr(importlib.import_module(module_path), class_name)
+        if issubclass(cls, BaseDialect):
+            classes.append(cls)
+    except ImportError:
+        pass
+
+__all__.extend(classes)
 
 
 def available_dialects(output="map"):
