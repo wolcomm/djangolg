@@ -17,7 +17,14 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from djangolg import events, exceptions
-from djangolg.methods.builtin import ( # noqa
+from djangolg.methods.bgp_as_path import BGPASPathMethod
+from djangolg.methods.bgp_community import BGPCommunityMethod
+from djangolg.methods.bgp_prefix import BGPPrefixMethod
+from djangolg.methods.ping import PingMethod
+from djangolg.methods.traceroute import TracerouteMethod
+
+
+classes = (
     BGPPrefixMethod,
     BGPASPathMethod,
     BGPCommunityMethod,
@@ -28,8 +35,6 @@ from djangolg.methods.builtin import ( # noqa
 
 def available_methods(output="map"):
     """Get available method classes."""
-    from djangolg.methods.base import BaseMethod
-    classes = BaseMethod.__subclasses__()
     if output == "map":
         return {m.name: m for m in classes}
     if output == "list":
