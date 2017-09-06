@@ -16,15 +16,16 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from djangolg.dialects.builtin import ( # noqa
-    CiscoIOSDialect
+from djangolg.dialects.cisco_ios import CiscoIOSDialect
+
+
+classes = (
+    CiscoIOSDialect,
 )
 
 
 def available_dialects(output="map"):
     """Get available dialect classes."""
-    from djangolg.dialects.base import BaseDialect
-    classes = BaseDialect.__subclasses__()
     if output == "map":
         return {d.name: d for d in classes}
     if output == "choices":
