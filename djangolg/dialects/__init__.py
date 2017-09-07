@@ -31,7 +31,7 @@ for item in settings.DIALECTS:
         cls = getattr(importlib.import_module(module_path), class_name)
         if issubclass(cls, BaseDialect):
             classes.append(cls)
-    except ImportError:
+    except ImportError:  # pragma: no cover
         pass
 
 __all__.extend(classes)

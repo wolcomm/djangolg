@@ -32,7 +32,7 @@ for item in settings.METHODS:
         cls = getattr(importlib.import_module(module_path), class_name)
         if issubclass(cls, BaseMethod):
             classes.append(cls)
-    except ImportError:
+    except ImportError:  # pragma: no cover
         pass
 
 __all__.extend(classes)
