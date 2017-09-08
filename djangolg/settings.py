@@ -76,6 +76,7 @@ FORMATTED_OUTPUT = getattr(settings, 'DJANGOLG_FORMATTED_OUTPUT', False)
 # this will re-raise exceptions in the view, so that stack traces
 # can be inspected
 DEBUG = getattr(settings, 'DJANGOLG_DEBUG', False)
+# DEBUG = True
 
 # Paths to method classes
 _DEFAULT_METHODS = [

@@ -97,14 +97,23 @@ class ViewsTestCase(TestCase):
             query = {'method_name': method_name}
             response = client.get(url, query, **extra)
             assert response.status_code == 400  # QueryParsingError
-            query['auth_key'] = 'bad_key'
+            assert "Bad Request" in response.reason_phrase
+            query['auth_key'] = keys.AuthKey(value='192.0.2.255').signed
             response = client.get(url, query, **extra)
             assert response.status_code == 401  # KeyValidationError
+            assert "does not match authorisation key" in response.reason_phrase
+            query['auth_key'] = 'bad_key'
+            response = client.get(url, query, **extra)
+            assert response.status_code == 401  # AuthorisationError
+            assert "command authorisation" in response.reason_phrase
             query['auth_key'] = auth_key
             response = client.get(url, query, **extra)
             assert response.status_code == 400  # FormValidationError
-            query.update({
-                'method_name': method_name,
-                'router': router.hostname,
-                'target': "{}".format(method.test_target)
-            })
+            assert "parameters failed to validate" in response.reason_phrase
+            query['router'] = router.id
+            query['target'] = "{}".format(method.test_target)
+            if method.options:
+                query['options'] = 0
+            response = client.get(url, query, **extra)
+            # assert response.status_code == 503  # ExecutionError
+            assert "during query execution" in response.reason_phrase

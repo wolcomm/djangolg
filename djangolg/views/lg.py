@@ -39,7 +39,7 @@ class LookingGlassJsonView(View):
             resp = JsonResponse(**self.handle_error(e))
             if settings.DEBUG:  # pragma: no cover
                 raise e
-        else:
+        else:  # pragma: no cover
             self.log.event = events.EVENT_QUERY_ACCEPT
             resp = JsonResponse(data)
         finally:
@@ -81,7 +81,7 @@ class LookingGlassJsonView(View):
             raise AuthorisationError("{}".format(e))
         if not settings.MAX_REQUESTS or count < settings.MAX_REQUESTS:
             return True
-        else:
+        else:  # pragma: no cover
             raise MaxRequestsExceeded(max_requests=settings.MAX_REQUESTS,
                                       request_count=count)
         raise AuthorisationError("An error occured during command \
@@ -104,17 +104,18 @@ class LookingGlassJsonView(View):
     def execute(self):
         """Execute Looking Glass request."""
         if not (self.method and self.router and self.target):
-            raise ExecutionError("command parameters missing")
+            raise ExecutionError(
+                "command parameters missing")  # pragma: no cover
         try:
             with LookingGlass(router=self.router) as lg:
-                output = lg.execute(
+                output = lg.execute(  # pragma: no cover
                     method=self.method,
                     target=self.target,
                     option_index=self.option_index
                 )
         except Exception as e:
-            raise ExecutionError(e.message)
-        return output
+            raise ExecutionError("{}".format(e))
+        return output  # pragma: no cover
 
     def handle_error(self, e=exceptions.LookingGlassError):
         """Handle an error raised during query progressing."""
@@ -147,7 +148,7 @@ class AuthorisationError(exceptions.LookingGlassError):
 
     log_event = events.EVENT_QUERY_REJECT
     http_status = 401
-    http_reason = "An error occured during authorisation key validation. \
+    http_reason = "An error occured during command authorisation. \
                    Please try again or contact support."
 
 
@@ -157,7 +158,8 @@ class MaxRequestsExceeded(AuthorisationError):
     http_reason = "The maximum number of allowed requests has been exceeded. \
                    Please wait to try again later, or contact support."
 
-    def __init__(self, max_requests=None, request_count=None, *args, **kwargs):
+    def __init__(self, max_requests=None,
+                 request_count=None, *args, **kwargs):  # pragma: no cover
         """Initialise new MaxRequestsExceeded instance."""
         message = "Request count {0} > {1}".format(request_count, max_requests)
         super(self.__class__, self).__init__(message, *args, **kwargs)
