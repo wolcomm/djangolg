@@ -80,9 +80,9 @@ DEBUG = getattr(settings, 'DJANGOLG_DEBUG', False)
 
 # Paths to method classes
 _DEFAULT_METHODS = [
+    'djangolg.methods.bgp_prefix.BGPPrefixMethod',
     'djangolg.methods.bgp_as_path.BGPASPathMethod',
     'djangolg.methods.bgp_community.BGPCommunityMethod',
-    'djangolg.methods.bgp_prefix.BGPPrefixMethod',
     'djangolg.methods.ping.PingMethod',
     'djangolg.methods.traceroute.TracerouteMethod',
 ]
