@@ -24,7 +24,7 @@ from djangolg import dialects, events
 class Router(models.Model):
     """Database representation of a router."""
 
-    hostname = models.CharField(max_length=20, unique=True)
+    hostname = models.CharField(max_length=50, unique=True)
     location = models.ForeignKey('Location', on_delete=models.SET_NULL,
                                  null=True)
     credentials = models.ForeignKey('Credential', on_delete=models.SET_NULL,
@@ -53,7 +53,7 @@ class Location(models.Model):
     """Database representation of a location."""
 
     name = models.CharField(max_length=50)
-    sitecode = models.CharField(max_length=10, unique=True)
+    sitecode = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
         """Return string representation."""
@@ -93,11 +93,11 @@ class Log(models.Model):
 
     timestamp = models.DateTimeField(auto_now_add=True)
     event = models.IntegerField(choices=events.EVENT_CHOICES)
-    src_host = models.CharField(max_length=20)
+    src_host = models.CharField(max_length=50)
     router = models.ForeignKey('Router', on_delete=models.SET_NULL, null=True)
     method_name = models.CharField(max_length=20, null=True)
     target = models.CharField(max_length=20, null=True)
-    key = models.CharField(max_length=40, null=True)
+    key = models.CharField(max_length=100, null=True)
     error = models.CharField(max_length=40, null=True)
 
     def __str__(self):
