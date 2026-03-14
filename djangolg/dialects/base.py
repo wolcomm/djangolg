@@ -20,7 +20,7 @@ import inspect
 
 import napalm
 
-from napalm_base import NetworkDriver
+from napalm.base import NetworkDriver
 
 
 class BaseDialect(object):
